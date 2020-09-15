@@ -9,9 +9,9 @@ import axios from 'axios'
 import './plugins/vee-validate'
 
 
-// axios.defaults.baseURL = 'http://192.168.43.252:8008/api/';
+axios.defaults.baseURL = 'http://192.168.8.81:8008/api/';
 // axios.defaults.baseURL = 'http://192.168.0.103:8008/api/';
-axios.defaults.baseURL = 'http://localhost:8000/api/';
+// axios.defaults.baseURL = 'http://localhost:8000/api/';
 axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('access_token');
 
 Vue.config.productionTip = false
