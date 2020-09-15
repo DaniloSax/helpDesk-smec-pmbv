@@ -88,7 +88,7 @@
             </div>
             {{-- public\storage\calls\37 --}}
 
-            <img src="{{ url('storage/calls/40/CkXwZTd83DC7H47V4MbUy6FgxT9mejLbUy05t9Aw.jpeg') }}" alt="" srcset="">
+            {{-- <img src="{{ url('storage/calls/40/CkXwZTd83DC7H47V4MbUy6FgxT9mejLbUy05t9Aw.jpeg') }}" alt="" srcset=""> --}}
 
             <div class="links">
                 <a href="https://laravel.com/docs">Docs</a>
