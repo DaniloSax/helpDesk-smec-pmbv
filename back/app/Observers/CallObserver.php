@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Call;
+use App\User;
 
 class CallObserver
 {
@@ -14,7 +15,8 @@ class CallObserver
      */
     public function created(Call $call)
     {
-        $call->created_by = auth()->user()->id;
+        // $auth = User::find(auth()->user()->id);
+        $call->created_by = auth()->check() ? auth()->user()->id : null;
         $call->save();
     }
 
@@ -26,7 +28,7 @@ class CallObserver
      */
     public function updated(Call $call)
     {
-        $call->updated_by = auth()->user()->id;
+        $call->updated_by = auth()->check() ? auth()->user()->id : null;
     }
 
     /**
