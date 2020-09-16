@@ -4,6 +4,7 @@ use App\Models\Profile;
 use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -14,6 +15,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        Role::create(['name' => 'administrador', 'guard_name' => 'api']);
+
         // user ADMINISTRADOR
         User::create([
             'name' => 'Danilo Veloso',
@@ -27,15 +30,15 @@ class UserSeeder extends Seeder
         });
 
         // user DIRECIONADOR
-        User::create([
-            'name' => 'Solucionador',
-            'email' => 'solucionador@gmail.com',
-            'email_verified_at' => now(),
-            'password' =>  bcrypt('danilo123'), 
-            'remember_token' => Str::random(10),
-        ])->each( function ($user){
-            factory(Profile::class, 1)->create(['user_id' => $user->id]);
-            $user->assignRole('solucionador');
-        });
+        // User::create([
+        //     'name' => 'Solucionador',
+        //     'email' => 'solucionador@gmail.com',
+        //     'email_verified_at' => now(),
+        //     'password' =>  bcrypt('danilo123'), 
+        //     'remember_token' => Str::random(10),
+        // ])->each( function ($user){
+        //     factory(Profile::class, 1)->create(['user_id' => $user->id]);
+        //     $user->assignRole('solucionador');
+        // });
     }
 }
