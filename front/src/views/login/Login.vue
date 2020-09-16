@@ -53,8 +53,8 @@ export default {
   data() {
     return {
       user: {
-        email: "danilovsdanilo@gmail.com",
-        password: "danilo123",
+        email: "",
+        password: "",
       },
       loading: false,
       error: "",

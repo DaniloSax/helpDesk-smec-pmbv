@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name' => 'administrador', 'guard_name' => 'api']);
+        // Role::create(['name' => 'administrador', 'guard_name' => 'api']);
 
         // user ADMINISTRADOR
         User::create([
@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
             'password' =>  bcrypt('danilo123'), 
             'remember_token' => Str::random(10),
         ])->each( function ($user){
+            $user->assignRole('administrador');
             factory(Profile::class, 1)->create(['user_id' => $user->id]);
             $user->assignRole('administrador');
         });
