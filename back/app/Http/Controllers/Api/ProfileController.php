@@ -92,12 +92,10 @@ class ProfileController extends Controller
 
         if ($validatedData) {
             $user = DB::transaction(function () use ($request, $user) {
-                $user->profile()->update($request->only([
-                    'full_name',
-                    'school',
-                    'office',
-                ]));
-
+                
+                $request->except('photo');
+                
+                $user->profile()->update($request->profile);
 
                 $user->update($request->all());
 

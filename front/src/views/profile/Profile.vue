@@ -15,12 +15,10 @@
 
         <v-form>
           <v-col cols="12">
-            <!-- <v-chip class=""> -->
-              <span class=" d-flex justify-center">
-                <h1 class="mb-2">{{ auth.name }} -</h1>
-                <h2 v-for="(role, i) in authRoles" :key="i">{{ role.toUpperCase() }}/</h2>
-              </span>
-            <!-- </v-chip> -->
+            <span class="d-flex justify-center">
+              <h1 class="mb-2">{{ auth.name }} -</h1>
+              <h2 v-for="(role, i) in authRoles" :key="i">{{ role.toUpperCase() }}/</h2>
+            </span>
 
             <v-row class="d-flex align-end">
               <v-col cols="2">
@@ -28,7 +26,7 @@
                 <v-hover v-slot:default="{ hover }" open-delay="200">
                   <a @click.prevent="show=true">
                     <v-card :elevation="hover ? 16 : 2" tile height="200" width="100%">
-                      <v-img :src="photo" height="100%" width="100%"></v-img>
+                      <v-img :src="photo || '@/assets/images/profile.png'" height="100%" width="100%"></v-img>
                     </v-card>
                   </a>
                 </v-hover>
@@ -130,8 +128,10 @@ export default {
     localforage.getItem("helpDesk").then((data) => {
       this.auth = data.login.auth;
       this.ridingComponent = false;
-      if (data.login.auth.profile.photo) {
-        this.photo = this.baseURL + data.login.auth.profile.photo;
+      if (this.auth.profile.photo) {
+        this.photo = this.baseURL + this.auth.profile.photo
+      } else {
+        this.photo = require("@/assets/images/profile.png");
       }
     });
   },
@@ -143,7 +143,7 @@ export default {
       ridingComponent: false,
       show: false,
       photo: null,
-      baseURL: "http://192.168.8.81:8008/storage/",
+      baseURL: "http://localhost:8000/storage/",
       file: "",
     };
   },
@@ -191,10 +191,6 @@ export default {
           }
           this.getMsgSuccess(true);
           this.loading = false;
-
-          // setTimeout(() => {
-          //   window.location.reload();
-          // }, 1000);
         })
         .catch((error) => {
           console.log("erro no component", error);

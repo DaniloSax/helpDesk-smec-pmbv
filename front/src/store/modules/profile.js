@@ -24,7 +24,7 @@ export default {
 
         updateUserProfile({ commit }, user) {
             return new Promise((resolve, reject) => {
-                console.log(user)
+                // console.log(user)
 
                 axios.put(`profile/${user.id}`, user, { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } }).then(resp => {
                         console.log(resp.data)

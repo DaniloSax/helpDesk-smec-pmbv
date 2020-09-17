@@ -52,11 +52,12 @@
                 </template>
 
                 <v-avatar size="50">
-                  <img
-                    :src="auth.profile.photo ? auth.profile.photo : '@/assets/images/profile.png' "
-                    alt="Foto do Perfil"
-                  />
-                  <!-- <v-img src="@/assets/images/profile.png"></v-img> -->
+                  <template v-if="photo">
+                    <img :src="baseURL + photo " alt="Foto do Perfil" />
+                  </template>
+                  <template v-else>
+                    <img src="@/assets/images/profile.png" alt="Foto do Perfil" />
+                  </template>
                 </v-avatar>
               </v-badge>
 
@@ -67,8 +68,8 @@
                 <template v-else>
                   <img src="@/assets/images/profile.png" alt="Foto do Perfil" />
                 </template>
-                <!-- <v-img src="@/assets/images/profile.png"></v-img> -->
               </v-avatar>
+              
               {{ auth ? auth.name : '' }}
             </v-btn>
           </template>
@@ -137,7 +138,8 @@ export default {
       activeBtn: 1,
       drawer: this.$store.state.btnSideBar,
       auth: null,
-      baseURL: "http://192.168.8.81:8008/storage/",
+      // baseURL: "http://192.168.8.81:8008/storage/",
+      baseURL: "http://localhost:8000/storage/",
       photo: null,
     };
   },
