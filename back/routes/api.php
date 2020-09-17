@@ -46,4 +46,5 @@ Route::prefix('notificable')->middleware('auth:api')->group(function () {
 });
 
 Route::get('/profile', 'Api\ProfileController@edit')->middleware('auth:api');
+Route::post('/profile', 'Api\ProfileController@storagePhoto')->middleware('auth:api');
 Route::put('/profile/{id}', 'Api\ProfileController@update')->middleware('auth:api');

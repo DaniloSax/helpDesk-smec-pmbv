@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -97,19 +98,39 @@ class ProfileController extends Controller
                     'office',
                 ]));
 
-                // foreach ($request->roles as $role) {
-                //     $user->syncRoles(['name' => $role->name, 'guard_name' => 'api']);
-                // }
 
-                $user->syncRoles($request->roles);
                 $user->update($request->all());
 
                 return $user;
             });
         }
 
-        return response()->json($user);
+        return response()->json($request->all(), 200);
     }
+
+    public function storagePhoto(Request $request)
+    {
+        if (auth()->check()) {
+            $user = User::find(auth()->user()->id);
+
+            if (isset($user->profile->photo)) {
+                Storage::delete('public/' . $user->profile->photo);
+            }
+
+            if ($request->hasFile('file')) {
+
+                $path = $request->file('file')->store('public/profiles/' . auth()->user()->id);
+
+                $path = str_replace('public/', '', $path);
+                $user->profile()->update(['photo' => $path]);
+
+                return response()->json(['success' => 'upload efetuado com sucesso!']);
+            }
+        } else {
+            return response()->json(['error' => 'usuário não está logado']);
+        }
+    }
+
 
     /**
      * Remove the specified resource from storage.

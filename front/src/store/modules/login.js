@@ -11,8 +11,6 @@ export default {
     mutations: {
         setDataLogged(state, user) {
             state.auth = user
-                // state.token = data.access_token
-                // localStorage.setItem('auth', state.auth)
             state.logged = true
         },
         setDataLogoff(state) {
@@ -23,6 +21,10 @@ export default {
             });
             state.token = null
             state.auth = null
+        },
+
+        updatePhoto(state, photo) {
+            state.auth.profile.photo = photo
         }
     },
     actions: {

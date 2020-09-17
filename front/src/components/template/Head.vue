@@ -52,12 +52,22 @@
                 </template>
 
                 <v-avatar size="50">
-                  <v-img src="@/assets/images/profile.png"></v-img>
+                  <img
+                    :src="auth.profile.photo ? auth.profile.photo : '@/assets/images/profile.png' "
+                    alt="Foto do Perfil"
+                  />
+                  <!-- <v-img src="@/assets/images/profile.png"></v-img> -->
                 </v-avatar>
               </v-badge>
 
               <v-avatar v-else size="50" class="mr-4">
-                <v-img src="@/assets/images/profile.png"></v-img>
+                <template v-if="photo">
+                  <img :src="baseURL + photo " alt="Foto do Perfil" />
+                </template>
+                <template v-else>
+                  <img src="@/assets/images/profile.png" alt="Foto do Perfil" />
+                </template>
+                <!-- <v-img src="@/assets/images/profile.png"></v-img> -->
               </v-avatar>
               {{ auth ? auth.name : '' }}
             </v-btn>
@@ -114,6 +124,7 @@ export default {
   created() {
     localforage.getItem("helpDesk").then((item) => {
       this.auth = item.login.auth;
+      this.photo = item.login.auth.profile.photo;
       this.$store.dispatch("allNotifications");
     });
   },
@@ -126,7 +137,8 @@ export default {
       activeBtn: 1,
       drawer: this.$store.state.btnSideBar,
       auth: null,
-      url: "",
+      baseURL: "http://localhost:8000/storage/",
+      photo: null,
     };
   },
   components: {

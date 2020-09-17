@@ -8,17 +8,19 @@
 
     <template v-slot:card-body>
       <v-skeleton-loader v-if="ridingComponent" :loading="true" class="mx-auto" type="article" tile></v-skeleton-loader>
-
-      <!-- <AlertMsg v-if="msg.errors || msg.success" :msg="msg" />
-      <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />-->
-
       <validation-observer v-else v-slot="{invalid}">
+        <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />
+
+        <AlertMsg v-if="msg.errors || msg.success" :msg="msg" />
+
         <v-form>
           <v-col cols="12">
-            <span class="d-flex justify-center">
-              <h1 class="mb-2">{{ auth.name }} -</h1>
-              <h2 v-for="(role, i) in authRoles" :key="i">{{ role.toUpperCase() }}/</h2>
-            </span>
+            <!-- <v-chip class=""> -->
+              <span class=" d-flex justify-center">
+                <h1 class="mb-2">{{ auth.name }} -</h1>
+                <h2 v-for="(role, i) in authRoles" :key="i">{{ role.toUpperCase() }}/</h2>
+              </span>
+            <!-- </v-chip> -->
 
             <v-row class="d-flex align-end">
               <v-col cols="2">
@@ -71,7 +73,7 @@
               <v-col>
                 <validation-provider rules="required" v-slot="{errors}">
                   <v-text-field
-                    label="Escola de Origem"
+                    label="Setor de Origem"
                     v-model="auth.profile.school"
                     :error-messages="errors[0]"
                     clearable
@@ -91,28 +93,8 @@
             </v-row>
 
             <v-row>
-              <v-col cols="6">
-                <validation-provider rules="min:8" vid="confirmation" v-slot="{errors}">
-                  <v-text-field
-                    label="Nova senha"
-                    type="password"
-                    v-model.lazy="auth.password"
-                    hint="Pelo menos 8 carácteres"
-                    :error-messages="errors[0]"
-                    clearable
-                  ></v-text-field>
-                </validation-provider>
-              </v-col>
-              <v-col cols="6">
-                <validation-provider rules="confirmed:confirmation" v-slot="{errors}">
-                  <v-text-field
-                    label="Confirme a nova senha"
-                    type="password"
-                    v-model.lazy="auth.password_confirmation"
-                    :error-messages="errors[0]"
-                    clearable
-                  ></v-text-field>
-                </validation-provider>
+              <v-col>
+                <ExpansablePassword @auth-password="getPassword($event)"></ExpansablePassword>
               </v-col>
             </v-row>
             <v-row class="d-flex justify-center">
@@ -132,23 +114,25 @@
  
  <script>
 import localforage from "localforage";
+import GlobalMixins from "@/mixins/globalMixins";
 
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 
 import CardDefault from "@/components/Card";
 import VueImageCropUpload from "vue-image-crop-upload";
+import ExpansablePassword from "./components/ExpansablePassword";
+import AlertMsg from "../../components/AlertMsg";
+import ToastMsg from "../../components/ToastMsg";
 
 export default {
   created() {
     this.ridingComponent = true;
     localforage.getItem("helpDesk").then((data) => {
-      // this.$store.dispatch("loadRoles").then((roles) => {
-        this.auth = data.login.auth;
-          this.ridingComponent = false;
-        // if (roles) {
-        //   this.roles = roles;
-        // }
-      // });
+      this.auth = data.login.auth;
+      this.ridingComponent = false;
+      if (data.login.auth.profile.photo) {
+        this.photo = this.baseURL + data.login.auth.profile.photo;
+      }
     });
   },
   data() {
@@ -158,7 +142,8 @@ export default {
       roles: [],
       ridingComponent: false,
       show: false,
-      photo: "",
+      photo: null,
+      baseURL: "http://localhost:8000/storage/",
       file: "",
     };
   },
@@ -167,7 +152,11 @@ export default {
     ValidationProvider,
     ValidationObserver,
     VueImageCropUpload,
+    ExpansablePassword,
+    AlertMsg,
+    ToastMsg,
   },
+  mixins: [GlobalMixins],
   computed: {
     authRoles() {
       return this.auth.roles.map((role) => role.name);
@@ -188,8 +177,34 @@ export default {
     },
     updateProfile() {
       this.loading = true;
-      this.$store.dispatch("updateUserProfile", this.auth);
-      this.loading = false;
+      this.$store
+        .dispatch("updateUserProfile", this.auth)
+        .then(() => {
+          this.$store.dispatch("getAuth");
+          if (this.auth.file) {
+            this.$store
+              .dispatch("updatePhotoProfile", this.auth.file)
+              .then(() => {
+                this.$store.dispatch("getAuth");
+                this.getMsgSuccess(true);
+              });
+          }
+          this.getMsgSuccess(true);
+          this.loading = false;
+
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 1000);
+        })
+        .catch((error) => {
+          console.log("erro no component", error);
+          this.getMsgError(error);
+          this.loading = false;
+        });
+    },
+    getPassword(event) {
+      this.auth.password = event.password;
+      this.auth.password_confirmation = event.password_confirmation;
     },
   },
   watch: {

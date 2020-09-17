@@ -26,9 +26,6 @@ class DatabaseSeeder extends Seeder
 
             factory(Role::class, 1)->create()->each(function ($role) use ($user) {
                 $user->assignRole($role->name);
-                // factory(Permission::class, 2)->create()->each(function ($permission) use ($role) {
-                //     $role->givePermissionTo($permission);
-                // });
             });
 
             factory(Service::class, 3)->create(['user_id' => $user->id]);
@@ -44,6 +41,7 @@ class DatabaseSeeder extends Seeder
             ]);
         });
 
-        $this->call(UserSeeder::class);
+        // $this->call(RoleSeeder::class);
+        // $this->call(UserSeeder::class);
     }
 }

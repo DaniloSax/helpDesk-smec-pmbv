@@ -21,6 +21,7 @@ export default {
                     })
             });
         },
+
         updateUserProfile({ commit }, user) {
             return new Promise((resolve, reject) => {
                 console.log(user)
@@ -32,7 +33,32 @@ export default {
                     })
                     .catch(error => {
                         console.log(error.response.data)
-                        reject(error)
+                        return reject(error.response.data)
+                    })
+            });
+        },
+
+        updatePhotoProfile({ commit }, file) {
+
+            const formData = new FormData()
+            formData.append('file', file);
+
+            return new Promise((resolve, reject) => {
+                axios.post(`profile/`, formData, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                            'Content-Type': 'image/jpeg'
+                        }
+                    })
+                    .then(resp => {
+                        console.log(resp.data)
+
+                        commit('notCommit')
+                        return resolve(resp)
+                    })
+                    .catch(error => {
+                        // console.log(error.response.data)
+                        return reject(error.response.data)
                     })
             });
         },
