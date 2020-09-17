@@ -137,7 +137,7 @@ export default {
       activeBtn: 1,
       drawer: this.$store.state.btnSideBar,
       auth: null,
-      baseURL: "http://localhost:8000/storage/",
+      baseURL: "http://192.168.8.81:8008/storage/",
       photo: null,
     };
   },
