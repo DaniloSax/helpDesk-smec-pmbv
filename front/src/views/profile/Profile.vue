@@ -143,6 +143,7 @@ export default {
       ridingComponent: false,
       show: false,
       photo: null,
+      // baseURL: "http://localhost:8000/storage/",
       baseURL: "http://192.168.8.81:8008/storage/",
       file: "",
     };

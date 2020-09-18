@@ -44,11 +44,12 @@ export default {
             formData.append('file', file);
 
             return new Promise((resolve, reject) => {
-                axios.post(`profile/`, formData, {
+                axios.post('profile/', formData, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                            'Content-Type': 'image/jpeg'
-                        }
+                            'Content-Type': 'multipart/form-data',
+                            'Access-Control-Allow-Origin': '*'
+                        },
                     })
                     .then(resp => {
                         console.log(resp.data)
