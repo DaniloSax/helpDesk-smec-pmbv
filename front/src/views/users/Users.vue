@@ -19,7 +19,7 @@
       <AlertMsg v-if="msg.errors || msg.success" :msg="msg" />
       <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />
 
-      <v-pagination :length="numberOfPages" v-model="pagination.page " circle></v-pagination>
+      <!-- <v-pagination :length="numberOfPages" v-model="pagination.page " circle></v-pagination> -->
 
       <v-data-table
         :headers="headers"
@@ -117,7 +117,7 @@ export default {
       return users;
     },
     numberOfPages() {
-      return Math.ceil(this.users.length / this.pagination.itemsPerPage);
+      return Math.ceil(this.users.length / this.pagination.itemsPerPage) ;
     },
   },
   methods: {
