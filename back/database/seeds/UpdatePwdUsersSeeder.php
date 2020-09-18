@@ -17,7 +17,7 @@ class UpdatePwdUsersSeeder extends Seeder
         // DB::table('users')->update(['password' => Hash::make('12345678')]);
 
         foreach (User::all() as $user) {
-            $user->password = bcrypt('12345678');
+            $user->password = bcrypt(12345678);
             $user->save();
         }
     }
