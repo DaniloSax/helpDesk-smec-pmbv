@@ -93,7 +93,7 @@ class ProfileController extends Controller
         if ($validatedData) {
             $user = DB::transaction(function () use ($request, $user) {
                 
-                $request->except('photo');
+                // $request->except('photo');
                 
                 $user->profile()->update($request->profile);
 

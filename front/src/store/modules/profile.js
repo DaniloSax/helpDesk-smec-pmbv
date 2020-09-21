@@ -1,4 +1,6 @@
 import axios from 'axios'
+// import firebase from 'firebase'
+// import localforage from 'localforage'
 
 export default {
     state: {
@@ -10,26 +12,29 @@ export default {
     actions: {
         getUserProfile({ commit }) {
             return new Promise((resolve, reject) => {
-                axios('/profile').then(resp => {
+                axios('/profile', {
+                        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+                    }).then(resp => {
                         console.log(resp.data)
-                        commit('')
-                        resolve(resp)
+                        commit('notCommit')
+                        return resolve(resp)
                     })
                     .catch(error => {
                         console.log(error.response)
-                        reject(error)
+                        return reject(error)
                     })
             });
         },
 
         updateUserProfile({ commit }, user) {
             return new Promise((resolve, reject) => {
-                // console.log(user)
-
-                axios.put(`profile/${user.id}`, user, { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } }).then(resp => {
+                axios.put(`profile/${user.id}`, user, {
+                        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+                    })
+                    .then(resp => {
                         console.log(resp.data)
                         commit('notCommit')
-                        resolve(resp)
+                        return resolve(resp)
                     })
                     .catch(error => {
                         console.log(error.response.data)

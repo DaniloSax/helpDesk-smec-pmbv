@@ -8,25 +8,29 @@
 
     <template v-slot:card-body>
       <v-skeleton-loader v-if="ridingComponent" :loading="true" class="mx-auto" type="article" tile></v-skeleton-loader>
+
       <validation-observer v-else v-slot="{invalid}">
         <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />
-
         <AlertMsg v-if="msg.errors || msg.success" :msg="msg" />
 
         <v-form>
           <v-col cols="12">
-            <span class="d-flex justify-center">
+            <!-- <span class="d-flex justify-center">
               <h1 class="mb-2">{{ auth.name }} -</h1>
               <h2 v-for="(role, i) in authRoles" :key="i">{{ role.toUpperCase() }}/</h2>
-            </span>
-
+            </span>-->
+            <!-- {{ auth }} -->
             <v-row class="d-flex align-end">
               <v-col cols="2">
                 <v-subheader class="d-flex justify-center">Foto de Perfil</v-subheader>
                 <v-hover v-slot:default="{ hover }" open-delay="200">
                   <a @click.prevent="show=true">
                     <v-card :elevation="hover ? 16 : 2" tile height="200" width="100%">
-                      <v-img :src="photo || '@/assets/images/profile.png'" height="100%" width="100%"></v-img>
+                      <v-img
+                        :src="photo || '@/assets/images/profile.png'"
+                        height="100%"
+                        width="100%"
+                      ></v-img>
                     </v-card>
                   </a>
                 </v-hover>
@@ -113,6 +117,7 @@
  <script>
 import localforage from "localforage";
 import GlobalMixins from "@/mixins/globalMixins";
+import PhotosMixins from "./mixins/PhotosMixins";
 
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 
@@ -124,15 +129,13 @@ import ToastMsg from "../../components/ToastMsg";
 
 export default {
   created() {
-    this.ridingComponent = true;
     localforage.getItem("helpDesk").then((data) => {
+      console.log(data)
       this.auth = data.login.auth;
-      this.ridingComponent = false;
-      if (this.auth.profile.photo) {
-        this.photo = this.baseURL + this.auth.profile.photo
-      } else {
-        this.photo = require("@/assets/images/profile.png");
-      }
+      this.downloadPhotoFirebase(this.auth).then((url) => {
+        this.photo = url || null;
+        this.ridingComponent = false;
+      });
     });
   },
   data() {
@@ -143,8 +146,6 @@ export default {
       ridingComponent: false,
       show: false,
       photo: null,
-      // baseURL: "http://localhost:8000/storage/",
-      baseURL: "http://192.168.8.81:8008/storage/",
       file: "",
     };
   },
@@ -157,24 +158,11 @@ export default {
     AlertMsg,
     ToastMsg,
   },
-  mixins: [GlobalMixins],
-  computed: {
-    authRoles() {
-      return this.auth.roles.map((role) => role.name);
-    },
-  },
+  mixins: [GlobalMixins, PhotosMixins],
   methods: {
     cropSuccess(imageDataUrl) {
       this.photo = imageDataUrl;
-    },
-    convertToImage(img) {
-      fetch(img)
-        .then((resp) => resp.blob())
-        .then((blob) => {
-          this.auth.file = new File([blob], "imagePerfil", {
-            type: "image/png",
-          });
-        });
+      this.uploadPhotoFirebase(imageDataUrl);
     },
     updateProfile() {
       this.loading = true;
@@ -182,14 +170,6 @@ export default {
         .dispatch("updateUserProfile", this.auth)
         .then(() => {
           this.$store.dispatch("getAuth");
-          if (this.auth.file) {
-            this.$store
-              .dispatch("updatePhotoProfile", this.auth.file)
-              .then(() => {
-                this.$store.dispatch("getAuth");
-                this.getMsgSuccess(true);
-              });
-          }
           this.getMsgSuccess(true);
           this.loading = false;
         })
@@ -202,13 +182,6 @@ export default {
     getPassword(event) {
       this.auth.password = event.password;
       this.auth.password_confirmation = event.password_confirmation;
-    },
-  },
-  watch: {
-    photo(newQuestion) {
-      if (newQuestion) {
-        this.convertToImage(newQuestion);
-      }
     },
   },
 };

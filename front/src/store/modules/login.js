@@ -23,9 +23,6 @@ export default {
             state.auth = null
         },
 
-        updatePhoto(state, photo) {
-            state.auth.profile.photo = photo
-        }
     },
     actions: {
         login({ commit, state }, crentls) {
@@ -66,8 +63,8 @@ export default {
             new Promise((resolve, reject) => {
                 axios.get('auth', { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
                     .then((resp) => {
-                        resolve(resp.data)
-                        return commit('setDataLogged', resp.data)
+                        commit('setDataLogged', resp.data)
+                        return resolve(resp.data)
                     })
                     .catch((error) => {
                         reject(error)

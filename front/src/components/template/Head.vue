@@ -53,7 +53,7 @@
 
                 <v-avatar size="50">
                   <template v-if="photo">
-                    <img :src="baseURL + photo " alt="Foto do Perfil" />
+                    <img :src="photo " alt="Foto do Perfil" />
                   </template>
                   <template v-else>
                     <img src="@/assets/images/profile.png" alt="Foto do Perfil" />
@@ -63,13 +63,12 @@
 
               <v-avatar v-else size="50" class="mr-4">
                 <template v-if="photo">
-                  <img :src="baseURL + photo " alt="Foto do Perfil" />
+                  <img :src="photo " alt="Foto do Perfil" />
                 </template>
                 <template v-else>
                   <img src="@/assets/images/profile.png" alt="Foto do Perfil" />
                 </template>
               </v-avatar>
-              
               {{ auth ? auth.name : '' }}
             </v-btn>
           </template>
@@ -109,6 +108,7 @@
             </v-list>
           </v-card>
         </v-menu>
+        <!-- {{ photo }} -->
       </v-toolbar-items>
     </v-app-bar>
   </div>
@@ -117,6 +117,7 @@
 <script>
 import localforage from "localforage";
 import AcessControllerMixins from "@/mixins/AcessControllerMixins";
+import PhotosMixins from "../../views/profile/mixins/PhotosMixins";
 import { mapGetters } from "vuex";
 
 import Notifications from "../Notifications";
@@ -125,20 +126,19 @@ export default {
   created() {
     localforage.getItem("helpDesk").then((item) => {
       this.auth = item.login.auth;
-      this.photo = item.login.auth.profile.photo;
+      // this.photo = item.login.auth.profile.photo;
       this.$store.dispatch("allNotifications");
+      this.downloadPhotoFirebase(this.auth).then((url) => (this.photo = url));
     });
+
+    // this.$store.dispatch("getAuth");
   },
   data() {
     return {
-      menus: [
-        { title: "Ver Perfil", icon: "account", color: "green" },
-        { title: "Sair", icon: "logout-variant", color: "red" },
-      ],
       activeBtn: 1,
       drawer: this.$store.state.btnSideBar,
       auth: null,
-      baseURL: "http://192.168.8.81:8008/storage/",
+      // baseURL: "http://192.168.8.81:8008/storage/",
       // baseURL: "http://localhost:8000/storage/",
       photo: null,
     };
@@ -146,9 +146,20 @@ export default {
   components: {
     Notifications,
   },
-  mixins: [AcessControllerMixins],
+  mixins: [AcessControllerMixins, PhotosMixins],
   computed: {
-    ...mapGetters(["notifications"]),
+    ...mapGetters({
+      notifications: "notifications",
+      getAuth: "auth",
+    }),
+  },
+  watch: {
+    "getAuth.profile.photo"(newQuestion) {
+      if (newQuestion) {
+        console.log("mudar foto no header", newQuestion);
+        this.downloadPhotoFirebase(this.auth).then((url) => (this.photo = url));
+      }
+    },
   },
   methods: {
     carregar(value) {
@@ -163,7 +174,7 @@ export default {
       this.$store.dispatch("logout", token).then(() => {
         this.$router.push("/login");
         // this.$destroy(this.$data);
-        this.$router.go();
+        // this.$router.go();
       });
     },
     editPerfil() {
