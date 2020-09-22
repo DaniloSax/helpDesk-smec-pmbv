@@ -55,9 +55,6 @@
                   <template v-if="photo">
                     <img :src="photo " alt="Foto do Perfil" />
                   </template>
-                  <!-- <template v-else>
-                    <img src="@/assets/images/profile.png" alt="Foto do Perfil" />
-                  </template>-->
                 </v-avatar>
               </v-badge>
 
@@ -65,9 +62,6 @@
                 <template v-if="photo">
                   <img :src="photo " alt="Foto do Perfil" />
                 </template>
-                <!-- <template v-else>
-                  <img src="@/assets/images/profile.png" alt="Foto do Perfil" />
-                </template>-->
               </v-avatar>
               {{ auth ? auth.name : '' }}
             </v-btn>
@@ -137,16 +131,12 @@ export default {
           return (this.photo = require("@/assets/images/profile.png"));
         });
     });
-
-    // this.$store.dispatch("getAuth");
   },
   data() {
     return {
       activeBtn: 1,
       drawer: this.$store.state.btnSideBar,
       auth: null,
-      // baseURL: "http://192.168.8.81:8008/storage/",
-      // baseURL: "http://localhost:8000/storage/",
       photo: null,
     };
   },

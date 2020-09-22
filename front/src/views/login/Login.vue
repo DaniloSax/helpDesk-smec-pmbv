@@ -13,9 +13,9 @@
         <validation-provider rules="required" v-slot="{ errors }">
           <v-text-field
             prepend-icon="mdi-email"
-            v-model="user.email"
+            v-model="user.login"
             @keyup.enter="login"
-            label="E-mail"
+            label="E-mail ou Nome do usuário"
             :error-messages="errors[0]"
           ></v-text-field>
         </validation-provider>
@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       user: {
-        email: "",
+        login: "",
         password: "",
       },
       loading: false,

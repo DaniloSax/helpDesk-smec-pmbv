@@ -28,22 +28,30 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $loginData = $request->validate([
-            'email' => ['required', 'string', 'email'],
+        $request->validate([
+            'login' => ['required', 'string'],
             'password' => ['required'],
         ]);
 
-        if (!auth()->attempt($loginData)) {
-            return response()->json(['message' => 'E-mail ou Senha incorreto!', 'status' => 400]);
+        $login_type = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
+
+        $request->merge([
+            $login_type => $request->login,
+        ]);
+
+        if (Auth::attempt($request->only($login_type, 'password'))) {
+
+            $user = User::find(auth()->user()->id);
+
+            $access_token = $user->createToken('accessToken')->accessToken;
+
+            $user = User::with('profile', 'roles')->find(auth()->user()->id);
+
+            return response(['user' => $user, 'access_token' => $access_token]);
+        } else {
+            return response()->json(['message' => 'Login ou Senha incorreto!', 'status' => 400]);
         }
 
-        $user = User::find(auth()->user()->id);
-        
-        $access_token = $user->createToken('accessToken')->accessToken;
-        
-        $user = User::with('profile', 'roles')->find(auth()->user()->id);
-        
-        return response(['user' => $user, 'access_token' => $access_token]);
     }
 
     public function logout(Request $request)
@@ -64,7 +72,7 @@ class AuthController extends Controller
 
     public function auth()
     {
-        if( auth()->check()){
+        if (auth()->check()) {
             $user = User::with('profile', 'roles')->find(auth()->user()->id);
             return response()->json($user, 200);
         }
