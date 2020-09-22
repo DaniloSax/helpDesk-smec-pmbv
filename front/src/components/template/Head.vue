@@ -55,9 +55,9 @@
                   <template v-if="photo">
                     <img :src="photo " alt="Foto do Perfil" />
                   </template>
-                  <template v-else>
+                  <!-- <template v-else>
                     <img src="@/assets/images/profile.png" alt="Foto do Perfil" />
-                  </template>
+                  </template>-->
                 </v-avatar>
               </v-badge>
 
@@ -65,9 +65,9 @@
                 <template v-if="photo">
                   <img :src="photo " alt="Foto do Perfil" />
                 </template>
-                <template v-else>
+                <!-- <template v-else>
                   <img src="@/assets/images/profile.png" alt="Foto do Perfil" />
-                </template>
+                </template>-->
               </v-avatar>
               {{ auth ? auth.name : '' }}
             </v-btn>
@@ -128,7 +128,14 @@ export default {
       this.auth = item.login.auth;
       // this.photo = item.login.auth.profile.photo;
       this.$store.dispatch("allNotifications");
-      this.downloadPhotoFirebase(this.auth).then((url) => (this.photo = url));
+      this.downloadPhotoFirebase(this.auth)
+        .then((url) => {
+          return (this.photo = url);
+        })
+        .catch((error) => {
+          console.log(error)
+          return (this.photo = require("@/assets/images/profile.png"));
+        });
     });
 
     // this.$store.dispatch("getAuth");

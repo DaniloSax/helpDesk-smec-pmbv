@@ -130,12 +130,18 @@ import ToastMsg from "../../components/ToastMsg";
 export default {
   created() {
     localforage.getItem("helpDesk").then((data) => {
-      console.log(data)
+      console.log(data);
       this.auth = data.login.auth;
-      this.downloadPhotoFirebase(this.auth).then((url) => {
-        this.photo = url || null;
-        this.ridingComponent = false;
-      });
+      this.downloadPhotoFirebase(this.auth)
+        .then((url) => {
+          this.photo = url || null;
+          this.ridingComponent = false;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.ridingComponent = false;
+          return (this.photo = require("@/assets/images/profile.png"));
+        });
     });
   },
   data() {
@@ -143,7 +149,7 @@ export default {
       auth: null,
       loading: false,
       roles: [],
-      ridingComponent: false,
+      ridingComponent: true,
       show: false,
       photo: null,
       file: "",
