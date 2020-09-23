@@ -6,6 +6,7 @@ import UsersRouters from './modules/usersRouters'
 import ServicesRouters from './modules/ServicesRouters'
 import CallsRouters from './modules/CallsRouters'
 import ProfileRouters from './modules/ProfileRoutes'
+import HelpersRouters from './modules/HelpersRoutes'
 
 import Home from '@/views/home/ControllerHome'
 import Login from '@/views/login/Login'
@@ -41,6 +42,8 @@ const routes = [{
     ...ServicesRouters,
     ...CallsRouters,
     ...ProfileRouters,
+    ...HelpersRouters,
+
     { name: 'error401', path: '/unauthorized', component: Unauthorized },
     { path: '*', component: Home },
 ]

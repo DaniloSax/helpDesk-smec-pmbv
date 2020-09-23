@@ -45,6 +45,17 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
+
+        <router-link class="remove-link" :to="{name: 'helpers'}">
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-account-question</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>AJUDA</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
       </v-list-item-group>
     </v-list>
   </v-navigation-drawer>

@@ -14,7 +14,7 @@
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </template>
-      <span>Nova Ordem</span>
+      <span>Novo Chamado</span>
     </v-tooltip>
 
     <v-dialog v-model="dialog" max-width="2000">
