@@ -45,7 +45,7 @@ export default new Vuex.Store({
     getters: {
         getBtnSideBar(state) {
             return state.btnSideBar
-        }
+        },
     },
     modules: {
         users,
