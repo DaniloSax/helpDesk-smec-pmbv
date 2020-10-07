@@ -19,29 +19,43 @@
 
     <v-dialog v-model="dialog" max-width="2000">
       <v-card>
-        <v-card-title class="d-flex justify-center headline">Nova Ordem de Serviço</v-card-title>
+        <v-card-title class="d-flex justify-center headline"
+          >Nova Ordem de Serviço</v-card-title
+        >
         <v-card-text>
           <v-stepper v-model="step">
             <v-stepper-header>
-              <v-stepper-step :complete="!!call" :editable="true" step="1">Formulário</v-stepper-step>
+              <v-stepper-step :complete="!!call" :editable="true" step="1"
+                >Formulário</v-stepper-step
+              >
 
               <v-divider></v-divider>
 
-              <v-stepper-step :complete="step > 2"  step="2">Anxeos</v-stepper-step>
+              <v-stepper-step :complete="step > 2" step="2"
+                >Anxeos</v-stepper-step
+              >
             </v-stepper-header>
 
             <v-stepper-items>
               <v-stepper-content step="1">
                 <form-create
                   :auth="auth"
-                  @salvar="step= 2; storeCall()"
+                  @salvar="
+                    step = 2;
+                    storeCall();
+                  "
                   :services="services"
                   @call_event="getCall($event)"
                 ></form-create>
               </v-stepper-content>
 
               <v-stepper-content step="2">
-                <images-uploads @loading="loading = $event.loading; dialog = $event.dialog"></images-uploads>
+                <images-uploads
+                  @loading="
+                    loading = $event.loading;
+                    dialog = $event.dialog;
+                  "
+                ></images-uploads>
               </v-stepper-content>
             </v-stepper-items>
           </v-stepper>
@@ -103,6 +117,7 @@ export default {
         .dispatch("storeCall", call)
         .then(() => {
           this.loading = false;
+          this.$store.dispatch("loadCalls");
         })
         .catch(() => (this.loading = false));
     },

@@ -5,29 +5,45 @@
     </v-btn>
     <v-dialog v-model="dialog" max-width="550">
       <v-card>
-        <v-card-title class="d-flex justify-center headline">Confirmação de Exclusão</v-card-title>
+        <v-card-title class="d-flex justify-center headline"
+          >Confirmação de Exclusão</v-card-title
+        >
 
         <v-card-text>
-          <v-list>
-            <v-list-item @click="()=>{}">
-              <v-list-item-title class="d-flex justify-center flex-wrap">
-                <span>
-                  <strong>Ordem número</strong>
-                  {{ call.id }} &nbsp;-
-                </span>
-                <span>&nbsp;{{ call.assunto }}</span>
-                <span>com destino {{ call.destiny }}</span>
-              </v-list-item-title>
+          <v-list three-line>
+            <v-list-item @click="() => {}">
+              <v-list-item-content class="text-center">
+                <v-list-item-title>
+                  Chamado nº {{ call.id }} - {{ call.name }}
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                  Destino {{ call.destiny }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  Prazo {{ call.term }} dias
+                </v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  <v-chip :color="colorStatus(call.statu)">{{
+                    call.statu.toUpperCase()
+                  }}</v-chip>
+                </v-list-item-subtitle>
+              </v-list-item-content>
             </v-list-item>
           </v-list>
+
+          <h2 class="text-center">Tem certeza disso ?</h2>
         </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="teal accent-4" text @click="dialog = false">Cancelar</v-btn>
+          <v-btn color="teal accent-4" text @click="dialog = false"
+            >Cancelar</v-btn
+          >
 
-          <v-btn color="red darken-1" text @click="deleteCall(call.id)">Excluir</v-btn>
+          <v-btn color="red darken-1" text @click="deleteCall(call.id)"
+            >Excluir</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -35,6 +51,8 @@
 </template>
 
 <script>
+import globalMixins from "@/mixins/globalMixins";
+
 export default {
   props: ["call"],
   data() {
@@ -58,6 +76,7 @@ export default {
         });
     },
   },
+  mixins: [globalMixins],
 };
 </script>
 

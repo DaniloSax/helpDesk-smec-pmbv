@@ -114,7 +114,7 @@ import AcessControllerMixins from "@/mixins/AcessControllerMixins";
 import PhotosMixins from "../../views/profile/mixins/PhotosMixins";
 import { mapGetters } from "vuex";
 
-import Notifications from "../Notifications";
+import Notifications from "../notifications/Notifications";
 
 export default {
   created() {

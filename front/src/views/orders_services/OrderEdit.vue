@@ -5,7 +5,7 @@
         <v-icon x-large class="mr-2">mdi-face-agent</v-icon>
       </template>
 
-      <template v-slot:card-title>{{ call ? call.name : '' }}</template>
+      <template v-slot:card-title>Nº {{ call ? call.id : '' }} - {{ call ? call.name : '' }}</template>
 
       <template v-slot:card-title-center>Editar Chamado</template>
 
@@ -57,7 +57,7 @@
           <v-divider class="mb-4"></v-divider>
           <v-row>
             <v-col cols="6">
-              <dialog-delete-all @deleteCall="deleteCall"></dialog-delete-all>
+              <dialog-delete-card @deleteCall="deleteCall"></dialog-delete-card>
             </v-col>
             <v-col cols="6">
               <v-btn block color="success" @click="updateCall()" :loading="loading">Salvar</v-btn>
@@ -75,7 +75,7 @@ import FormEdit from "./components/forms/FormEdit";
 import imageUpload from "./components/ImagesUploads";
 import InputDinamic from "./components/InputDinamic";
 import ExpansionResponses from "./components/expansion/ExpansionResponses";
-import DialogDeleteAll from "./components/dialogs/DialogDeleteAll";
+import DialogDeleteCard from "./components/dialogs/DialogDeleteCard";
 
 import GlobalMixins from "@/mixins/globalMixins";
 import ToastMsg from "../../components/ToastMsg";
@@ -112,7 +112,7 @@ export default {
     imageUpload,
     InputDinamic,
     ExpansionResponses,
-    DialogDeleteAll,
+    DialogDeleteCard,
     ToastMsg,
   },
   computed: {

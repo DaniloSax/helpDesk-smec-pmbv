@@ -27,7 +27,7 @@
             <v-list>
               <v-list-item>
                 <v-list-item-content>
-                  <v-list-item-title class="mb-2 headline">{{ call.name }}</v-list-item-title>
+                  <v-list-item-title class="mb-2 headline"> Nº {{ call.id }} - {{ call.name }}</v-list-item-title>
                   <v-list-item-subtitle>Destino: {{ call.destiny }} - {{ call.initials }}</v-list-item-subtitle>
                   <v-list-item-subtitle>Prazo: {{ call.term }} dias</v-list-item-subtitle>
                   <v-list-item-subtitle>
