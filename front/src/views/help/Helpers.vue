@@ -1,5 +1,4 @@
 <template>
-<div>
   <CardDefualt color="light-blue">
     <template v-slot:card-icon>
       <v-icon x-large>mdi-account-question</v-icon>
@@ -8,7 +7,6 @@
     <template v-slot:card-title>Tutoriais</template>
 
     <template v-slot:card-body>
-
       <v-card-text>
         <h1 class="mb-2">#Controle de Chamados</h1>
         <ul>
@@ -49,15 +47,12 @@
         <h2 id="responder-chamados" class="mb-2">#Responder Chamados</h2>
         <TutorResponseCall></TutorResponseCall>
       </v-card-text>
-     
-     
+
+      <v-footer>
+        <About></About>
+      </v-footer>
     </template>
   </CardDefualt>
-
-  <v-footer>
-    <About></About>
-  </v-footer>
-  </div>
 </template>
 
 <script>
