@@ -99,8 +99,8 @@ export default {
     return {
       newCall: null,
       images: [],
-      baseURL: "http://localhost:8000/storage/",
-      // baseURL: "http://192.168.8.81:8008/storage/",
+      // baseURL: "http://localhost:8000/storage/",
+      baseURL: "http://192.168.8.81:8008/storage/",
       responses: null,
       loading: false,
     };
