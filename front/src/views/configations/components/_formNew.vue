@@ -30,7 +30,13 @@
       </v-col>
       <v-col cols="3">
         <ValidationProvider>
-          <v-select :items="initials" v-model="service.initials" label="Sigla"></v-select>
+          <v-autocomplete
+            :items="initials"
+            v-model="service.initials"
+            label="Sigla"
+            clearable
+          ></v-autocomplete>
+          <!-- <v-select :items="initials" v-model="service.initials" label="Sigla" ></v-select> -->
         </ValidationProvider>
       </v-col>
       <v-col cols="3">
@@ -60,8 +66,31 @@ import { ValidationProvider } from "vee-validate";
 export default {
   data() {
     return {
-      service: {},
-      initials: ["SMAG", "SMO", "SMEC"],
+      service: {
+        destiny: 'Ponto Eletrônico'
+      },
+      initials: [
+        "SEMUC",
+        "SMAG",
+        "SMEC",
+        "SAMSA",
+        "SMO",
+        "SEMGES",
+        "SEPF",
+        "SPMA",
+        "SMST",
+        "PROCON",
+        "CPL",
+        "CGM",
+        "PGM",
+        "GAB EXEC",
+        "SMTI",
+        "EMAP",
+        "PASSEM",
+        "SMPE",
+        "SMPE",
+        "SMAAI",
+      ],
       prioritys: ["Baixa", "Média", "Alta", "Urgente"],
     };
   },

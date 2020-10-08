@@ -6,18 +6,27 @@
 
     <v-dialog v-model="dialog" max-width="700">
       <v-card>
-        <v-card-title class="d-flex justify-center">Atualizar Serviço</v-card-title>
+        <v-card-title class="d-flex justify-center"
+          >Atualizar Serviço</v-card-title
+        >
         <v-card-text class="text-center">
           <v-form>
             <v-row>
               <v-col cols="6">
                 <ValidationProvider>
-                  <v-text-field label="Nome" v-model="service.name"></v-text-field>
+                  <v-text-field
+                    label="Nome"
+                    v-model="service.name"
+                  ></v-text-field>
                 </ValidationProvider>
               </v-col>
               <v-col cols="6">
                 <ValidationProvider>
-                  <v-text-field label="Descrição" textarea v-model="service.description"></v-text-field>
+                  <v-text-field
+                    label="Descrição"
+                    textarea
+                    v-model="service.description"
+                  ></v-text-field>
                 </ValidationProvider>
               </v-col>
             </v-row>
@@ -25,17 +34,34 @@
             <v-row>
               <v-col cols="6">
                 <ValidationProvider>
-                  <v-text-field label="Destino" v-model="service.destiny"></v-text-field>
+                  <v-text-field
+                    label="Destino"
+                    v-model="service.destiny"
+                  ></v-text-field>
                 </ValidationProvider>
               </v-col>
               <v-col cols="3">
                 <ValidationProvider>
-                  <v-select :items="initials" v-model="service.initials" label="Sigla"></v-select>
+                  <v-autocomplete
+                    :items="initials"
+                    v-model="service.initials"
+                    label="Sigla"
+                    clearable
+                  ></v-autocomplete>
+                  <!-- <v-select
+                    :items="initials"
+                    v-model="service.initials"
+                    label="Sigla"
+                  ></v-select> -->
                 </ValidationProvider>
               </v-col>
               <v-col cols="3">
                 <ValidationProvider>
-                  <v-select :items="prioritys" v-model="service.priority" label="Prioridades"></v-select>
+                  <v-select
+                    :items="prioritys"
+                    v-model="service.priority"
+                    label="Prioridades"
+                  ></v-select>
                 </ValidationProvider>
               </v-col>
             </v-row>
@@ -43,7 +69,11 @@
             <v-row>
               <v-col cols="4">
                 <ValidationProvider>
-                  <v-text-field type="number" label="Prazo em dias" v-model="service.term"></v-text-field>
+                  <v-text-field
+                    type="number"
+                    label="Prazo em dias"
+                    v-model="service.term"
+                  ></v-text-field>
                 </ValidationProvider>
               </v-col>
             </v-row>
@@ -53,7 +83,15 @@
           <v-spacer></v-spacer>
 
           <v-btn text color="red" @click="dialog = false">NÃO</v-btn>
-          <v-btn text color="success" @click="dialog = false; updateService()">SIM</v-btn>
+          <v-btn
+            text
+            color="success"
+            @click="
+              dialog = false;
+              updateService();
+            "
+            >SIM</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -69,7 +107,28 @@ export default {
   data() {
     return {
       dialog: false,
-      initials: ["SMAG", "SMEC", "SMO"],
+      initials: [
+        "SEMUC",
+        "SMAG",
+        "SMEC",
+        "SAMSA",
+        "SMO",
+        "SEMGES",
+        "SEPF",
+        "SPMA",
+        "SMST",
+        "PROCON",
+        "CPL",
+        "CGM",
+        "PGM",
+        "GAB EXEC",
+        "SMTI",
+        "EMAP",
+        "PASSEM",
+        "SMPE",
+        "SMPE",
+        "SMAAI",
+      ],
       prioritys: ["Baixa", "Média", "Alta", "Urgente"],
       loading: false,
     };
