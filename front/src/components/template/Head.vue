@@ -1,15 +1,23 @@
 <template>
   <div>
     <v-app-bar color class="app-bar-color" elevation="400">
-      <v-app-bar-nav-icon @click.stop="activeSideBar()" color="white"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        @click.stop="activeSideBar()"
+        color="white"
+      ></v-app-bar-nav-icon>
 
       <v-spacer />
       <v-toolbar-items class="ml-10">
         <v-divider inset vertical light color="white" />
 
         <v-tooltip bottom>
-          <template v-slot:activator="{on}">
-            <v-btn text to="/home" v-on="on" class="white--text font-weight-light">
+          <template v-slot:activator="{ on }">
+            <v-btn
+              text
+              to="/home"
+              v-on="on"
+              class="white--text font-weight-light"
+            >
               <v-icon>mdi-home-city-outline</v-icon>
             </v-btn>
           </template>
@@ -19,8 +27,13 @@
         <v-divider inset vertical light color="white" />
 
         <v-tooltip bottom>
-          <template v-slot:activator="{on}">
-            <v-btn text :to="{name:'calls'}" v-on="on" class="white--text font-weight-light">
+          <template v-slot:activator="{ on }">
+            <v-btn
+              text
+              :to="{ name: 'calls' }"
+              v-on="on"
+              class="white--text font-weight-light"
+            >
               <v-icon>mdi-face-agent</v-icon>
             </v-btn>
           </template>
@@ -29,9 +42,15 @@
 
         <v-divider inset vertical light color="white" />
 
-        <v-tooltip bottom>
-          <template v-slot:activator="{on}">
-            <v-btn text icon v-on="on" to="/configure" class="white--text font-weight-light">
+        <v-tooltip bottom v-if="isAdmin || isSolver">
+          <template v-slot:activator="{ on }">
+            <v-btn
+              text
+              icon
+              v-on="on"
+              to="/configure"
+              class="white--text font-weight-light"
+            >
               <v-icon>mdi-cog-outline</v-icon>
             </v-btn>
           </template>
@@ -53,29 +72,36 @@
 
                 <v-avatar size="50">
                   <template v-if="photo">
-                    <img :src="photo " alt="Foto do Perfil" />
+                    <img :src="photo" alt="Foto do Perfil" />
                   </template>
                 </v-avatar>
               </v-badge>
 
               <v-avatar v-else size="50" class="mr-4">
                 <template v-if="photo">
-                  <img :src="photo " alt="Foto do Perfil" />
+                  <img :src="photo" alt="Foto do Perfil" />
                 </template>
               </v-avatar>
-              {{ auth ? auth.name : '' }}
+              {{ auth ? auth.name : "" }}
             </v-btn>
           </template>
 
           <v-card>
-            <v-card-title primary-title>{{ auth ? auth.name : '' }}</v-card-title>
+            <v-card-title primary-title>{{
+              auth ? auth.name : ""
+            }}</v-card-title>
             <v-card-text>
-              <span>{{ auth ? auth.email : '' }}</span>
+              <span>{{ auth ? auth.email : "" }}</span>
               <br />
 
               <template v-if="auth && auth.roles">
-                <span class="text-uppercase" v-for="(role, i) in auth.roles" :key="i">
-                  <b>{{ role.name }}</b>/
+                <span
+                  class="text-uppercase"
+                  v-for="(role, i) in auth.roles"
+                  :key="i"
+                >
+                  <b>{{ role.name }}</b
+                  >/
                 </span>
               </template>
             </v-card-text>
@@ -127,7 +153,7 @@ export default {
           return (this.photo = url);
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
           return (this.photo = require("@/assets/images/profile.png"));
         });
     });
@@ -170,8 +196,8 @@ export default {
       const token = localStorage.getItem("access_token");
       this.$store.dispatch("logout", token).then(() => {
         this.$router.push("/login");
-        // this.$destroy(this.$data);
-        // this.$router.go();
+        this.$destroy(this.$data);
+        document.location.reload(true);
       });
     },
     editPerfil() {

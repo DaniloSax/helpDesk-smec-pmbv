@@ -13,7 +13,7 @@
           </v-list-item>
         </router-link>
 
-        <router-link class="remove-link" :to="{name:'calls'}">
+        <router-link class="remove-link" :to="{ name: 'calls' }">
           <v-list-item>
             <v-list-item-icon>
               <v-icon>mdi-face-agent</v-icon>
@@ -24,7 +24,11 @@
           </v-list-item>
         </router-link>
 
-        <router-link class="remove-link" :to="{name:'users'}">
+        <router-link
+          class="remove-link"
+          :to="{ name: 'users' }"
+          v-if="isAdmin || isSolver"
+        >
           <v-list-item>
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
@@ -35,7 +39,11 @@
           </v-list-item>
         </router-link>
 
-        <router-link class="remove-link" to="/configure">
+        <router-link
+          class="remove-link"
+          to="/configure"
+          v-if="isAdmin || isSolver"
+        >
           <v-list-item>
             <v-list-item-icon>
               <v-icon>mdi-cog-outline</v-icon>
@@ -46,7 +54,7 @@
           </v-list-item>
         </router-link>
 
-        <router-link class="remove-link" :to="{name: 'helpers'}">
+        <router-link class="remove-link" :to="{ name: 'helpers' }">
           <v-list-item>
             <v-list-item-icon>
               <v-icon>mdi-account-question</v-icon>
@@ -62,6 +70,8 @@
 </template>
 
 <script>
+import AcessControllerMixins from "@/mixins/AcessControllerMixins";
+
 export default {
   computed: {
     drawer: {
@@ -70,9 +80,10 @@ export default {
       },
       set(value) {
         this.$store.commit("updateBtnSideBar", value);
-      }
-    }
-  }
+      },
+    },
+  },
+  mixins: [AcessControllerMixins],
 };
 </script>
 
