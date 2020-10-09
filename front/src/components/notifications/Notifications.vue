@@ -51,26 +51,25 @@ export default {
     NotificationsDialog,
   },
   computed: {
-    ...mapGetters(["notifications"]),
+    ...mapGetters(["notifications", "callsById"]),
   },
   methods: {
     editCall(notify) {
-      this.$store
-        .dispatch("readNotifyCall", notify)
-        .then(() => {
+      this.$store.dispatch("readNotifyCall", notify).then(() => {
+        const call = this.callsById(notify.data.call_id);
+
+        if (call) {
+          console.log("call existe", call);
           this.$router.replace({
             name: "callsEdit",
-            params: { id: notify.data.call_id },
+            params: { id: call.id },
           });
-        })
-        .catch(() => {
-          this.$store.dispatch("readNotifyCall", notify).then(() => {
-            this.$router.push({
-              name: "callsEdit",
-              params: { id: notify.data.call_id },
-            });
-          });
-        });
+        } else {
+          this.$store.commit("updatetoastErrorNotify", true);
+          this.$store.commit("setCallError", notify.data);
+          this.$router.replace({ name: "calls" }).catch(() => {});
+        }
+      });
     },
   },
 };

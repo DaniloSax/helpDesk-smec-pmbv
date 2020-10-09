@@ -28,17 +28,30 @@ export default new Vuex.Store({
     state: {
         btnSideBar: null,
         loading: false,
+        toastErrorNotify: false,
+        callError: null
     },
     mutations: {
 
         activeSideBar(state) {
             state.btnSideBar = !state.btnSideBar
         },
+
         updateBtnSideBar(state, value) {
             state.btnSideBar = value
         },
+
+
         setLoading(state, payload) {
             state.loading = payload
+        },
+
+        updatetoastErrorNotify(state, value) {
+            state.toastErrorNotify = value
+        },
+
+        setCallError(state, call) {
+            state.callError = call
         }
     },
 
@@ -46,6 +59,7 @@ export default new Vuex.Store({
         getBtnSideBar(state) {
             return state.btnSideBar
         },
+        getcallError: (state) => state.callError
     },
     modules: {
         users,
