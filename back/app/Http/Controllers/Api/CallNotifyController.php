@@ -19,18 +19,14 @@ class CallNotifyController extends Controller
 
     public function markOnReadAll()
     {
-        // return response('function markOnReadAll');
         $user = User::find(auth()->user()->id);
-        // foreach ($user->unreadNotifications as $notification) {
-        //     $notification->markAsRead();
-        // }
+        
         $user->unreadNotifications->markAsRead();
         return response($user->unreadNotifications, 200);
     }
     
     public function markOnRead($id)
     {
-        return response('function markOnRead');
 
         $user = User::find(auth()->user()->id);
 
