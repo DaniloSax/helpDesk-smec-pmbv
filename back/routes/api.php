@@ -41,8 +41,8 @@ Route::prefix('home')->middleware('auth:api')->group(function () {
 
 Route::prefix('notificable')->middleware('auth:api')->group(function () {
     Route::get('calls', 'Api\CallNotifyController@index');
-    Route::put('/{id}', 'Api\CallNotifyController@markOnRead');
-    Route::put('/all', 'Api\CallNotifyController@allMarkOnRead');
+    Route::put('all', 'Api\CallNotifyController@markOnReadAll');
+    Route::put('{id}', 'Api\CallNotifyController@markOnRead');
 });
 
 Route::get('/profile', 'Api\ProfileController@edit')->middleware('auth:api');

@@ -1,17 +1,13 @@
  <template>
   <div>
-    <!-- <v-btn text color="success">
-    <v-icon>mdi-dots-horizontal-circle</v-icon>
-    ver mais
-</v-btn> -->
-
+  
     <v-list-item @click="() => {}">
       <v-list-item-icon>
         <v-icon color="blue">mdi-dots-horizontal-circle</v-icon>
       </v-list-item-icon>
       <v-list-item-content>
         <v-list-item-title>
-          <a href="#$" @click.stop="dialog = true">Ver mais...</a>
+          <a  @click.stop="dialog = true">Ver mais...</a>
         </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
@@ -104,9 +100,10 @@ export default {
   methods: {
     edit(notify) {
       this.$emit("editNotify", notify);
+      this.dialog = false
     },
     markReadAll(){
-        this.$emit("markReadAll");
+       this.$store.dispatch('markReadAll')
     }
   },
 };

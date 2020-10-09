@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // const config = { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } }
-const token = localStorage.getItem('access_token')
+// const token = localStorage.getItem('access_token')
 
 export default {
     state: {
@@ -17,6 +17,9 @@ export default {
             const i = state.notifications.findIndex(not => not.id == notify.id);
             console.log('setReadNotify mutations', i, state.notifications)
             state.notifications.splice(i, 1)
+            if (state.notifications.length == 0) {
+                state.notifications = null
+            }
         },
         setReadAllNotify(state) {
             state.notifications = null
@@ -28,20 +31,18 @@ export default {
         allNotifications({ commit }) {
             return new Promise((resolve, reject) => {
                 axios.get('notificable/calls', { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } }).then(resp => {
-                    console.log('allNotifications dispatch', resp.data);
                     commit('setNotifications', resp.data)
                     resolve(resp.data)
                 }).catch(error => {
                     // console.log(error);
-                    reject(error)
+                    reject(error.response.data)
                 })
             });
         },
 
         readNotifyCall({ commit }, notify) {
             return new Promise((resolve, reject) => {
-                axios.put('notificable/' + notify.id, { headers: { Authorization: `Bearer ${token}` } }).then(resp => {
-                    console.log('readNotifyCall dispatch', resp.data);
+                axios.put('notificable/' + notify.id, '', { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } }).then(resp => {
                     commit('setReadNotify', notify)
                     resolve(resp.data)
                 }).catch(error => {
@@ -53,14 +54,14 @@ export default {
 
         markReadAll({ commit }) {
             return new Promise((resolve, reject) => {
-                axios.put('notificable/all', { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } }).then(resp => {
-                    console.log('markReadAll dispatch', resp.data);
-                    commit('setReadAllNotify')
-                    resolve(resp.data)
-                }).catch(error => {
-                    console.log(error.response.data);
-                    reject(error)
-                })
+                axios.put('notificable/all', '', { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
+                    .then(resp => {
+                        commit('setReadAllNotify')
+                        resolve(resp.data)
+                    }).catch(error => {
+                        console.log(error.response.data);
+                        reject(error)
+                    })
             });
         },
 

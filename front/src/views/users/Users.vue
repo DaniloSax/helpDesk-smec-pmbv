@@ -100,7 +100,7 @@ export default {
           value: "roles",
         },
         {
-          text: "Escola",
+          text: "Setor",
           value: "profile.school",
         },
         {

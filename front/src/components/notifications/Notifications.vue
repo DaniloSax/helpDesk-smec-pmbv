@@ -28,7 +28,6 @@
         <NotificationsDialog
           :notifications="notifications"
           @editNotify="editCall($event)"
-          @markReadAll="markReadAll()"
         />
       </template>
     </v-list>
@@ -55,10 +54,6 @@ export default {
     ...mapGetters(["notifications"]),
   },
   methods: {
-    markReadAll() {
-      this.$store.dispatch("markReadAll");
-    },
-
     editCall(notify) {
       this.$store
         .dispatch("readNotifyCall", notify)

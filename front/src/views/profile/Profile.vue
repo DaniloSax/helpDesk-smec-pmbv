@@ -15,11 +15,7 @@
 
         <v-form>
           <v-col cols="12">
-            <!-- <span class="d-flex justify-center">
-              <h1 class="mb-2">{{ auth.name }} -</h1>
-              <h2 v-for="(role, i) in authRoles" :key="i">{{ role.toUpperCase() }}/</h2>
-            </span>-->
-            <!-- {{ auth }} -->
+         
             <v-row class="d-flex align-end">
               <v-col cols="2">
                 <v-subheader class="d-flex justify-center">Foto de Perfil</v-subheader>

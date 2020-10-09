@@ -61,7 +61,7 @@
             <v-col cols="3">
               <validation-provider rules="required" v-slot="{errors}">
                 <v-text-field
-                  label="Escola de Origem"
+                  label="Setor de Origem"
                   v-model="user.profile.school"
                   :error-messages="errors[0]"
                   clearable
