@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Call;
 use App\Models\Response;
+use App\Notifications\ResponseNotification;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,15 +22,6 @@ class ResponseController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -39,11 +32,24 @@ class ResponseController extends Controller
     public function store(Request $request)
     {
         $call = Call::find($request->call_id);
-        // $response = Response::create($request->all());
-       $response = $call->responses()->create($request->all());
-        // DB::table('users_calls')->where('call_id', $call->id)->where('user_id', '!=', $call->created_by)->update([
-        //     'response_id' => $response->id
-        // ]);
+
+        $response = DB::transaction(function () use ($call, $request) {
+
+            $response = $call->responses()->create($request->all());
+
+            $userAuth = User::find(auth()->user()->id);
+
+            foreach ($call->users as $user) {
+                if ($user->id !== $userAuth->id) {
+                    $user->notify(new ResponseNotification($response));
+                }
+            }
+
+            return $response;
+        });
+
+
+
         return response($response);
     }
 
@@ -59,17 +65,6 @@ class ResponseController extends Controller
         return response($call->responses);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return 'edit response';
-
-    }
 
     /**
      * Update the specified resource in storage.
@@ -80,7 +75,6 @@ class ResponseController extends Controller
      */
     public function update(Request $request, Response $response)
     {
-        // $response->rating = $request->rating;
         $response->update(['rating' => $request->rating]);
         return response($response);
     }

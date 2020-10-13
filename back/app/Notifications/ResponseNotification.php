@@ -7,21 +7,20 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Log;
 
-class CallNotification extends Notification
+class ResponseNotification extends Notification
 {
     use Queueable;
-    private $call = null;
+    private $response = null;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($call)
+    public function __construct($response)
     {
-        $this->call = $call;
+        $this->response = $response;
     }
 
     /**
@@ -44,9 +43,9 @@ class CallNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -57,12 +56,11 @@ class CallNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        // Log::info($this->call);
         return [
-            'call_id' => $this->call->id,
-            'call_name' => $this->call->name,
-            'created_by' => User::find($this->call->created_by),
-            'type' => 'call',
+            'call_id' => $this->response->call_id,
+            'text' => $this->response->text,
+            'created_by' => User::find($this->response->created_by),
+            'type' => 'response',
         ];
     }
 }

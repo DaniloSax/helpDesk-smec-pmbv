@@ -6,13 +6,16 @@
         <template v-if="i <= 1">
           <v-list-item two-line @click="editCall(notify)">
             <v-list-item-icon>
-              <v-icon color="blue" medium>mdi-face-agent</v-icon>
+              <v-icon :color="checkTypeNotify(notify).color" medium>
+                {{ checkTypeNotify(notify).icon }}
+              </v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title
-                >Chamado nº: {{ notify ? notify.data.call_id : "" }} Nome:
-                {{ notify ? notify.data.call_name : "" }}</v-list-item-title
-              >
+              <v-list-item-title>
+                Chamado nº: {{ notify ? notify.data.call_id : "" }}
+                {{ checkTypeNotify(notify).name }}:
+                {{ checkTypeNotify(notify).text }}
+              </v-list-item-title>
               <v-list-item-subtitle
                 >Criado por:
                 {{
@@ -36,6 +39,8 @@
  
  <script>
 import { mapGetters } from "vuex";
+import NotificationsMixins from "./mixins/NotificationsMixins";
+
 import NotificationsDialog from "./NotificationsDialog";
 
 export default {
@@ -50,6 +55,7 @@ export default {
   components: {
     NotificationsDialog,
   },
+  mixins: [NotificationsMixins],
   computed: {
     ...mapGetters(["notifications", "callsById"]),
   },

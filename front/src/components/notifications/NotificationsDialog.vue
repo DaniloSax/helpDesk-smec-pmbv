@@ -1,13 +1,12 @@
  <template>
   <div>
-  
     <v-list-item @click="() => {}">
       <v-list-item-icon>
         <v-icon color="blue">mdi-dots-horizontal-circle</v-icon>
       </v-list-item-icon>
       <v-list-item-content>
         <v-list-item-title>
-          <a  @click.stop="dialog = true">Ver mais...</a>
+          <a @click.stop="dialog = true">Ver mais...</a>
         </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
@@ -17,8 +16,7 @@
         <v-card-title class="d-flex justify-center headline"
           >Notificações</v-card-title
         >
-        <v-card-text >
-
+        <v-card-text>
           <v-text-field
             label="Buscar"
             v-model="search"
@@ -29,13 +27,16 @@
           <v-list v-for="(notify, i) in filteredNotifications" :key="i">
             <v-list-item two-line @click="edit(notify)">
               <v-list-item-icon>
-                <v-icon color="blue" medium>mdi-face-agent</v-icon>
+                <v-icon :color="checkTypeNotify(notify).color" medium>
+                  {{ checkTypeNotify(notify).icon }}
+                </v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title
-                  >Chamado nº: {{ notify ? notify.data.call_id : "" }} Nome:
-                  {{ notify ? notify.data.call_name : "" }}</v-list-item-title
-                >
+                <v-list-item-title>
+                  Chamado nº: {{ notify ? notify.data.call_id : "" }}
+                  {{ checkTypeNotify(notify).name }}:
+                  {{ checkTypeNotify(notify).text }}
+                </v-list-item-title>
                 <v-list-item-subtitle
                   >Criado por:
                   {{
@@ -63,6 +64,8 @@
 </template>
  
  <script>
+import NotificationsMixins from "./mixins/NotificationsMixins";
+
 export default {
   created() {
     console.log("notificacoes modal", this.notifications);
@@ -74,6 +77,7 @@ export default {
     };
   },
   props: ["notifications"],
+  mixins: [NotificationsMixins],
   computed: {
     filteredNotifications() {
       return this.notifications.filter((notify) => {
@@ -100,11 +104,11 @@ export default {
   methods: {
     edit(notify) {
       this.$emit("editNotify", notify);
-      this.dialog = false
+      this.dialog = false;
     },
-    markReadAll(){
-       this.$store.dispatch('markReadAll')
-    }
+    markReadAll() {
+      this.$store.dispatch("markReadAll");
+    },
   },
 };
 </script>

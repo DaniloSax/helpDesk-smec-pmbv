@@ -8,7 +8,6 @@ import localForage from 'localforage'
 import users from './modules/users'
 import login from './modules/login'
 import services from './modules/services'
-import orders from './modules/orders'
 import calls from './modules/calls/calls'
 import notifications from './modules/notifications'
 import profile from './modules/profile'
@@ -65,7 +64,6 @@ export default new Vuex.Store({
         users,
         login,
         services,
-        orders,
         calls,
         notifications,
         profile,

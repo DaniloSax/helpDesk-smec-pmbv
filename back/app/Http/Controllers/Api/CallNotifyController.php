@@ -9,9 +9,6 @@ class CallNotifyController extends Controller
 {
     public function index()
     {
-
-        // return response('index notification');
-
         $user = User::find(auth()->user()->id);
 
         return response($user->unreadNotifications);
@@ -20,11 +17,11 @@ class CallNotifyController extends Controller
     public function markOnReadAll()
     {
         $user = User::find(auth()->user()->id);
-        
+
         $user->unreadNotifications->markAsRead();
         return response($user->unreadNotifications, 200);
     }
-    
+
     public function markOnRead($id)
     {
 

@@ -13,6 +13,7 @@
         :items-per-page.sync="itemsPerPage"
         :page="page"
         :search="search"
+        no-data-text="Nenhum registro encontrado"
         hide-default-footer
       >
         <template v-slot:header class="d-flex">

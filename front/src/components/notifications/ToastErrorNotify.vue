@@ -1,7 +1,7 @@
  <template>
   <v-snackbar
     v-model="toastErrorNotify"
-    color="error"
+    color="deep-purple accent-1"
     vertical
     centered
     shaped
@@ -14,7 +14,8 @@
         <v-icon class="mr-2">mdi-alert</v-icon>
         O chamado "Nº
         {{ getcallError ? getcallError.call_id : "" }} -
-        {{ getcallError ? getcallError.call_name : "" }}" foi excluído.
+        {{ getcallError ? getcallError.call_name : "" }}" não existe!
+        Possivelmente tenha sido excluído.
       </span>
 
       <v-spacer></v-spacer>

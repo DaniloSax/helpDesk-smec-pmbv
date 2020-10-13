@@ -15,15 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    // $call = Call::orderBy('created_at', 'desc')->first();
-    // $image = $call->images[0]->path;
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     // $call = Call::orderBy('created_at', 'desc')->first();
+//     // $image = $call->images[0]->path;
+//     return view('welcome');
+// });
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 // Route::prefix('api/notificable')->middleware('auth')->group(function () {
 //     Route::get('calls', 'Api\CallNotifyController@index');
