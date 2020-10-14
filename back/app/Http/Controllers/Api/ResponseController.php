@@ -37,10 +37,8 @@ class ResponseController extends Controller
 
             $response = $call->responses()->create($request->all());
 
-            $userAuth = User::find(auth()->user()->id);
-
             foreach ($call->users as $user) {
-                if ($user->id !== $userAuth->id) {
+                if ($user->id !== auth()->user()->id) {
                     $user->notify(new ResponseNotification($response));
                 }
             }

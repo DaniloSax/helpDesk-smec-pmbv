@@ -29,8 +29,12 @@
                 </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
+
           </v-list>
 
+            <v-alert v-if="call.statu !== 'concluído'" type="warning" dense border="left" >
+              Chamado não concluído
+            </v-alert>
           <h2 class="text-center">Tem certeza disso ?</h2>
         </v-card-text>
 
@@ -41,7 +45,7 @@
             >Cancelar</v-btn
           >
 
-          <v-btn color="red darken-1" text @click="deleteCall(call.id)"
+          <v-btn color="red darken-1" text @click="deleteCall(call.id)" :disabled="call.statu !== 'concluído'"
             >Excluir</v-btn
           >
         </v-card-actions>

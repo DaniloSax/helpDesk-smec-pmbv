@@ -5,13 +5,15 @@
         <v-icon x-large class="mr-2">mdi-face-agent</v-icon>
       </template>
 
-      <template v-slot:card-title>Nº {{ call ? call.id : '' }} - {{ call ? call.name : '' }}</template>
+      <template v-slot:card-title
+        >Nº {{ call ? call.id : "" }} - {{ call ? call.name : "" }}</template
+      >
 
       <template v-slot:card-title-center>Editar Chamado</template>
 
       <template v-slot:card-btn-back>
         <v-btn icon color="white">
-          <router-link tag="a" :to="{name: 'calls'}">
+          <router-link tag="a" :to="{ name: 'calls' }">
             <v-icon color="white" x-large>mdi-arrow-left</v-icon>
           </router-link>
         </v-btn>
@@ -19,15 +21,34 @@
 
       <template v-slot:card-body>
         <template v-if="!newCall">
-          <v-skeleton-loader :loading="true" class="mx-auto" type="article" tile></v-skeleton-loader>
-          <v-skeleton-loader :loading="true" class="mx-auto" type="article" tile></v-skeleton-loader>
-          <v-skeleton-loader :loading="true" class="mx-auto" type="article" tile></v-skeleton-loader>
+          <v-skeleton-loader
+            :loading="true"
+            class="mx-auto"
+            type="article"
+            tile
+          ></v-skeleton-loader>
+          <v-skeleton-loader
+            :loading="true"
+            class="mx-auto"
+            type="article"
+            tile
+          ></v-skeleton-loader>
+          <v-skeleton-loader
+            :loading="true"
+            class="mx-auto"
+            type="article"
+            tile
+          ></v-skeleton-loader>
         </template>
 
         <template v-else>
-          <ToastMsg :msg="msg" />
+          <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />
 
-          <form-edit @call="getInputs($event)" :call="call" :services="services" />
+          <form-edit
+            @call="getInputs($event)"
+            :call="call"
+            :services="services"
+          />
 
           <image-upload :call_id="call.id" />
           <v-divider class="mt-4"></v-divider>
@@ -35,13 +56,13 @@
           <v-row v-if="images" justify="center">
             <v-carousel show-arrows-on-hover>
               <v-carousel-item
-                v-for="(item,i) in images"
+                v-for="(item, i) in images"
                 :key="i"
-                :src="baseURL+item.path"
+                :src="baseURL + item.path"
                 reverse-transition="fade-transition"
                 transition="fade-transition"
                 :append="true"
-                :href="baseURL+item.path"
+                :href="baseURL + item.path"
                 target="_blanck"
               ></v-carousel-item>
             </v-carousel>
@@ -57,10 +78,19 @@
           <v-divider class="mb-4"></v-divider>
           <v-row>
             <v-col cols="6">
-              <dialog-delete-card @deleteCall="deleteCall"></dialog-delete-card>
+              <dialog-delete-card
+                :call="call"
+                @deleteCall="deleteCall"
+              ></dialog-delete-card>
             </v-col>
             <v-col cols="6">
-              <v-btn block color="success" @click="updateCall()" :loading="loading">Salvar</v-btn>
+              <v-btn
+                block
+                color="success"
+                @click="updateCall()"
+                :loading="loading"
+                >Salvar</v-btn
+              >
             </v-col>
           </v-row>
         </template>
@@ -143,9 +173,16 @@ export default {
         });
     },
     deleteCall() {
-      this.$store.dispatch("deleteCall", this.id).then(() => {
-        return this.$router.replace("/calls");
-      });
+      this.$store
+        .dispatch("deleteCall", this.id)
+        .then(() => {
+          return this.$router.replace("/calls");
+        })
+        .catch((error) => {
+          if (error.status == "423") {
+            this.getMsgError(error);
+          }
+        });
     },
   },
 };

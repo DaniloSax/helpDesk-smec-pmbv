@@ -160,16 +160,21 @@ class CallController extends Controller
      */
     public function destroy(Call $call)
     {
-        if (isset($call->images)) {
-            FacadesStorage::deleteDirectory('calls/' . $call->id);
+        if ($call->statu == "concluído") {
+
+            if (isset($call->images)) {
+                FacadesStorage::deleteDirectory('calls/' . $call->id);
+            }
+
+            if (isset($call->responses)) $call->responses()->delete();
+
+            if (isset($call->images)) $call->images()->delete();
+
+            $call->delete();
+
+            return response(200);
+        } else {
+            return response()->json(['errors' => ['Chamado "' . $call->id . ' - ' . $call->name . '" não foi concluído!']], 423);
         }
-
-        if (isset($call->responses)) $call->responses()->delete();
-
-        if (isset($call->images)) $call->images()->delete();
-
-        $call->delete();
-
-        return response(200);
     }
 }

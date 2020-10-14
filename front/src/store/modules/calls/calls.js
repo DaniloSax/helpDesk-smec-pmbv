@@ -36,12 +36,10 @@ export default {
             return new Promise((resolve, reject) => {
                 axios.get('/calls', { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
                     .then((resp) => {
-                        resolve(resp.data)
-                        console.log('dispatch loadCalls', resp.data)
-                        return commit('setCalls', resp.data)
+                        commit('setCalls', resp.data)
+                        return resolve(resp.data)
                     }).catch(error => {
-                        reject(error)
-                        return console.log(error.response.data)
+                        return reject(error)
                     })
             })
         },
@@ -50,7 +48,6 @@ export default {
             const config = {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-                    // "Content-Type": "multipart/form-data",
                 },
             };
 
@@ -58,13 +55,11 @@ export default {
                 axios.post(`calls`, call, config)
                     .then((resp) => {
                         dispatch('allNotifications')
-                        resolve(resp.data)
                         commit('storeCall', resp.data)
-                        return console.log(resp.data)
+                        return resolve(resp.data)
                     })
                     .catch((error) => {
-                        reject(error.response)
-                        return console.log(error.response.data)
+                        return reject(error.response)
                     })
             })
         },
@@ -76,9 +71,8 @@ export default {
                         headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
                     })
                     .then((resp) => {
-                        resolve(resp.data)
                         commit('updateCall', call)
-                        return console.log(resp.data)
+                        return resolve(resp.data)
                     })
                     .catch((error) => {
                         reject(error.response)
@@ -95,12 +89,11 @@ export default {
                     })
                     .then((resp) => {
                         commit('deleteCall', call_id)
-                        resolve(resp.data)
-                        return console.log(resp.data)
+                        return resolve(resp.data)
                     })
                     .catch((error) => {
-                        console.log(error.response.data)
-                        reject(error)
+                        console.log(error.response)
+                        return reject(error.response)
                     })
             });
         },
