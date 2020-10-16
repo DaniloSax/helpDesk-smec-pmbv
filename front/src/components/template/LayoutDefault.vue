@@ -1,5 +1,6 @@
 <template>
-  <v-app>
+  <!-- <v-app> -->
+  <div>
     <Head />
     <SidebBar />
     <v-main>
@@ -10,7 +11,8 @@
       </v-container>
     </v-main>
     <Footer />
-  </v-app>
+  </div>
+  <!-- </v-app> -->
 </template>
 
 <script>

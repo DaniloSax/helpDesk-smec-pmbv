@@ -1,20 +1,18 @@
 <template>
-  <div>
-    <template v-if="$route.name == 'login'">
-      <v-app>
-        <v-main class="d-flex align-center">
-          <v-container fluid class="d-flex justify-center">
-            <router-view />
-          </v-container>
-        </v-main>
-      </v-app>
-    </template>
-    <template v-else>
-      <layout-default>
+  <v-app>
+    <!-- <template v-if="$route.name == 'login'"> -->
+    <v-main v-if="$route.name == 'login'" class="d-flex align-center">
+      <v-container fluid class="d-flex justify-center">
         <router-view />
-      </layout-default>
-    </template>
-  </div>
+      </v-container>
+    </v-main>
+    <!-- </template> -->
+    <!-- <template v-else> -->
+    <layout-default v-else>
+      <router-view />
+    </layout-default>
+    <!-- </template> -->
+  </v-app>
 </template>
 
 <script>

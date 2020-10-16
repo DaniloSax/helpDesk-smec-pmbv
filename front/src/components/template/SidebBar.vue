@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" absolute temporary bottom>
+  <v-navigation-drawer v-model="drawer" absolute temporary left app>
     <v-list nav dense>
       <v-list-item-group>
         <router-link class="remove-link" to="/home">

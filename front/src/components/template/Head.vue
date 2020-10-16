@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <v-app-bar color class="app-bar-color" elevation="400">
+    <v-app-bar class="app-bar-color" elevation="400" app>
       <v-app-bar-nav-icon
         @click.stop="activeSideBar()"
         color="white"
@@ -131,7 +130,6 @@
         <!-- {{ photo }} -->
       </v-toolbar-items>
     </v-app-bar>
-  </div>
 </template>
 
 <script>

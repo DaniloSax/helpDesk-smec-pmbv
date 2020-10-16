@@ -1,8 +1,11 @@
 <template>
-  <v-footer height="60" class="footer-color" absolute app>
+  <v-footer class="footer-color"  absolute app>
     <v-row>
       <v-col class="text-center">
-        <span class="white--text">&copy; Prefeitura Municipal de Boa Vista | HelpDesk - Sistema de Suporte ao SISGEP</span>
+        <span class="white--text"
+          >&copy; Prefeitura Municipal de Boa Vista | HelpDesk - Sistema de
+          Suporte ao SISGEP</span
+        >
       </v-col>
     </v-row>
   </v-footer>
