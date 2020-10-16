@@ -7,7 +7,8 @@
       height="12px"
       rounded
       stream
-    >{{ countProgressBar.daysOrHours}}</v-progress-linear>
+      >{{ countProgressBar.daysOrHours }}</v-progress-linear
+    >
 
     <v-progress-linear
       v-else
@@ -16,7 +17,8 @@
       height="12px"
       rounded
       stream
-    >{{ countProgressBar.daysOrHours}}</v-progress-linear>
+      >{{ countProgressBar.daysOrHours }}</v-progress-linear
+    >
   </div>
 </template>
 
@@ -41,9 +43,16 @@ export default {
       if (search_horas > 0) {
         let daysOrHours = count_days.replace(/\D/g, "");
         let total = parseFloat(daysOrHours * 100) / (this.call.term * 24);
-        return { total, daysOrHours: `Criado há menos de ${daysOrHours} horas` };
+        return {
+          total,
+          daysOrHours: `Criado há menos de ${daysOrHours} horas`,
+        };
       } else {
-        let daysOrHours = count_days;
+        let daysOrHours = count_days.split(" ").map((work) => {
+          if (work == "dia") {
+            return (work = "");
+          } else return work
+        }).join(' ');
         let total = (100 / this.call.term) * count_days;
         return { total, daysOrHours: `Criado há ${daysOrHours} dias` };
       }

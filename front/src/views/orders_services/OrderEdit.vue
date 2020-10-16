@@ -5,11 +5,11 @@
         <v-icon x-large class="mr-2">mdi-face-agent</v-icon>
       </template>
 
-      <template v-slot:card-title
-        >Nº {{ call ? call.id : "" }} - {{ call ? call.name : "" }}</template
-      >
+      <template v-slot:card-title>
+        Nº {{ call ? call.id : "" }} - {{ call ? call.name : "" }}
+      </template>
 
-      <template v-slot:card-title-center>Editar Chamado</template>
+      <template v-slot:card-title-center>Detalhes do Chamado</template>
 
       <template v-slot:card-btn-back>
         <v-btn icon color="white">

@@ -1,7 +1,7 @@
 <template>
   <CardDefualt color="light-blue">
     <template v-slot:card-icon>
-      <v-icon x-large>mdi-account-question</v-icon>
+      <v-icon x-large class="mr-2">mdi-account-question</v-icon>
     </template>
 
     <template v-slot:card-title>Tutoriais</template>

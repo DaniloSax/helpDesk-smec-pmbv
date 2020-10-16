@@ -8,19 +8,18 @@
       height="90"
       dark
     >
-      <v-card-title primary-title class="headline">
+      <span class="headline d-flex justify-space-around align-center pa-3">
         <slot name="card-icon"></slot>
-
         <slot name="card-title"></slot>
 
         <v-spacer></v-spacer>
-        
+
         <slot name="card-title-center"></slot>
 
         <v-spacer></v-spacer>
 
         <slot name="card-btn-back"></slot>
-      </v-card-title>
+      </span>
     </v-sheet>
 
     <v-card-title class="pt-0">
