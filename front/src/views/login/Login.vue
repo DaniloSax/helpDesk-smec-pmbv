@@ -1,14 +1,18 @@
 <template>
-  <v-card width="50%" height="100%" tile>
-    <v-card-title class="d-flex justify-center app-bar-color white--text">Fazer Login</v-card-title>
+  <v-card
+    :width="$vuetify.breakpoint.mobile ? '100%' : '50%'"
+    height="100%"
+    tile
+  >
+    <v-card-title class="d-flex justify-center app-bar-color white--text"
+      >Fazer Login</v-card-title
+    >
 
-
-
-    <validation-observer v-slot="{invalid}">
-      <v-card-text class="mt-12">
-    
-    <v-alert v-show="error" dense  type="error" class="mt-2">{{ error }}</v-alert>
-
+    <validation-observer v-slot="{ invalid }">
+      <v-card-text :class="$vuetify.breakpoint.mobile ? 'ma-0' : 'mt-12'">
+        <v-alert v-show="error" dense type="error" class="mt-2">{{
+          error
+        }}</v-alert>
 
         <validation-provider rules="required" v-slot="{ errors }">
           <v-text-field
@@ -40,7 +44,8 @@
           :disabled="invalid"
           color="primary"
           :loading="loading"
-        >Entrar</v-btn>
+          >Entrar</v-btn
+        >
       </v-card-actions>
     </validation-observer>
   </v-card>
@@ -71,7 +76,7 @@ export default {
             this.$router.replace("/");
           } else {
             console.log(resp.data.message);
-            this.error = resp.data.message
+            this.error = resp.data.message;
           }
         })
         .catch(() => {
@@ -79,9 +84,9 @@ export default {
           console.log("error");
         });
     },
-    clearError(){
-      this.error = null
-    }
+    clearError() {
+      this.error = null;
+    },
   },
 };
 </script>

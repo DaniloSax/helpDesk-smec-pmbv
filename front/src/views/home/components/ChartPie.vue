@@ -14,7 +14,10 @@ export default {
 
   mixins: [reactiveProp],
   mounted() {
-    this.renderChart(this.chartData, { responsive: true });
+    this.renderChart(this.chartData, {
+      responsive: true,
+      maintainAspectRatio: true,
+    });
   },
 };
 </script>

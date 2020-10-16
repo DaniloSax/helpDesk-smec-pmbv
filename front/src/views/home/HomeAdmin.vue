@@ -16,17 +16,24 @@
       ></v-progress-linear>
 
       <v-card-text v-else>
-        <v-row class="d-flex align-center">
-          <v-col cols="8">
+        <v-row
+          class="d-flex align-center"
+          :class="$vuetify.breakpoint.mobile ? 'flex-column' : ''"
+        >
+          <v-col :cols="$vuetify.breakpoint.mobile ? '' : 8">
             <v-card elevation="8" color="white">
-              <v-card-title>Chamados Solucionados</v-card-title>
+              <v-card-title>Chamados por solucionador</v-card-title>
               <v-card-text>
-                <chart-bar :height="150" :chart-data="collectionChartBar" />
+                <chart-bar
+                  :height="$vuetify.breakpoint.mobile ? 500 : 150"
+                  :chart-data="collectionChartBar"
+                />
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col cols="4">
+          <v-col :cols="$vuetify.breakpoint.mobile ? '' : 4">
             <v-card elevation="8" color="white">
+              <!-- <v-card-title> Total de chamados </v-card-title> -->
               <v-card-text>
                 <chart-pie :chart-data="collectionChartPie" :height="350" />
               </v-card-text>
