@@ -14,7 +14,7 @@ axios.defaults.baseURL = 'http://192.168.8.81:8008/api/';
 axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('access_token');
 
 Vue.config.productionTip = false
-// Vue.config.devtools = false
+    // Vue.config.devtools = false
 
 new Vue({
     router,

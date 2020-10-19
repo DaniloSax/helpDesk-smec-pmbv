@@ -9,7 +9,7 @@ class Profile extends Model
 {
     protected $table = 'profiles';
 
-    protected $fillable = ['full_name', 'school', 'office', 'user_id'];
+    protected $fillable = ['full_name', 'school', 'office', 'user_id', 'activated'];
 
     protected $dates = [
         'created_at', 'updated_at',

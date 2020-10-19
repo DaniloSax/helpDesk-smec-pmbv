@@ -15,9 +15,35 @@ class CallObserver
      */
     public function created(Call $call)
     {
-        // $auth = User::find(auth()->user()->id);
         $call->created_by = auth()->check() ? auth()->user()->id : null;
         $call->save();
+
+        // direciona chamado para o solucionador que tiver menos chamados
+        $users = User::with([
+            'roles' => function ($query) {
+                $query->where('name', 'solucionador');
+            },
+        ])->get();
+
+        $countCalls = [];
+        foreach ($users as $user) {
+            if ($user->roles->isNotEmpty() && $user->profile->activated) {
+                array_push($countCalls, $user->calls->count());
+            }
+        }
+        
+        foreach ($users as $user) {
+
+            if ($user->roles->isNotEmpty() && $user->profile->activated) {
+
+                if (($user->calls->count() <= min($countCalls))) {
+                    $user->calls()->attach($call->id);
+                    $call->statu = 'andamento';
+                    $call->save();
+                    break;
+                }
+            }
+        }
     }
 
     /**
