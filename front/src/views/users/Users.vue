@@ -12,7 +12,12 @@
       </v-btn>
     </template>
     <template v-slot:card-header-list-fieldSearch>
-      <v-text-field clearable label="Buscar" v-model="search" prepend-icon="mdi-magnify"></v-text-field>
+      <v-text-field
+        clearable
+        label="Buscar"
+        v-model="search"
+        prepend-icon="mdi-magnify"
+      ></v-text-field>
     </template>
 
     <template v-slot:card-body>
@@ -31,15 +36,31 @@
         :items-per-page="pagination.itemsPerPage"
         :options.sync="pagination"
         :footer-props="{
-        itemsPerPageText: 'Linhas por Página',
-        itemsPerPageAllText: 'Todos',
-        pageText: `${pagination.page} de ${numberOfPages}`,
-      }"
+          itemsPerPageText: 'Linhas por Página',
+          itemsPerPageAllText: 'Todos',
+          pageText: `${pagination.page} de ${numberOfPages}`,
+        }"
       >
         <template v-slot:item.roles="{ item }">
-          <span v-for="(role) in item.roles" :key="role.id" class="mx-1">
-            <v-chip :color="colorRoles(role.name)" dark class="text-uppercase">{{ role.name }}</v-chip>
+          <span v-for="role in item.roles" :key="role.id" class="mx-1">
+            <v-chip
+              :color="colorRoles(role.name)"
+              dark
+              class="text-uppercase"
+              >{{ role.name }}</v-chip
+            >
           </span>
+        </template>
+
+        <template v-slot:item.profile="{ item }">
+          <!-- {{ item.activated }} -->
+          <v-switch
+            v-model="item.profile.activated"
+            color="primary"
+            :value="item.profile.activated"
+            @change="changeActivated(item.id, item.profile.activated)"
+            hide-details
+          ></v-switch>
         </template>
 
         <template v-slot:item.actions="{ item }">
@@ -104,6 +125,10 @@ export default {
           value: "profile.school",
         },
         {
+          text: "Ativação",
+          value: "profile",
+        },
+        {
           text: "Ações",
           value: "actions",
           sortable: false,
@@ -117,7 +142,7 @@ export default {
       return users;
     },
     numberOfPages() {
-      return Math.ceil(this.users.length / this.pagination.itemsPerPage) ;
+      return Math.ceil(this.users.length / this.pagination.itemsPerPage);
     },
   },
   methods: {
@@ -126,6 +151,15 @@ export default {
       if (role == "direcionador") return "blue darken-1";
       if (role == "operador") return "cyan darken-1";
       if (role == "solucionador") return "teal";
+    },
+
+    changeActivated(user_id, activated) {
+      const user = {
+        id: user_id,
+        activated,
+      };
+
+      this.$store.dispatch("updateUserActivated", user);
     },
   },
 };

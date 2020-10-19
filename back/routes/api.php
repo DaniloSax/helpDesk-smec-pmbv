@@ -24,6 +24,8 @@ Route::post('/logout', 'Api\AuthController@logout')->middleware('auth:api');
 Route::get('/auth', 'Api\AuthController@auth')->middleware('auth:api');
 
 Route::resource('/users', 'Api\UserController')->middleware('auth:api');
+Route::put('/user-activated/{user}', 'Api\UserController@updateAtivated')->middleware('auth:api');
+
 Route::resource('/roles', 'Api\RoleController')->middleware('auth:api');
 Route::resource('/services', 'Api\ServiceController')->middleware('auth:api');
 Route::resource('/calls', 'Api\CallController')->middleware('auth:api');

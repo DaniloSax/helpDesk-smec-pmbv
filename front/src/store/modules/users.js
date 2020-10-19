@@ -65,8 +65,8 @@ export default {
         updateUser({ dispatch, commit }, user) {
             return new Promise((resolve, reject) => {
                 axios.put(`users/${user.id}`, user, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
-                })
+                        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+                    })
                     .then((resp) => {
                         console.log(resp.data)
                         dispatch('loadUsers')
@@ -74,17 +74,34 @@ export default {
                         resolve(resp.data)
                     })
                     .catch((error) => {
-                        // console.log(error.response.data)
-                        // commit('setErrors', error.response.data.errors)
                         return reject(error.response.data)
                     })
             })
         },
+        updateUserActivated({ commit }, user) {
+            return new Promise((resolve, reject) => {
+                console.log(user)
+                axios.put(`user-activated/${user.id}`, user, {
+                        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+                    })
+                    .then((resp) => {
+                        console.log(resp.data)
+                        commit('notCommit')
+                        return resolve(resp.data)
+                    })
+                    .catch((error) => {
+                        return reject(error.response.data)
+                    })
+            })
+        },
+
+
+
         deleteUser({ dispatch, commit }, user_id) {
             return new Promise((resolve, reject) => {
                 axios.delete(`users/${user_id}`, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
-                })
+                        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+                    })
                     .then((resp) => {
                         console.log(resp.data)
                         dispatch('loadUsers')

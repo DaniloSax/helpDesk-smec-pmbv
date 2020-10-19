@@ -131,6 +131,13 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    public function updateAtivated(User $user, Request $request)
+    {
+        $activated = empty($request->activated) ? false : true;
+        $user->profile->update(['activated' => $activated]);
+        return response($user->profile);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
