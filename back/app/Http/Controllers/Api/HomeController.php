@@ -35,9 +35,9 @@ class HomeController extends Controller
             ['text' => 'andamento', 'value' => $progress, 'color' => '#FFF9C4'],
             ['text' => 'iniciar', 'value' => $starting, 'color' => '#43A047'],
             ['text' => 'concluido', 'value' => $concluded, 'color' => '#C6FF00'],
-            ['text' => 'atrasado', 'value' => $late, 'color' => '#E6EE9C'],
+            ['text' => 'atrasado', 'value' => $late, 'color' => '#EF9A9A'],
             ['text' => 'cancelado', 'value' => $canceled, 'color' => '#BBDEFB'],
-            ['text' => 'paralisado', 'value' => $paralyzed, 'color' => '#EF9A9A'],
+            ['text' => 'paralisado', 'value' => $paralyzed, 'color' => '#FFEB3B'],
         ]);
     }
 

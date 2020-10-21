@@ -8,6 +8,7 @@ use App\Notifications\CallNotification;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
 
 class CallController extends Controller
@@ -20,6 +21,13 @@ class CallController extends Controller
     public function index()
     {
         $user = User::find(auth()->user()->id);
+
+        foreach ($user->calls as $call) {
+            if ($call->created_at->addDays($call->term) < now() && $call->statu !== 'atrasado') {
+                $call->update(['statu' => 'atrasado']);
+            }
+        }
+
         $callsOfUser = $user->calls()->orderBy('id', 'desc')->get();
         $callsAll = Call::with('users')->orderBy('id', 'desc')->get();
 

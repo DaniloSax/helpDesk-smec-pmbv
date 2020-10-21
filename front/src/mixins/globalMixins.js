@@ -23,8 +23,8 @@ export default {
             let color = "";
             if (statu == "a iniciar") color = "#B2DFDB";
             if (statu == "andamento") color = "#FFF9C4";
-            if (statu == "atrasado") color = "#E6EE9C";
-            if (statu == "paralisado") color = "#EF9A9A";
+            if (statu == "atrasado") color = "#EF9A9A";
+            if (statu == "paralisado") color = "#FFEB3B";
             if (statu == "concluído") color = "#C6FF00";
             if (statu == "cancelado") color = "#BBDEFB";
             return color;
