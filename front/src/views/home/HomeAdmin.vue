@@ -100,7 +100,7 @@ export default {
           },
           {
             label: "Paralisado",
-            backgroundColor: "#EF9A9A",
+            backgroundColor: "#FFEB3B",
             data: this.callPerUser.map((item) => item.paralyzed),
           },
           {
@@ -110,7 +110,7 @@ export default {
           },
           {
             label: "Atrasado",
-            backgroundColor: "#E6EE9C",
+            backgroundColor: "#EF9A9A",
             data: this.callPerUser.map((item) => item.late),
           },
           {

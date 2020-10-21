@@ -21,6 +21,7 @@
     </template>
 
     <template v-slot:card-body>
+     
       <AlertMsg v-if="msg.errors || msg.success" :msg="msg" />
       <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />
 
@@ -178,6 +179,7 @@ export default {
 
       this.$store.dispatch("updateUserDriver", user);
     },
+
   },
 };
 </script>

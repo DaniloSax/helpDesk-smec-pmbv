@@ -7,18 +7,18 @@
     <template v-slot:card-title>Registrar Usuário</template>
 
     <template v-slot:card-btn-back>
-      <v-btn icon color="white" :to="{name:'users'}">
-        <v-icon x-large>mdi-arrow-left</v-icon>
+      <v-btn icon color="white">
+        <router-link tag="a" :to="{ name: 'users' }">
+          <v-icon color="white" x-large>mdi-arrow-left</v-icon>
+        </router-link>
       </v-btn>
     </template>
 
     <template v-slot:card-body>
-
       <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />
       <AlertMsg v-if="msg.errors || msg.success" :msg="msg" />
 
       <form-create :loading="loading" @submit="storeUser" />
-
     </template>
   </card-default>
 </template>
@@ -29,7 +29,7 @@ import CardDefault from "@/components/Card";
 import AlertMsg from "../../components/AlertMsg";
 import ToastMsg from "../../components/ToastMsg";
 
-import GlobalMixin from '../../mixins/globalMixins'
+import GlobalMixin from "../../mixins/globalMixins";
 
 export default {
   data() {
@@ -59,7 +59,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.getMsgError(error)
+          this.getMsgError(error);
           this.loading = false;
         });
     },

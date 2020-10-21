@@ -11,6 +11,7 @@ export default {
     this.renderChart(this.chartData, {
       responsive: true,
       maintainAspectRatio: true,
+     
     });
   },
 };

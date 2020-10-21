@@ -5,24 +5,28 @@
         <v-icon x-large>mdi-account</v-icon>
       </template>
 
-      <template v-slot:card-title>{{ user ? user.name : '' }}</template>
+      <template v-slot:card-title>{{ user ? user.name : "" }}</template>
 
       <template v-slot:card-title-center>Editar Usuário</template>
 
       <template v-slot:card-btn-back>
         <v-btn icon color="white">
-          <router-link tag="a" :to="{name: 'users'}">
+          <router-link tag="a" :to="{ name: 'users' }">
             <v-icon color="white" x-large>mdi-arrow-left</v-icon>
           </router-link>
         </v-btn>
       </template>
 
       <template v-slot:card-body>
-
         <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />
         <AlertMsg v-if="msg.errors || msg.success" :msg="msg" />
 
-        <form-edit :id="id" :loading="loading" @submitUpdate="submitUpdate"  @deleteUser="deleteUser($event)"/>
+        <form-edit
+          :id="id"
+          :loading="loading"
+          @submitUpdate="submitUpdate"
+          @deleteUser="deleteUser($event)"
+        />
       </template>
     </card-default>
   </div>
@@ -62,7 +66,7 @@ export default {
         .dispatch("updateUser", event)
         .then(() => {
           this.loading = false;
-          this.getMsgSuccess(true)
+          this.getMsgSuccess(true);
 
           this.$store.dispatch("getAuth");
         })
@@ -74,8 +78,8 @@ export default {
         });
     },
 
-    deleteUser(event){
-      console.log('delete user', event)
+    deleteUser(event) {
+      console.log("delete user", event);
     },
   },
 };
