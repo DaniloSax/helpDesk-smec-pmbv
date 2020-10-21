@@ -53,14 +53,16 @@
         </template>
 
         <template v-slot:item.profile="{ item }">
-          <!-- {{ item.activated }} -->
           <v-switch
-            v-model="item.profile.activated"
+            v-if="isSolver(item.id)"
+            v-model="item.profile.driver"
             color="primary"
-            :value="item.profile.activated"
-            @change="changeActivated(item.id, item.profile.activated)"
+            :value="item.profile.driver"
+            @change="changeDriver(item.id, item.profile.driver)"
             hide-details
           ></v-switch>
+
+          <span v-else>----</span>
         </template>
 
         <template v-slot:item.actions="{ item }">
@@ -87,6 +89,7 @@ import AlertMsg from "../../components/AlertMsg";
 import ToastMsg from "../../components/ToastMsg";
 
 import GlobalMixin from "../../mixins/globalMixins";
+
 export default {
   created() {
     this.$store.dispatch("loadUsers");
@@ -125,8 +128,10 @@ export default {
           value: "profile.school",
         },
         {
-          text: "Ativação",
+          text: "Auto direcionador",
           value: "profile",
+          align: "center",
+          sortable: false,
         },
         {
           text: "Ações",
@@ -153,13 +158,25 @@ export default {
       if (role == "solucionador") return "teal";
     },
 
-    changeActivated(user_id, activated) {
+    isSolver(id) {
+      const user = this.users.find((user) => {
+        return user.id == id;
+      });
+
+      const solver = user.roles.filter((role) => role.name == "solucionador");
+
+      if (solver.length > 0) {
+        return true;
+      } else return false;
+    },
+
+    changeDriver(user_id, driver) {
       const user = {
         id: user_id,
-        activated,
+        driver,
       };
 
-      this.$store.dispatch("updateUserActivated", user);
+      this.$store.dispatch("updateUserDriver", user);
     },
   },
 };

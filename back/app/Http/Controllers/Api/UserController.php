@@ -66,6 +66,12 @@ class UserController extends Controller
 
             $user->assignRole($request->roles);
 
+            foreach ($user->roles as $role) {
+                if ($role->name == 'solucionador') {
+                    $user->profile->update(['driver' => true]);
+                }
+            }
+
             return $user;
         });
         return response()->json($user);
@@ -76,27 +82,6 @@ class UserController extends Controller
         return response(['user' => $user, 'access_token' => $access_token], '200');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -119,10 +104,25 @@ class UserController extends Controller
         if ($request->password) $request['password'] = bcrypt($request->password);
 
         if ($validatedData) {
-            $user = DB::transaction(function () use ($request, $user, $validatedData) {
+            $user = DB::transaction(function () use ($request, $user) {
                 $user->profile()->update($request->profile);
-                $user->syncRoles($request->roles);
+                // $user->syncRoles($request->roles);
+
+                foreach ($user->roles as $role) {
+                    $user->removeRole($role);
+                }
+
+                $user->assignRole($request->roles);
+
                 $user->update($request->all());
+
+                foreach ($user->roles as $role) {
+                    if ($role->name == 'solucionador') {
+                        $user->profile->update(['driver' => true]);
+                    } else {
+                        $user->profile->update(['driver' => null]);
+                    }
+                }
 
                 return $user;
             });
@@ -133,8 +133,8 @@ class UserController extends Controller
 
     public function updateAtivated(User $user, Request $request)
     {
-        $activated = empty($request->activated) ? false : true;
-        $user->profile->update(['activated' => $activated]);
+        $driver = empty($request->driver) ? false : true;
+        $user->profile->update(['driver' => $driver]);
         return response($user->profile);
     }
 

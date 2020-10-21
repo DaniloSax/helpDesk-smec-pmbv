@@ -27,14 +27,14 @@ class CallObserver
 
         $countCalls = [];
         foreach ($users as $user) {
-            if ($user->roles->isNotEmpty() && $user->profile->activated) {
+            if ($user->roles->isNotEmpty() && $user->profile->driver) {
                 array_push($countCalls, $user->calls->count());
             }
         }
         
         foreach ($users as $user) {
 
-            if ($user->roles->isNotEmpty() && $user->profile->activated) {
+            if ($user->roles->isNotEmpty() && $user->profile->driver) {
 
                 if (($user->calls->count() <= min($countCalls))) {
                     $user->calls()->attach($call->id);

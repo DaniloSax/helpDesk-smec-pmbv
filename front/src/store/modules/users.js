@@ -78,7 +78,7 @@ export default {
                     })
             })
         },
-        updateUserActivated({ commit }, user) {
+        updateUserDriver({ commit }, user) {
             return new Promise((resolve, reject) => {
                 console.log(user)
                 axios.put(`user-activated/${user.id}`, user, {

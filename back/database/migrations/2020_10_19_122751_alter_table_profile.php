@@ -14,7 +14,7 @@ class AlterTableProfile extends Migration
     public function up()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->boolean('activated')->after('office')->nullable();
+            $table->boolean('driver')->after('office')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AlterTableProfile extends Migration
     public function down()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->dropColumn('activated');
+            $table->dropColumn('driver');
         });
     }
 }

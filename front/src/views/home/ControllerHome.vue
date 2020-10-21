@@ -8,21 +8,20 @@
  <script>
 import HomeAdmin from "./HomeAdmin";
 import HomeOperator from "./HomeOperator";
-import HomeSolver from "./HomeSolver";
+// import HomeSolver from "./HomeSolver";
 
 import localforage from "localforage";
 
 const RoleDashboardMapping = {
   administrador: HomeAdmin,
   direcionador: HomeAdmin,
-  solucionador: HomeSolver,
+  solucionador: HomeAdmin,
   operador: HomeOperator,
 };
 export default {
   created() {
     localforage.getItem("helpDesk").then((value) => {
       this.componentSelected = value.login.auth.roles.map((item) => {
-        // this.$store.dispatch("datasStatusCalls")
         return (this.componentSelected = item);
       });
     });
