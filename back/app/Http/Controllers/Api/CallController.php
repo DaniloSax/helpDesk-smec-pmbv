@@ -23,8 +23,10 @@ class CallController extends Controller
         $user = User::find(auth()->user()->id);
 
         foreach ($user->calls as $call) {
-            if ($call->created_at->addDays($call->term) < now() && $call->statu !== 'concluído') {
-                $call->update(['statu' => 'atrasado']);
+            if ($call->created_at->addDays($call->term) < now()) {
+                if ($call->statu === 'andamento') {
+                    $call->update(['statu' => 'atrasado']);
+                }
             }
         }
 
