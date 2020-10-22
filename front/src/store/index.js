@@ -28,7 +28,9 @@ export default new Vuex.Store({
         btnSideBar: null,
         loading: false,
         toastErrorNotify: false,
-        callError: null
+        callError: null,
+        itemsPerPageCalls: 2,
+        pageCalls: 1,
     },
     mutations: {
 
@@ -51,14 +53,25 @@ export default new Vuex.Store({
 
         setCallError(state, call) {
             state.callError = call
-        }
+        },
+
+        updateItemPerPage(state, payload) {
+            state.itemsPerPageCalls = payload
+        },
+
+        updatePage(state, payload) {
+            state.pageCalls = payload
+        },
     },
 
     getters: {
         getBtnSideBar(state) {
             return state.btnSideBar
         },
-        getcallError: (state) => state.callError
+        getcallError: (state) => state.callError,
+
+        getItemsPerPage: state => state.itemsPerPageCalls,
+        getPage: state => state.pageCalls,
     },
     modules: {
         users,

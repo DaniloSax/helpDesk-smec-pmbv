@@ -8,19 +8,22 @@ import HomeDatas from './HomeDatas'
 export default {
     state: {
         calls: [],
-        errors: [],
+        // errors: [],
     },
     mutations: {
         setCalls(state, calls) {
             state.calls = calls
         },
+
         storeCall(state, call) {
             state.calls.push(call);
         },
+
         deleteCall(state, call_id) {
             const i = state.calls.findIndex((item) => item.id === call_id)
             state.calls.splice(i, 1);
         },
+
         updateCall(state, call) {
             const i = state.calls.findIndex(item => item.id === call.id)
             state.calls[i] = call
@@ -103,6 +106,8 @@ export default {
         callsById: (state) => (id) => {
             return state.calls.find(call => call.id == id)
         },
+
+
     },
     modules: {
         responses,

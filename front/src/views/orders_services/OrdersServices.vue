@@ -89,8 +89,8 @@ export default {
     return {
       search: "",
       loading: true,
-      itemsPerPage: 2,
-      page: 1,
+      // itemsPerPage: 2,
+      // page: 1,
       itemsPerPageArray: [1, 2, 4, 8, 12],
     };
   },
@@ -101,6 +101,23 @@ export default {
     },
     numberOfPages() {
       return Math.ceil(this.calls.length / this.itemsPerPage);
+    },
+    itemsPerPage: {
+      get() {
+        return this.$store.getters.getItemsPerPage;
+      },
+      set(value) {
+        this.$store.commit("updateItemPerPage", value);
+      },
+    },
+    page: {
+      get() {
+        return this.$store.getters.getPage;
+      },
+      set(value) {
+        console.log("set value page", value);
+        return this.$store.commit("updatePage", value);
+      },
     },
   },
   methods: {
