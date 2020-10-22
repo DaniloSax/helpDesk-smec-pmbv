@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn block color="red" class="white--text" @click.stop="dialog = true"
+    <v-btn block color="red" class="white--text" @click.stop="dialog = true" :disabled="call.statu === 'concluído'"
       >Excluir</v-btn
     >
 

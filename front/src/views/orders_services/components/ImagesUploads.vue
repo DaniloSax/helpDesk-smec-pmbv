@@ -1,10 +1,11 @@
 <template>
-  <ValidationObserver v-slot="{ invalid }" class="row d-flex align-baseline">
+  <ValidationObserver v-slot="{ invalid }" class="row d-flex justify-space-around align-baseline">
     <v-col cols="11">
       <ValidationProvider rules="required">
         <v-file-input
+          :disabled="call_statu === 'concluído'"
           accept="image/png, image/jpeg, image/bmp"
-          placeholder="Anexar Imagens"
+          placeholder="Anexar Imagens/Arquivos"
           prepend-icon="mdi-camera"
           v-model="images"
           multiple
@@ -14,12 +15,13 @@
 
     <v-btn
       small
-      class="ml-2 "
+      class="ml-2"
       color="primary"
       @click="onUpload"
       :loading="loading"
       :disabled="invalid"
-    >CARREGAR</v-btn>
+      >CARREGAR</v-btn
+    >
   </ValidationObserver>
 </template>
 
@@ -30,6 +32,7 @@ import { ValidationProvider, ValidationObserver } from "vee-validate";
 export default {
   props: {
     call_id: { type: Number, required: false },
+    call_statu: { type: String, required: false },
   },
   data() {
     return {

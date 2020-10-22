@@ -1,11 +1,15 @@
 <template>
   <v-form>
     <v-row>
-      <v-col cols="2">
+      <v-col cols="3">
         <v-text-field
           name="name"
           label="Criado por:"
-          :value="created_by ? created_by.name : ''"
+          :value="
+            created_by
+              ? `${created_by.name} - ${formatDate(callLocal.created_at)}`
+              : 'teste'
+          "
           readonly
           filled
           shaped
@@ -17,7 +21,7 @@
         <validation-provider rules v-slot="{ errors }">
           <v-autocomplete
             :items="services"
-            :disabled="!isAdmin"
+            :disabled="!isAdmin || callLocal.statu === 'concluído'"
             item-text="name"
             item-value="id"
             v-model="service_id"
@@ -40,7 +44,7 @@
         </validation-provider>
       </v-col>
       <v-col :cols="disabled ? 3 : 2">
-        <validation-provider rules="required" v-slot="{errors, valid}">
+        <validation-provider rules="required" v-slot="{ errors, valid }">
           <v-select
             :items="prioritys"
             v-model="callLocal.priority"
@@ -54,12 +58,13 @@
       </v-col>
       <v-col :cols="disabled ? 3 : 2">
         <!-- LEMBRETE -> can: admin|solucionador|direcionador -->
-        <validation-provider rules="required" v-slot="{errors}">
+        <validation-provider rules="required" v-slot="{ errors }">
           <v-select
             class="text-uppercase"
             :items="status"
-            v-model="callLocal.statu"
+            v-model.lazy="callLocal.statu"
             :disabled="!isAdmin && !isSolver"
+            :readonly="isConclued"
             label="Status"
             :error-messages="errors[0]"
             @input="$emit('call', callLocal)"
@@ -72,11 +77,12 @@
             :items="solvers"
             v-model="solver"
             @input="updateSolver(solver)"
-            :readonly="!isAdmin"
             item-text="name"
             item-value="id"
             label="Solucionador"
-            :loading="loading"
+            :readonly="!isAdmin"
+            :disabled="callLocal.statu === 'concluído'"
+            :loading="loading || loadingSolver"
             :error-messages="errors[0]"
             :clearable="isAdmin"
           ></v-autocomplete>
@@ -123,7 +129,11 @@
         </validation-provider>
       </v-col>
       <v-col cols="2">
-        <validation-provider name="assunto" rules="required" v-slot="{ errors, valid }">
+        <validation-provider
+          name="assunto"
+          rules="required"
+          v-slot="{ errors, valid }"
+        >
           <v-text-field
             label="Prazo contagem em dias"
             type="number"
@@ -136,12 +146,17 @@
         </validation-provider>
       </v-col>
     </v-row>
-    <validation-provider name="descricao" rules="required" v-slot="{ errors, valid }">
+    <validation-provider
+      name="descricao"
+      rules="required"
+      v-slot="{ errors, valid }"
+    >
       <v-textarea
         clearable
         auto-grow
         outlined
         label="Descrição"
+        :disabled="callLocal.statu === 'concluído'"
         v-model="callLocal.description"
         :error-messages="errors[0]"
         :success="valid"
@@ -155,16 +170,22 @@
 import { ValidationProvider } from "vee-validate";
 import localforage from "localforage";
 import AccessControllerMixins from "@/mixins/AcessControllerMixins";
+import moment from "moment";
 
 export default {
   created() {
+    if (this.call.statu === "concluído") {
+      this.isConclued = true;
+      console.log(this.isConclued);
+    }
     localforage.getItem("helpDesk").then((value) => {
       this.callLocal = this.call;
       this.$store.dispatch("loadUsers").then(() => {
         this.$store.dispatch("loadServices");
+        this.loadingSolver = true;
         this.$store.dispatch("loadSolver", this.call.id).then((item) => {
           this.solver = item;
-          console.log("solver", this.solver);
+          this.loadingSolver = false;
           return (this.auth = value.login.auth);
         });
       });
@@ -189,6 +210,8 @@ export default {
       disabled: false,
       solver: null,
       loading: false,
+      loadingSolver: false,
+      isConclued: false,
     };
   },
   mixins: [AccessControllerMixins],
@@ -250,6 +273,11 @@ export default {
         this.$store.dispatch("updateCall", this.callLocal);
         this.dispatchSolver(solver);
       }
+    },
+
+    formatDate(value) {
+      moment.locale("pt-br");
+      return moment(value).format("dddd L");
     },
   },
 };

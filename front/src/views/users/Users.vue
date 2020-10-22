@@ -131,7 +131,6 @@ export default {
         {
           text: "Auto direcionador",
           value: "profile",
-          align: "center",
           sortable: false,
         },
         {

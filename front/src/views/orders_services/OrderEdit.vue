@@ -50,7 +50,7 @@
             :services="services"
           />
 
-          <image-upload :call_id="call.id" />
+          <image-upload :call_id="call.id" :call_statu="call.statu" />
           <v-divider class="mt-4"></v-divider>
 
           <v-row v-if="images" justify="center">
@@ -71,7 +71,7 @@
           <v-divider class="mt-4"></v-divider>
           <v-row justify="center">
             <expansion-responses>
-              <InputDinamic :responses="responses" :call_id="call.id" />
+              <InputDinamic :responses="responses" :call_id="call.id" :call_statu="call.statu"/>
             </expansion-responses>
           </v-row>
 

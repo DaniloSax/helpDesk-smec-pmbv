@@ -6,8 +6,14 @@
           <ValidationObserver v-slot="{ invalid }">
             <validation-provider rules="required" v-slot="{ errors }">
               <v-text-field
-                :label="item.created_by ? `Resposta de ${userCreated_by(item.created_by).name}`: 'Resposta'"
-                :readonly="auth.id !== userCreated_by(item.created_by).id || item.posted"
+                :label="
+                  item.created_by
+                    ? `Resposta de ${userCreated_by(item.created_by).name}`
+                    : 'Resposta'
+                "
+                :readonly="
+                  auth.id !== userCreated_by(item.created_by).id || item.posted
+                "
                 v-model="item.text"
                 :error-messages="errors[0]"
                 textarea
@@ -15,15 +21,25 @@
                 counter="100"
               >
                 <template v-slot:append-outer>
-                  <v-btn v-if="!item.posted" icon color="red" @click.prevent="deleteInput(item.id)">
+                  <v-btn
+                    v-if="!item.posted"
+                    icon
+                    color="red"
+                    @click.prevent="deleteInput(item.id)"
+                  >
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
 
-                  <v-btn v-if="item.posted" icon color="teal" :loading="item.loading">
+                  <v-btn
+                    v-if="item.posted"
+                    icon
+                    color="teal"
+                    :loading="item.loading"
+                  >
                     <v-icon>mdi-check</v-icon>
                   </v-btn>
                   <v-btn
-                   v-else 
+                    v-else
                     icon
                     color="teal"
                     @click.prevent="sendResponse(item)"
@@ -41,9 +57,9 @@
             v-if="item.posted"
             :readonly="auth.id == userCreated_by(item.created_by).id"
             v-model="item.rating"
-            @input="updateResponse({id: item.id, rating: item.rating})"
+            @input="updateResponse({ id: item.id, rating: item.rating })"
             full-icon="mdi-thumb-up-outline"
-            :color="item.rating == 5 ? 'teal':'orange'"
+            :color="item.rating == 5 ? 'teal' : 'orange'"
             background-color="orange lighten-3"
             half-increments
             hover
@@ -53,7 +69,12 @@
         </v-col>
       </v-row>
     </div>
-    <a @click.prevent="addInput(lastResonseReact ? lastResonseReact.id + 1 : 0)">Responder</a>
+
+    <a
+      @click.prevent="addInput(lastResonseReact ? lastResonseReact.id + 1 : 0)"
+      v-show="call_statu !== 'concluído'"
+      >Responder</a
+    >
   </div>
 </template>
 
@@ -75,6 +96,7 @@ export default {
   props: {
     responses: { type: [Array, Object], required: true },
     call_id: { type: Number, required: true },
+    call_statu: { type: String, required: false },
   },
   data() {
     return {

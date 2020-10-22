@@ -3,6 +3,7 @@
     <v-btn icon color="red" @click.stop="dialog = true" :loading="loading">
       <v-icon>mdi-delete</v-icon>
     </v-btn>
+
     <v-dialog v-model="dialog" max-width="550">
       <v-card>
         <v-card-title class="d-flex justify-center headline"
@@ -29,12 +30,16 @@
                 </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
-
           </v-list>
 
-            <v-alert v-if="call.statu !== 'concluído'" type="warning" dense border="left" >
-              Chamado não concluído
-            </v-alert>
+          <v-alert
+            v-if="call.statu !== 'concluído'"
+            type="warning"
+            dense
+            border="left"
+          >
+            Chamado não concluído
+          </v-alert>
           <h2 class="text-center">Tem certeza disso ?</h2>
         </v-card-text>
 
@@ -45,7 +50,11 @@
             >Cancelar</v-btn
           >
 
-          <v-btn color="red darken-1" text @click="deleteCall(call.id)" :disabled="call.statu !== 'concluído'"
+          <v-btn
+            color="red darken-1"
+            text
+            @click="deleteCall(call.id)"
+            :disabled="disabilited()"
             >Excluir</v-btn
           >
         </v-card-actions>
@@ -56,6 +65,7 @@
 
 <script>
 import globalMixins from "@/mixins/globalMixins";
+import AccessControllerMixin from "@/mixins/AcessControllerMixins";
 
 export default {
   props: ["call"],
@@ -79,8 +89,12 @@ export default {
           this.loading = false;
         });
     },
+    disabilited() {
+      if (this.call.statu !== "concluído") return true;
+      if (!this.isAdmin) return true;
+    },
   },
-  mixins: [globalMixins],
+  mixins: [globalMixins, AccessControllerMixin],
 };
 </script>
 
