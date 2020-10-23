@@ -8,17 +8,16 @@ export default {
                 .add(this.call.term, "days")
                 .format("dddd");
 
+
             switch (date) {
-                case "Sábado":
+                case "sábado":
                     date = moment(created_at)
-                        .add(2, "days")
-                        .format("dddd L");
+                        .add(this.call.term + 2, 'days').format("dddd L");
                     break;
 
-                case "Domingo":
+                case "domingo":
                     date = moment(created_at)
-                        .add(1, "days")
-                        .format("dddd L");
+                        .add(this.call.term + 1, 'days').format("dddd L");
                     break;
 
                 default:
