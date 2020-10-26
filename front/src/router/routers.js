@@ -32,11 +32,10 @@ const routes = [{
     {
         path: '/home',
         component: Home,
-        // meta: {
-        //     requireAuth: true,
-        //     grantAll: false,
-        //     grants: ['administrador', 'direcionador']
-        // },
+        meta: {
+            requireAuth: true,
+            grantAll: false,
+        },
     },
     ...UsersRouters,
     ...ServicesRouters,
@@ -62,14 +61,13 @@ router.beforeEach((to, from, next) => {
     if (to.name !== 'login' && !token) {
         next('/login')
     } else {
-        next()
-    }
-    if (from.path == '/home') {
         console.clear()
+        next()
     }
 
     if (to.meta.requireAuth) {
-        // cargar data auth localStorage
+        console.clear()
+            // cargar data auth localStorage
         localForage.getItem('helpDesk').then(value => {
             const roles = value.login.auth.roles.map(r => r.name)
 
@@ -79,7 +77,6 @@ router.beforeEach((to, from, next) => {
                 } else { return false }
 
             })
-            console.log(rolesEgrants)
             if (token && rolesEgrants) {
                 next()
             }

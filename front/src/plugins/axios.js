@@ -9,7 +9,7 @@ axios.interceptors.response.use(resp => {
     return resp;
 }, error => {
     if (error.response.status === 401) {
-        localStorage.removeItem(`access_token`)
+        localStorage.removeItem('access_token')
         return router.replace({ name: 'login' })
     }
 })

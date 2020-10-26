@@ -39,19 +39,25 @@ class AuthController extends Controller
             $login_type => $request->login,
         ]);
 
+
         if (Auth::attempt($request->only($login_type, 'password'))) {
 
             $user = User::find(auth()->user()->id);
 
-            $access_token = $user->createToken('accessToken')->accessToken;
+            if (isset($user->tokens)) {
 
+                foreach ($user->tokens as $token) {
+                    $token->delete();
+                }
+            }
+
+            $access_token =  $user->createToken('accessToken')->accessToken;
             $user = User::with('profile', 'roles')->find(auth()->user()->id);
 
             return response(['user' => $user, 'access_token' => $access_token]);
         } else {
             return response()->json(['message' => 'Login ou Senha incorreto!', 'status' => 400]);
         }
-
     }
 
     public function logout(Request $request)
