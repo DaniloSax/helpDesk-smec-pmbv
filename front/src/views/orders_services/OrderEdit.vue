@@ -71,7 +71,11 @@
           <v-divider class="mt-4"></v-divider>
           <v-row justify="center">
             <expansion-responses>
-              <InputDinamic :responses="responses" :call_id="call.id" :call_statu="call.statu"/>
+              <InputDinamic
+                :responses="responses"
+                :call_id="call.id"
+                :call_statu="call.statu"
+              />
             </expansion-responses>
           </v-row>
 
@@ -144,6 +148,15 @@ export default {
     ExpansionResponses,
     DialogDeleteCard,
     ToastMsg,
+  },
+  watch: {
+    "call.id"(lastQuestion, newQuestion) {
+      // add newCall and refresh page for reload datas
+      if (newQuestion.id !== lastQuestion) {
+        this.newCall = this.call;
+        this.$router.go();
+      }
+    },
   },
   computed: {
     call() {
