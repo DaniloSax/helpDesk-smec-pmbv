@@ -7,6 +7,8 @@ module.exports = {
     },
 
 
+    publicPath: '/',
+
     pwa: {
         name: 'HelpDesk - PMBV',
         themeColor: '#4DBA87',
