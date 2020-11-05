@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <router-view></router-view>
     <v-card tile>
       <v-card-title class="app-bar-color mb-5">
         <div class="white--text d-flex flex-column">
@@ -53,11 +54,14 @@ import { mapGetters } from "vuex";
 export default {
   async created() {
     this.loaded = true;
+    // if (!this.getUsers) {
+      console.log('users nao carregado')
+      this.$store.dispatch("loadUsers");
+    // }
     await this.$store.dispatch("statusAllCalls").then((statusAllCalls) => {
       this.$store.dispatch("callPerUserSolver").then(() => {
         this.statusAllCalls = statusAllCalls;
         this.callPerUser = this.getcallPerUser;
-        // console.log("callPerUser", this.callPerUser);
         this.configChartPie();
         this.configChartBar();
         this.loaded = false;
@@ -74,7 +78,12 @@ export default {
     };
   },
   components: { ChartPie, ChartBar },
-  computed: { ...mapGetters({ getcallPerUser: "callPerUserSolver" }) },
+  computed: {
+    ...mapGetters({
+      getcallPerUser: "callPerUserSolver",
+      // getUsers: "users",
+    }),
+  },
   methods: {
     configChartPie() {
       this.collectionChartPie = {
@@ -94,7 +103,7 @@ export default {
         labels: this.callPerUser.map((item) => item.user),
         datasets: [
           {
-            label: "Concluido",
+            label: "Concluído",
             backgroundColor: "#C6FF00",
             data: this.callPerUser.map((item) => item.concluded),
           },

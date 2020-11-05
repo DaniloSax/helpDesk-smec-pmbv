@@ -8,7 +8,7 @@ import HomeDatas from './HomeDatas'
 export default {
     state: {
         calls: [],
-        // errors: [],
+        searchCalls: null,
     },
     mutations: {
         setCalls(state, calls) {
@@ -28,6 +28,10 @@ export default {
             const i = state.calls.findIndex(item => item.id === call.id)
             state.calls[i] = call
             console.log(state.calls[i])
+        },
+
+        updateSearchCalls(state, payload) {
+            state.searchCalls = payload
         },
 
         notCommit() {
@@ -106,6 +110,7 @@ export default {
         callsById: (state) => (id) => {
             return state.calls.find(call => call.id == id)
         },
+        searchCalls: state => state.searchCalls
 
 
     },

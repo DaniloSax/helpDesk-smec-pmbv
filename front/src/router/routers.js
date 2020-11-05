@@ -11,6 +11,7 @@ import HelpersRouters from './modules/HelpersRoutes'
 import Home from '@/views/home/ControllerHome'
 import Login from '@/views/login/Login'
 import Unauthorized from '@/views/aborts/401'
+import CallsPerSolver from '@/views/home/CallsPerSolvers'
 
 
 
@@ -31,10 +32,23 @@ const routes = [{
     },
     {
         path: '/home',
+        name: 'home',
         component: Home,
+        children: [{
+            path: "solver/:id",
+            name: "callsSolver",
+            component: CallsPerSolver,
+            props: true,
+            meta: {
+                requireAuth: true,
+                grantAll: false,
+                grants: ['administrador', 'direcionador', 'solucionador']
+            },
+        }],
         meta: {
             requireAuth: true,
             grantAll: false,
+            grants: ['administrador', 'direcionador', 'solucionador', 'operador', ]
         },
     },
     ...UsersRouters,

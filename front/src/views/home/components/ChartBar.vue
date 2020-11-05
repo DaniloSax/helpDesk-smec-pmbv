@@ -11,7 +11,26 @@ export default {
     this.renderChart(this.chartData, {
       responsive: true,
       maintainAspectRatio: true,
-     
+      onClick: (point, event) => {
+        const solverChartName = event[0]._model.label;
+
+        console.log("solverChart", solverChartName);
+
+        const solver = this.$store.getters.users.find(
+          (user) => user.name === solverChartName
+        );
+
+        if (solver) {
+          this.$router
+            .replace({ name: "callsSolver", params: { id: solver.id, solver } })
+            .catch(() => {});
+        }
+      },
+      hover: {
+        onHover: (event, chartElement) => {
+          event.target.style.cursor = chartElement[0] ? "pointer" : "default";
+        },
+      },
     });
   },
 };

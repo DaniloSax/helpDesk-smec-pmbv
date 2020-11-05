@@ -87,7 +87,7 @@ export default {
   },
   data() {
     return {
-      search: "",
+      // search: "",
       loading: true,
       // itemsPerPage: 2,
       // page: 1,
@@ -115,8 +115,15 @@ export default {
         return this.$store.getters.getPage;
       },
       set(value) {
-        console.log("set value page", value);
         return this.$store.commit("updatePage", value);
+      },
+    },
+    search: {
+      get() {
+        return this.$store.getters.searchCalls;
+      },
+      set(value) {
+        return this.$store.commit("updateSearchCalls", value);
       },
     },
   },

@@ -103,4 +103,10 @@ class HomeController extends Controller
             'progress' => ['value' => $user->calls()->where('statu', 'andamento')->count(), 'color' => '#FFF9C4'],
         ]);
     }
+
+    public function detailsCallsPerSolver($id)
+    {
+        $user = User::find($id);
+        return response($user->calls);
+    }
 }

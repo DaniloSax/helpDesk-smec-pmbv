@@ -12,7 +12,11 @@
       <template v-slot:card-title-center>Detalhes do Chamado</template>
 
       <template v-slot:card-btn-back>
-        <v-btn icon color="white">
+        <v-btn icon color="white" v-if="solver" @click="backRouter()">
+          <v-icon color="white" x-large>mdi-arrow-left</v-icon>
+        </v-btn>
+
+        <v-btn icon color="white" v-else>
           <router-link tag="a" :to="{ name: 'calls' }">
             <v-icon color="white" x-large>mdi-arrow-left</v-icon>
           </router-link>
@@ -22,18 +26,8 @@
       <template v-slot:card-body>
         <template v-if="!newCall">
           <v-skeleton-loader
-            :loading="true"
-            class="mx-auto"
-            type="article"
-            tile
-          ></v-skeleton-loader>
-          <v-skeleton-loader
-            :loading="true"
-            class="mx-auto"
-            type="article"
-            tile
-          ></v-skeleton-loader>
-          <v-skeleton-loader
+            v-for="(item, i) in 3"
+            :key="i"
             :loading="true"
             class="mx-auto"
             type="article"
@@ -115,6 +109,13 @@ import GlobalMixins from "@/mixins/globalMixins";
 import ToastMsg from "../../components/ToastMsg";
 
 export default {
+  // beforeRouteEnter(to, from, next) {
+  //   if (from.name === "callsSolver" && this.solver_id) {
+  //     this.backRouter = `home/solver/${this.solver_id}`;
+  //     console.log(this.backRouter)
+  //   }
+  //   next();
+  // },
   created() {
     this.$store.dispatch("loadCalls").then(() => {
       this.$store.dispatch("loadImagesCall", this.id).then((items) => {
@@ -122,13 +123,20 @@ export default {
           this.responses = responses ? responses : "";
           this.images = items != "" ? items : null;
           this.newCall = this.call;
-
-          console.log("images", this.images);
+          // if (this.solver) {
+          //   this.backRouter = this.$router.push({
+          //     name: "callsSolver",
+          //     params: { id: this.solver.id, solver: this.solver },
+          //   });
+          // }
         });
       });
     });
   },
-  props: ["id"],
+  props: {
+    id: { type: [Number, String], required: true },
+    solver: { type: Object, required: false },
+  },
   data() {
     return {
       newCall: null,
@@ -196,6 +204,13 @@ export default {
             this.getMsgError(error);
           }
         });
+    },
+
+    backRouter() {
+      this.$router.push({
+        name: "callsSolver",
+        params: { id: this.solver.id, solver: this.solver },
+      });
     },
   },
 };

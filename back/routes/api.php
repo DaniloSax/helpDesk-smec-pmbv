@@ -36,6 +36,7 @@ Route::post('/images/{id}', 'Api\ImageController@storeImageInCall')->middleware(
 Route::resource('/responses', 'Api\ResponseController')->middleware('auth:api');
 
 Route::prefix('home')->middleware('auth:api')->group(function () {
+    Route::get('/details-calls-solver/{User}', 'Api\HomeController@detailsCallsPerSolver');
     Route::get('/admin/status-calls', 'Api\HomeController@statusAllCalls');
     Route::get('/admin/status-calls-solvers', 'Api\HomeController@callsUserSolver');
     Route::get('/status-calls-auth', 'Api\HomeController@callsUserAuth');
