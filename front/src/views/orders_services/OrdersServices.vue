@@ -21,6 +21,7 @@
     </template>
 
     <template v-slot:default="props">
+      <Paginations :calls="calls"></Paginations>
       <v-row>
         <v-col v-for="(item, i) in props.items" :key="i" cols="12">
           <v-progress-circular
@@ -35,47 +36,15 @@
     </template>
 
     <template v-slot:footer>
-      <v-row class="mt-2" align="center">
-        <span class="grey--text">Itens por Página</span>
-        <v-menu offset-y>
-          <template v-slot:activator="{ on }">
-            <v-btn dark text color="primary" class="ml-2" v-on="on">
-              {{ itemsPerPage }}
-              <v-icon>mdi-chevron-down</v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-              v-for="(number, index) in itemsPerPageArray"
-              :key="index"
-              @click="updateItemsPerPage(number)"
-            >
-              <v-list-item-title>{{ number }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-
-        <v-spacer></v-spacer>
-
-        <span class="mr-4 grey--text"
-          >Página {{ page }} de {{ numberOfPages }}</span
-        >
-        <v-btn fab dark color="blue darken-3" class="mr-1" @click="formerPage">
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
-        <v-btn fab dark color="blue darken-3" class="ml-1" @click="nextPage">
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-btn>
-      </v-row>
+      <Paginations :calls="calls"></Paginations>
     </template>
   </v-data-iterator>
 </template>
 
 <script>
-// import orders from "./data/orders";
-
 import OrderService from "./components/OrderService";
 import DialogAdd from "./components/dialogs/DialogAdd";
+import Paginations from "./components/Paginations";
 
 export default {
   created() {
@@ -83,25 +52,24 @@ export default {
       this.$store.dispatch("allNotifications");
       this.$store.dispatch("loadUsers");
       this.loading = false;
+      this.concatItems();
     });
   },
   data() {
     return {
-      // search: "",
       loading: true,
-      // itemsPerPage: 2,
-      // page: 1,
-      itemsPerPageArray: [1, 2, 4, 8, 12],
     };
   },
-  components: { OrderService, DialogAdd },
+  components: { OrderService, DialogAdd, Paginations },
   computed: {
     calls() {
       return this.$store.getters.calls;
     },
-    numberOfPages() {
-      return Math.ceil(this.calls.length / this.itemsPerPage);
+
+    users() {
+      return this.$store.getters.users;
     },
+
     itemsPerPage: {
       get() {
         return this.$store.getters.getItemsPerPage;
@@ -128,15 +96,12 @@ export default {
     },
   },
   methods: {
-    nextPage() {
-      if (this.page + 1 <= this.numberOfPages) this.page += 1;
-    },
-    formerPage() {
-      if (this.page - 1 >= 1) this.page -= 1;
-    },
-    updateItemsPerPage(number) {
-      this.page = 1;
-      this.itemsPerPage = number;
+    concatItems() {
+      this.calls.forEach((call) => {
+        call.from = this.users.find(
+          (user) => user.id === call.created_by
+        ).profile.school;
+      });
     },
   },
 };

@@ -6,6 +6,7 @@
       </v-container>
     </v-main>
     <layout-default v-else>
+      <OnScroll></OnScroll>
       <router-view />
     </layout-default>
   </v-app>
@@ -13,9 +14,10 @@
 
 <script>
 import LayoutDefault from "./components/template/LayoutDefault";
+import OnScroll from './components/OnScroll'
 
 export default {
-  components: { LayoutDefault },
+  components: { LayoutDefault, OnScroll },
 };
 </script>
 

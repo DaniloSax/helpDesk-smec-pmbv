@@ -35,29 +35,50 @@
             ></v-text-field>
           </template>
 
+          <template v-slot:item.statu="{ item }">
+            <v-chip :color="colorStatus(item.statu)">
+              {{ item.statu.toUpperCase() }}
+            </v-chip>
+          </template>
+
+          <template v-slot:item.school="{ item }">
+            {{ item.from }}
+          </template>
+
           <template v-slot:item.actions="{ item }">
-            <v-btn icon color="primary" @click="toDetailsCall(item.id)">
+            <v-btn
+              icon
+              color="primary"
+              @click="toDetailsCall(item.id)"
+              :disabled="!isAdmin"
+            >
               <v-icon>mdi-card-account-details</v-icon>
             </v-btn>
           </template>
         </v-data-table>
       </v-card-text>
+
+      <!-- {{ customFilterSector }} -->
     </v-card>
   </v-dialog>
 </template>
  
  <script>
-import {} from "vuex";
+import GlobalMixins from "@/mixins/globalMixins";
+import AcessControllerMixins from "@/mixins/AcessControllerMixins";
 
 export default {
-  async created() {
+  async mounted() {
     let calls = await this.$store.dispatch(
       "detailsCallsPerSolver",
       this.solver.id
     );
     this.calls = calls.data;
+    this.concatItems();
+    console.log("novo call", this.calls);
   },
   props: ["solver"],
+  mixins: [GlobalMixins, AcessControllerMixins],
   data() {
     return {
       dialog: true,
@@ -80,6 +101,11 @@ export default {
           value: "statu",
         },
         {
+          text: "Setor de origem",
+          align: "start",
+          value: "from",
+        },
+        {
           text: "Ações",
           align: "start",
           value: "actions",
@@ -97,6 +123,14 @@ export default {
         params: { id, solver: this.solver },
       });
     },
+
+    concatItems() {
+      this.calls.forEach((call) => {
+        call.from = this.users.find(
+          (user) => user.id === call.created_by
+        ).profile.school;
+      });
+    },
   },
   computed: {
     search: {
@@ -106,6 +140,10 @@ export default {
       set(value) {
         this.$store.commit("updateSerach", value);
       },
+    },
+
+    users() {
+      return this.$store.getters.users;
     },
 
     numberOfPages() {

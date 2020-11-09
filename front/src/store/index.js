@@ -62,6 +62,7 @@ export default new Vuex.Store({
         updatePage(state, payload) {
             state.pageCalls = payload
         },
+
     },
 
     getters: {

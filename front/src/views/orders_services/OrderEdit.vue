@@ -109,13 +109,6 @@ import GlobalMixins from "@/mixins/globalMixins";
 import ToastMsg from "../../components/ToastMsg";
 
 export default {
-  // beforeRouteEnter(to, from, next) {
-  //   if (from.name === "callsSolver" && this.solver_id) {
-  //     this.backRouter = `home/solver/${this.solver_id}`;
-  //     console.log(this.backRouter)
-  //   }
-  //   next();
-  // },
   created() {
     this.$store.dispatch("loadCalls").then(() => {
       this.$store.dispatch("loadImagesCall", this.id).then((items) => {
@@ -123,12 +116,6 @@ export default {
           this.responses = responses ? responses : "";
           this.images = items != "" ? items : null;
           this.newCall = this.call;
-          // if (this.solver) {
-          //   this.backRouter = this.$router.push({
-          //     name: "callsSolver",
-          //     params: { id: this.solver.id, solver: this.solver },
-          //   });
-          // }
         });
       });
     });
