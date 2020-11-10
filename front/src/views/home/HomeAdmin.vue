@@ -120,7 +120,6 @@ export default {
           }
         });
       });
-      console.log("solvers", solvers);
       return solvers;
     },
   },

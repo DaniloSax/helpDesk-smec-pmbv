@@ -8,14 +8,10 @@
           @mouseleave="mouseLeave"
           v-on="on"
         >
-          <v-img
-            :src="solver.profile.photo || srcDefalt"
-            :height="height"
-            width="100"
-          ></v-img>
+          <img :src="srcDefalt" :height="height" width="100" />
         </v-avatar>
         <v-rating
-          :value="calculatePoints(solver.id) || 0"
+          :value="calculatePoints(solver.id)"
           color="yellow accent-4"
           background-color="yellow accent-4"
           hover
@@ -33,13 +29,21 @@
         </span>
       </div>
     </v-tooltip>
-
   </div>
 </template>
  
  <script>
 import { mapGetters } from "vuex";
+
 export default {
+  created() {
+    if (!this.solver.profile.photo) {
+      this.srcDefalt = require("@/assets/images/profile.png");
+    } else {
+      this.srcDefalt = this.solver.profile.photo;
+    }
+    console.log(this.srcDefalt);
+  },
   props: {
     solver: { type: Object, require: true },
   },
@@ -91,7 +95,7 @@ export default {
 
         let result = ratings.reduce((acum, item) => {
           return (acum += item) / ratings.length;
-        });
+        }, 0);
 
         return result;
       }
