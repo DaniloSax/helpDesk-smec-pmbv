@@ -15,7 +15,7 @@
           ></v-img>
         </v-avatar>
         <v-rating
-          :value="calculatePoints(solver.id)"
+          :value="calculatePoints(solver.id) || 0"
           color="yellow accent-4"
           background-color="yellow accent-4"
           hover
@@ -33,6 +33,7 @@
         </span>
       </div>
     </v-tooltip>
+
   </div>
 </template>
  
