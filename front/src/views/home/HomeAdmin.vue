@@ -34,9 +34,22 @@
           </v-col>
           <v-col :cols="$vuetify.breakpoint.mobile ? '' : 4">
             <v-card elevation="8" color="white">
-              <!-- <v-card-title> Total de chamados </v-card-title> -->
+              <v-card-title>
+                <v-chip class="ma-2 headline" color="blue lighten-5"
+                  >Total: {{ calls.length }} Chamados</v-chip
+                >
+              </v-card-title>
               <v-card-text>
-                <chart-pie :chart-data="collectionChartPie" :height="350" />
+                <chart-pie :chart-data="collectionChartPie" :height="300" />
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col>
+            <v-card elevation="8" color="white">
+              <v-card-text>
+                <v-avatar size="100" color="red" @mousemove="getMove($event)">
+                  <img src="../../assets/images/profile.png" alt="alt" />
+                </v-avatar>
               </v-card-text>
             </v-card>
           </v-col>
@@ -54,10 +67,8 @@ import { mapGetters } from "vuex";
 export default {
   async created() {
     this.loaded = true;
-    // if (!this.getUsers) {
-      console.log('users nao carregado')
-      this.$store.dispatch("loadUsers");
-    // }
+    this.$store.dispatch("loadUsers");
+    this.calls = await this.$store.dispatch("loadCalls");
     await this.$store.dispatch("statusAllCalls").then((statusAllCalls) => {
       this.$store.dispatch("callPerUserSolver").then(() => {
         this.statusAllCalls = statusAllCalls;
@@ -75,6 +86,7 @@ export default {
       statusAllCalls: null,
       callPerUser: null,
       loaded: false,
+      calls: null,
     };
   },
   components: { ChartPie, ChartBar },

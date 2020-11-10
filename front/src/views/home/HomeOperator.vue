@@ -4,7 +4,7 @@
       <v-card-title class="app-bar-color mb-5">
         <div class="white--text d-flex flex-column">
           <span class="headline">Bem Vindo</span>
-          <p class="subtitle-1">Monitore o andamento dos seus chamados</p>
+          <p class="subtitle-1">Olá! Desejamos uma ótima experiência</p>
         </div>
       </v-card-title>
 

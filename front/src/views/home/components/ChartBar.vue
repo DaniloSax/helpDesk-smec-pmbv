@@ -31,6 +31,19 @@ export default {
           event.target.style.cursor = chartElement[0] ? "pointer" : "default";
         },
       },
+      // scales: {
+      //   yAxes: [
+      //     {
+      //       ticks: {
+      //         callback: function (value, index, values) {
+      //           console.log(index, value ,values)
+      //           console.log(this.chartData)
+      //           return value;
+      //         },
+      //       },
+      //     },
+      //   ],
+      // },
     });
   },
 };

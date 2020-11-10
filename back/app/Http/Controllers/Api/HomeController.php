@@ -96,10 +96,10 @@ class HomeController extends Controller
 
         return response()->json([
             'concluded' => ['value' => $user->calls()->where('statu', 'concluído')->count(), 'color' => '#C6FF00'],
-            'paralyzed' => ['value' => $user->calls()->where('statu', 'paralisado')->count(), 'color' => '#EF9A9A'],
+            'paralyzed' => ['value' => $user->calls()->where('statu', 'paralisado')->count(), 'color' => '#FFEB3B'],
             'canceled' => ['value' => $user->calls()->where('statu', 'cancelado')->count(), 'color' => '#BBDEFB'],
-            'late' => ['value' => $user->calls()->where('statu', 'atrasado')->count(), 'color' => '#E6EE9C'],
-            'starting' => ['value' => $user->calls()->where('statu', 'a iniciar')->count(), 'color' => '#B2DFDB'],
+            'late' => ['value' => $user->calls()->where('statu', 'atrasado')->count(), 'color' => '#EF9A9A'],
+            'starting' => ['value' => $user->calls()->where('statu', 'a iniciar')->count(), 'color' => '#43A047'],
             'progress' => ['value' => $user->calls()->where('statu', 'andamento')->count(), 'color' => '#FFF9C4'],
         ]);
     }
