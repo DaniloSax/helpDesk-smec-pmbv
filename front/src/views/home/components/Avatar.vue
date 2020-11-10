@@ -85,7 +85,7 @@ export default {
           .map((item) => {
             if (item.rating > 0) {
               return ratings.push(parseFloat(item.rating));
-            }
+            } else return [];
           });
 
         let result = ratings.reduce((acum, item) => {
