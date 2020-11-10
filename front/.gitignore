@@ -1,4 +1,4 @@
 /node_modules
 /prototipo
 npm-debug.log
-/dist
+#/dist
