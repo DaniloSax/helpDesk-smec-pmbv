@@ -3,9 +3,6 @@ import axios from 'axios'
 export default {
     state: {
         users: [],
-        roles: [],
-        // errors: [],
-        // toastActive: false,
     },
     mutations: {
         setUsers(state, users) {

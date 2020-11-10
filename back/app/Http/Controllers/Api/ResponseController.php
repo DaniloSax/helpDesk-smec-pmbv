@@ -19,7 +19,7 @@ class ResponseController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(['responses' => Response::all()]);
     }
 
 
