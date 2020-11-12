@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.30deb7ca2f8e3ad46bfc2e13d2305d62.js"
+  "/precache-manifest.faf17366c5b947ef38d2eb1cbfd24803.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "HelpDesk-vuejs"});
