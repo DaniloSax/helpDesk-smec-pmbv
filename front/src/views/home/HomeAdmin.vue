@@ -48,7 +48,17 @@
         <v-row>
           <v-col cols="12">
             <v-card elevation="8" color="white">
-              <v-card-title> Liga da Justiça </v-card-title>
+              <v-card-title>
+                <div class="d-flex flex-column">
+                  <span>Solucionadores</span>
+                  <span class="body-2">
+                    Baseado nas pontuações das responstas enviadas aos
+                    operadores. <br />
+                    A contagem inicia-se a partir de 5 notas
+                  </span>
+                </div>
+              </v-card-title>
+              <v-card-subtitle class="pt-0 mt-0"> </v-card-subtitle>
               <v-card-text class="d-lg-flex justify-lg-space-around flex-wrap">
                 <Avatar
                   v-for="(solver, i) in solvers"
@@ -60,6 +70,12 @@
           </v-col>
         </v-row>
       </v-card-text>
+
+      <v-card-actions class="d-flex justify-end">
+        <span class="body-2">
+          <DialogSignature />
+        </span>
+      </v-card-actions>
     </v-card>
   </v-container>
 </template>
@@ -68,6 +84,7 @@
 import ChartPie from "./components/ChartPie";
 import ChartBar from "./components/ChartBar";
 import Avatar from "./components/Avatar";
+import DialogSignature from "./components/DialogSignature";
 import { mapGetters } from "vuex";
 
 export default {
@@ -96,7 +113,7 @@ export default {
       calls: null,
     };
   },
-  components: { ChartPie, ChartBar, Avatar },
+  components: { ChartPie, ChartBar, Avatar, DialogSignature },
   computed: {
     ...mapGetters({
       getcallPerUser: "callPerUserSolver",
