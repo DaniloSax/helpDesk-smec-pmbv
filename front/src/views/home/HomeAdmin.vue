@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <router-view></router-view>
-    <v-card tile>
+    <v-card tile color="background-card">
       <v-card-title class="app-bar-color">
         <div class="white--text d-flex flex-column">
           <span class="headline">Bem Vindo</span>
@@ -16,58 +16,50 @@
         color="primary"
       ></v-progress-linear>
 
-      <v-img
-        v-else
-        :max-height="!$vuetify.breakpoint.mobile ? '800' : ''"
-        class="grey lighten-2"
-        src="@/assets/images/background_solversStar.jpg"
-      >
-        <v-card-text>
-          <v-row
-            class="d-flex align-center"
-            :class="$vuetify.breakpoint.mobile ? 'flex-column' : ''"
-          >
-            <v-col :cols="$vuetify.breakpoint.mobile ? '' : 8">
-              <v-card elevation="8" color="white">
-                <v-card-title>Chamados por solucionador</v-card-title>
-                <v-card-text>
-                  <chart-bar
-                    :height="$vuetify.breakpoint.mobile ? 500 : 150"
-                    :chart-data="collectionChartBar"
-                  />
-                </v-card-text>
-              </v-card>
-            </v-col>
-            <v-col :cols="$vuetify.breakpoint.mobile ? '' : 4">
-              <v-card elevation="8" color="white">
-                <v-card-title>
-                  <v-chip class="ma-2 headline" color="blue lighten-5"
-                    >Total: {{ calls.length }} Chamados</v-chip
-                  >
-                </v-card-title>
-                <v-card-text>
-                  <chart-pie :chart-data="collectionChartPie" :height="300" />
-                </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12">
-              <v-card elevation="8" color="white">
-                <v-card-text
-                  class="d-lg-flex justify-lg-space-around flex-wrap"
+      <v-card-text v-else>
+        <v-row
+          class="d-flex align-center"
+          :class="$vuetify.breakpoint.mobile ? 'flex-column' : ''"
+        >
+          <v-col :cols="$vuetify.breakpoint.mobile ? '' : 8">
+            <v-card elevation="8" color="white">
+              <v-card-title>Chamados por solucionador</v-card-title>
+              <v-card-text>
+                <chart-bar
+                  :height="$vuetify.breakpoint.mobile ? 500 : 150"
+                  :chart-data="collectionChartBar"
+                />
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col :cols="$vuetify.breakpoint.mobile ? '' : 4">
+            <v-card elevation="8" color="white">
+              <v-card-title>
+                <v-chip class="ma-2 headline" color="blue lighten-5"
+                  >Total: {{ calls.length }} Chamados</v-chip
                 >
-                  <Avatar
-                    v-for="(solver, i) in solvers"
-                    :key="i"
-                    :solver="solver"
-                  ></Avatar>
-                </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-img>
+              </v-card-title>
+              <v-card-text>
+                <chart-pie :chart-data="collectionChartPie" :height="300" />
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <v-card elevation="8" color="white">
+              <v-card-title> Liga da Justiça </v-card-title>
+              <v-card-text class="d-lg-flex justify-lg-space-around flex-wrap">
+                <Avatar
+                  v-for="(solver, i) in solvers"
+                  :key="i"
+                  :solver="solver"
+                ></Avatar>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-card-text>
     </v-card>
   </v-container>
 </template>
@@ -179,4 +171,9 @@ export default {
 </script>
  
  <style>
+.background-card {
+  background: #7F7FD5;
+  background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+  background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+}
 </style>

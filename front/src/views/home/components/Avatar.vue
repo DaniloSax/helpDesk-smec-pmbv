@@ -7,6 +7,7 @@
           @mouseenter="mouseEnter"
           @mouseleave="mouseLeave"
           v-on="on"
+          to="teste"
         >
           <v-img :src="srcDefalt" :height="height" width="100"> </v-img>
         </v-avatar>
@@ -21,7 +22,7 @@
       </template>
 
       <div class="d-flex flex-column align-baseline">
-        <span>
+        <span class="headline text-h6">
           {{ solver.name }}
         </span>
         <span>
@@ -42,7 +43,6 @@ export default {
     } else {
       this.srcDefalt = this.solver.profile.photo;
     }
-    console.log(this.srcDefalt);
   },
   props: {
     solver: { type: Object, require: true },
@@ -81,8 +81,10 @@ export default {
     },
     calculatePoints(id) {
       let ratings = [];
+      let result = 0;
 
-      if (this.responsesOfSolver.length > 0) {
+      // filter solucionador atual e mount array com valores para calculo
+      if (this.responsesOfSolver && this.responsesOfSolver.length > 0) {
         this.responsesOfSolver
           .filter((resp) => {
             return resp.created_by === id;
@@ -93,9 +95,11 @@ export default {
             } else return [];
           });
 
-        let result = ratings.reduce((acum, item) => {
-          return (acum += item) / ratings.length;
-        }, 0);
+        if (ratings.length >= 5) {
+          result = ratings.reduce((acum, item) => {
+            return (acum += item) / ratings.length;
+          }, 0);
+        }
 
         return result;
       }
