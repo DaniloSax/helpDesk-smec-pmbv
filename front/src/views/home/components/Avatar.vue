@@ -8,7 +8,7 @@
           @mouseleave="mouseLeave"
           v-on="on"
         >
-          <img :src="srcDefalt" :height="height" width="100" />
+          <v-img :src="srcDefalt" :height="height" width="100"> </v-img>
         </v-avatar>
         <v-rating
           :value="calculatePoints(solver.id)"
