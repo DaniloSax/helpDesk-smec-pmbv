@@ -1,0 +1,13 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/css/styles.css": "/css/styles.css",
+    "/js/bootstrap.min.js": "/js/bootstrap.min.js",
+    "/js/jquery.min.js": "/js/jquery.min.js",
+    "/js/jquery.easing.min.js": "/js/jquery.easing.min.js",
+    "/js/jquery.magnific-popup.js": "/js/jquery.magnific-popup.js",
+    "/js/popper.min.js": "/js/popper.min.js",
+    "/js/swiper.min.js": "/js/swiper.min.js",
+    "/js/validator.min.js": "/js/validator.min.js",
+    "/js/scripts.js": "/js/scripts.js"
+}

@@ -16,12 +16,16 @@ mix.js('resources/js/app.js', 'public/js')
         //
     ]);
 
-
-mix.styles('resources/css/main.css', 'public/styles.css')
+mix.styles([
+    'resources/css/bootstrap.css',
+    'resources/css/fontawesome-all.css',
+    'resources/css/magnific-popup.css',
+    'resources/css/swiper.css',
+    'resources/css/styles.css',
+], 'public/css/styles.css')
 
 mix.copy([
-    'resources/js/app.js',
-    'resources/js/bootstrap.js',
+    'resources/js/bootstrap.min.js',
     'resources/js/jquery.min.js',
     'resources/js/jquery.easing.min.js',
     'resources/js/jquery.magnific-popup.js',
