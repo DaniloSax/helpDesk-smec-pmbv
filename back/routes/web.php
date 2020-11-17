@@ -30,3 +30,5 @@ use Illuminate\Support\Facades\Route;
 //     Route::put('/{id}', 'Api\CallNotifyController@markOnRead');
 //     Route::put('/all', 'Api\CallNotifyController@allMarkOnRead');
 // });
+
+Route::get('/', 'SiteController@home')->name('site');
