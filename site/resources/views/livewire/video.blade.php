@@ -1,11 +1,11 @@
 <div>
     
     <!-- Video -->
-    <div class="basic-3">
+    <div class="basic-3" id="video">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Check Out The Video</h2>
+                    <h2>Trocando Bobina do Relógio</h2>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
             <div class="row">
@@ -14,7 +14,7 @@
                     <!-- Video Preview -->
                     <div class="image-container">
                         <div class="video-wrapper">
-                            <a class="popup-youtube" href="https://www.youtube.com/watch?v=fLCjQJCekTs" data-effect="fadeIn">
+                            <a class="popup-youtube" href="https://www.youtube.com/watch?v=aFitPeZaFCg" data-effect="fadeIn">
                                 <img class="img-fluid" src="images/video-frame.svg" alt="alternative">
                                 <span class="video-play-button">
                                     <span></span>
@@ -24,7 +24,7 @@
                     </div> <!-- end of image-container -->
                     <!-- end of video preview -->
 
-                    <p>This video will show you a case study for one of our <strong>Major Customers</strong> and will help you understand why your startup needs Evolo in this highly competitive market</p>
+                    <p>Pequena demonstração de como trocar a bobina do equipamento de ponto eletrônico</p>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
         </div> <!-- end of container -->

@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>About The Team</h2>
+                    <h2>Conheça a equipe SISGEP</h2>
                     <p class="p-heading p-large">Meat our team of specialized marketers and business developers which
                         will help you research new products and launch them in new emerging markets</p>
                 </div> <!-- end of col -->
