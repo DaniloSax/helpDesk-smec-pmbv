@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Mail\FeedBack;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'home']);
+
+Route::get('/send-mail', function () {
+    $message = 'mesagem enviada por email via laravel';
+    Mail::to('danilovsdanilo@gmail.com')->send(new FeedBack('Ponto Eletrônico', $message));
+    dd('mensagem enviada!');
+});
