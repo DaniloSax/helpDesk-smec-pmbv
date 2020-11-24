@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -40,46 +41,47 @@ class UserController extends Controller
     {
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'unique:users,email', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'full_name' => ['required', 'string', 'max:255'],
             'school' => ['required'],
             'office' => ['required'],
         ]);
 
-        // $validatedData['password'] = bcrypt($request->password);
+        if ($validatedData) {
 
+            $user = DB::transaction(function () use ($request) {
 
-        $user = DB::transaction(function () use ($request) {
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' =>  bcrypt($request->password),
+                ]);
 
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' =>  bcrypt($request->password),
-            ]);
+                $user->profile()->create($request->only([
+                    'full_name',
+                    'school',
+                    'office',
+                ]));
 
-            $user->profile()->create($request->only([
-                'full_name',
-                'school',
-                'office',
-            ]));
+                $user->assignRole($request->roles);
 
-            $user->assignRole($request->roles);
-
-            foreach ($user->roles as $role) {
-                if ($role->name == 'solucionador') {
-                    $user->profile->update(['driver' => true]);
+                foreach ($user->roles as $role) {
+                    if ($role->name == 'solucionador') {
+                        $user->profile->update(['driver' => true]);
+                    }
                 }
-            }
 
-            return $user;
-        });
-        return response()->json($user);
+                return $user;
+            });
+        }
+
+        return response()->json(['user' => $user], Response::HTTP_OK);
 
 
-        $access_token = $user->createToken('tokenCreateUser');
+        // $access_token = $user->createToken('tokenCreateUser');
 
-        return response(['user' => $user, 'access_token' => $access_token], '200');
+        // return response(['user' => $user, 'access_token' => $access_token], '200');
     }
 
 

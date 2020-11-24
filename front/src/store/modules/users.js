@@ -49,14 +49,12 @@ export default {
             return new Promise((resolve, reject) => {
                 axios.post('users', user, { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
                     .then((resp) => {
-                        // console.log(resp.data)
                         dispatch('loadUsers')
                         return resolve(resp.data)
                     })
                     .catch((error) => {
-                        console.log(error.response.data)
-                        reject(error.response.data)
                         commit('setErrors', error.response.data.errors)
+                        return reject(error.response.data)
                     })
             })
         },

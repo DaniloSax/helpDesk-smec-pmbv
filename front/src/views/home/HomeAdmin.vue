@@ -52,7 +52,7 @@
                 <div class="d-flex flex-column">
                   <span>Solucionadores</span>
                   <span class="body-2">
-                    Baseado nas pontuações das responstas enviadas aos
+                    Baseado nas pontuações das respostas enviadas aos
                     operadores. <br />
                     A contagem inicia-se a partir de 5 notas
                   </span>

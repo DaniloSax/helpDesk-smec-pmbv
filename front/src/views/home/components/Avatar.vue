@@ -95,13 +95,17 @@ export default {
             } else return [];
           });
 
+        console.log("ratings", ratings.length);
+
         if (ratings.length >= 5) {
           result = ratings.reduce((acum, item) => {
-            return (acum += item) / ratings.length;
+            return (acum += item);
           }, 0);
-        }
 
-        return result;
+          return result / ratings.length;
+        } else {
+          return result;
+        }
       }
     },
   },
