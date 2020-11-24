@@ -124,14 +124,14 @@ export default {
   data() {
     return {
       user: {
-        name: "danilo",
-        full_name: "danilo veloso",
-        email: "operador@gmail.com",
-        roles: ["operador"],
-        office: 'analista',
-        school: "Folha",
-        password: 12345687,
-        password_confirmation: 12345678,
+        // name: "danilo",
+        // full_name: "danilo veloso",
+        // email: "operador@gmail.com",
+        // roles: ["operador"],
+        // office: 'analista',
+        // school: "Folha",
+        // password: 12345687,
+        // password_confirmation: 12345678,
       },
     };
   },
