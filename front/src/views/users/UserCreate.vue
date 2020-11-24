@@ -18,7 +18,7 @@
       <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />
       <AlertMsg v-if="msg.errors || msg.success" :msg="msg" />
 
-      <form-create :loading="loading" @submit="storeUser" />
+      <form-create :loading="loading" @submit="storeUser($event)" />
     </template>
   </card-default>
 </template>
@@ -26,8 +26,8 @@
  <script>
 import FormCreate from "./components/forms/FormCreate";
 import CardDefault from "@/components/Card";
-import AlertMsg from "../../components/AlertMsg";
 import ToastMsg from "../../components/ToastMsg";
+import AlertMsg from "../../components/AlertMsg";
 
 import GlobalMixin from "../../mixins/globalMixins";
 
@@ -41,8 +41,8 @@ export default {
   components: {
     FormCreate,
     CardDefault,
-    AlertMsg,
     ToastMsg,
+    AlertMsg,
   },
   mixins: [GlobalMixin],
   methods: {
@@ -51,22 +51,15 @@ export default {
       this.$store
         .dispatch("storeUser", event)
         .then((user) => {
-          this.loading = false;
-          return this.$router.replace({
+          this.$router.replace({
             name: "usersEdit",
             params: { id: user.id },
           });
         })
         .catch((error) => {
-          console.log(error);
           this.getMsgError(error);
-          this.loading = false;
-        });
-    },
-  },
-  computed: {
-    errors() {
-      return this.$store.getters.errorsUser;
+        })
+        .finally(() => (this.loading = false));
     },
   },
 };

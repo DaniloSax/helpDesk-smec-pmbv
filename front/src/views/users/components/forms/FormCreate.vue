@@ -1,10 +1,11 @@
  <template>
-  <validation-observer v-slot="{invalid}">
+ <!-- v-slot="{ invalid }" -->
+  <validation-observer >
     <v-form>
       <v-col cols="12">
         <v-row>
           <v-col cols="6">
-            <validation-provider rules="required" v-slot="{errors}">
+            <validation-provider rules="required" v-slot="{ errors }">
               <v-text-field
                 label="Nome do usuário"
                 type="text"
@@ -14,7 +15,7 @@
             </validation-provider>
           </v-col>
           <v-col cols="6">
-            <validation-provider rules="required" v-slot="{errors}">
+            <validation-provider rules="required" v-slot="{ errors }">
               <v-text-field
                 label="Nome Completo"
                 v-model="user.full_name"
@@ -26,7 +27,7 @@
 
         <v-row>
           <v-col cols="3">
-            <validation-provider rules="required|email" v-slot="{errors}">
+            <validation-provider rules="required|email" v-slot="{ errors }">
               <v-text-field
                 label="Email"
                 type="text"
@@ -36,7 +37,7 @@
             </validation-provider>
           </v-col>
           <v-col cols="4">
-            <validation-provider rules="required" v-slot="{errors}">
+            <validation-provider rules="required" v-slot="{ errors }">
               <v-select
                 :items="roles"
                 label="Função no Sistema"
@@ -48,7 +49,7 @@
             </validation-provider>
           </v-col>
           <v-col cols="3">
-            <validation-provider rules="required" v-slot="{errors}">
+            <validation-provider rules="required" v-slot="{ errors }">
               <!-- mudar "escola de origem" pra "setor de origem" -->
               <v-text-field
                 label="Setor de Origem"
@@ -58,15 +59,23 @@
             </validation-provider>
           </v-col>
           <v-col cols="2">
-            <validation-provider rules="required" v-slot="{errors}">
-              <v-text-field label="Cargo" v-model="user.office" :error-messages="errors[0]"></v-text-field>
+            <validation-provider rules="required" v-slot="{ errors }">
+              <v-text-field
+                label="Cargo"
+                v-model="user.office"
+                :error-messages="errors[0]"
+              ></v-text-field>
             </validation-provider>
           </v-col>
         </v-row>
 
         <v-row>
           <v-col cols="6">
-            <validation-provider rules="required|min:8" vid="confirmation" v-slot="{errors}">
+            <validation-provider
+              rules="required|min:8"
+              vid="confirmation"
+              v-slot="{ errors }"
+            >
               <v-text-field
                 label="Senha"
                 type="password"
@@ -77,7 +86,10 @@
             </validation-provider>
           </v-col>
           <v-col cols="6">
-            <validation-provider rules="required|confirmed:confirmation" v-slot="{errors}">
+            <validation-provider
+              rules="required|confirmed:confirmation"
+              v-slot="{ errors }"
+            >
               <v-text-field
                 label="Confirme a senha"
                 type="password"
@@ -89,12 +101,13 @@
         </v-row>
         <v-row class="d-flex justify-center">
           <!-- <v-btn @click="$emit('submit', user)" color="red">Salvar</v-btn> -->
+          <!-- :disabled="invalid" -->
           <v-btn
             @click="$emit('submit', user)"
             color="primary"
-            :disabled="invalid"
             :loading="loading"
-          >Salvar</v-btn>
+            >Salvar</v-btn
+          >
         </v-row>
       </v-col>
     </v-form>
@@ -110,7 +123,16 @@ export default {
   props: ["loading"],
   data() {
     return {
-      user: {},
+      user: {
+        name: "danilo",
+        full_name: "danilo veloso",
+        email: "operador@gmail.com",
+        roles: ["operador"],
+        office: 'analista',
+        school: "Folha",
+        password: 12345687,
+        password_confirmation: 12345678,
+      },
     };
   },
   components: { ValidationProvider, ValidationObserver },

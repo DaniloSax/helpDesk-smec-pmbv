@@ -12,9 +12,9 @@ export default {
         setRoles(state, roles) {
             state.roles = roles
         },
-        setErrors(state, errors) {
-            state.errors = errors
-        }
+        // setErrors(state, errors) {
+        //     state.errors = errors
+        // }
     },
     actions: {
         loadUsers({ commit }) {
@@ -45,15 +45,17 @@ export default {
             })
         },
 
-        storeUser({ dispatch, commit }, user) {
+        storeUser({ dispatch }, user) {
+            console.log('chegou no dispatch')
             return new Promise((resolve, reject) => {
-                axios.post('users', user, { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
+                axios.post('users', user, {
+                        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+                    })
                     .then((resp) => {
                         dispatch('loadUsers')
                         return resolve(resp.data)
                     })
                     .catch((error) => {
-                        commit('setErrors', error.response.data.errors)
                         return reject(error.response.data)
                     })
             })
@@ -64,7 +66,6 @@ export default {
                         headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
                     })
                     .then((resp) => {
-                        console.log(resp.data)
                         dispatch('loadUsers')
                         commit('notCommit')
                         resolve(resp.data)
@@ -117,6 +118,6 @@ export default {
             return state.users.find(user => user.id == id)
         },
         roles: (state) => state.roles,
-        errorsUser: (state) => state.errors,
+        // errorsUser: (state) => state.errors,
     },
 }

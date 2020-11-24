@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -40,13 +41,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'unique:users,email', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name' => ['required', 'string', 'max:255', 'unique:users,name'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['min:8', 'confirmed'],
+            'password_confirmation' => ['min:8'],
             'full_name' => ['required', 'string', 'max:255'],
-            'school' => ['required'],
-            'office' => ['required'],
+            'school' => ['required', 'string', 'max:255'],
+            'office' => ['required', 'string', 'max:255'],
         ]);
+
 
         if ($validatedData) {
 
@@ -76,12 +79,7 @@ class UserController extends Controller
             });
         }
 
-        return response()->json(['user' => $user], Response::HTTP_OK);
-
-
-        // $access_token = $user->createToken('tokenCreateUser');
-
-        // return response(['user' => $user, 'access_token' => $access_token], '200');
+        return response()->json($user);
     }
 
 
