@@ -1,8 +1,9 @@
  <template>
   <v-dialog v-model="dialog" max-width="900">
     <v-card v-click-outside="redirectHome">
-      <v-card-title class="headline">
-        Chamados de {{ solver.name }}
+      <v-card-title class=" d-flex flex-column">
+        <span class="headline"> Chamados de {{ solver.name }} </span>
+        <span class="subtitle-1">Total: {{ calls ? calls.length : 'Carregando' }} Chamados</span>
       </v-card-title>
 
       <v-card-text>
