@@ -1,6 +1,5 @@
  <template>
- <!-- v-slot="{ invalid }" -->
-  <validation-observer >
+  <validation-observer v-slot="{ invalid }">
     <v-form>
       <v-col cols="12">
         <v-row>
@@ -100,12 +99,11 @@
           </v-col>
         </v-row>
         <v-row class="d-flex justify-center">
-          <!-- <v-btn @click="$emit('submit', user)" color="red">Salvar</v-btn> -->
-          <!-- :disabled="invalid" -->
           <v-btn
             @click="$emit('submit', user)"
             color="primary"
             :loading="loading"
+            :disabled="invalid"
             >Salvar</v-btn
           >
         </v-row>
