@@ -7,11 +7,13 @@ import ServicesRouters from './modules/ServicesRouters'
 import CallsRouters from './modules/CallsRouters'
 import ProfileRouters from './modules/ProfileRoutes'
 import HelpersRouters from './modules/HelpersRoutes'
+import ChatRouter from './modules/Chat'
 
 import Home from '@/views/home/ControllerHome'
 import Login from '@/views/login/Login'
 import Unauthorized from '@/views/aborts/401'
 import CallsPerSolver from '@/views/home/CallsPerSolvers'
+
 
 
 
@@ -56,6 +58,7 @@ const routes = [{
     ...CallsRouters,
     ...ProfileRouters,
     ...HelpersRouters,
+    ...ChatRouter,
 
     { name: 'error401', path: '/unauthorized', component: Unauthorized },
     { path: '*', component: Home },

@@ -9,7 +9,6 @@ import './plugins/vee-validate'
 import './registerServiceWorker'
 import './plugins/axios'
 
-
 Vue.config.productionTip = false
     // Vue.config.devtools = false
 

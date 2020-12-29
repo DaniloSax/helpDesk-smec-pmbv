@@ -7,7 +7,6 @@
     </v-main>
     <layout-default v-else>
       <OnScroll></OnScroll>
-      <chat> </chat>
       <router-view />
     </layout-default>
   </v-app>
@@ -16,10 +15,9 @@
 <script>
 import LayoutDefault from "./components/template/LayoutDefault";
 import OnScroll from "./components/OnScroll";
-import Chat from "./components/Chat.vue";
 
 export default {
-  components: { LayoutDefault, OnScroll, Chat },
+  components: { LayoutDefault, OnScroll },
 };
 </script>
 
