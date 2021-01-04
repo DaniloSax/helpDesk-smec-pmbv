@@ -6,7 +6,12 @@
       </v-container>
     </v-main>
     <layout-default v-else>
-      <OnScroll></OnScroll>
+      <v-container grid-list-xs class="d-flex justify-space-around">
+        
+        <OnScroll></OnScroll>
+
+        <ContainerChat />
+      </v-container>
       <router-view />
     </layout-default>
   </v-app>
@@ -15,9 +20,10 @@
 <script>
 import LayoutDefault from "./components/template/LayoutDefault";
 import OnScroll from "./components/OnScroll";
+import ContainerChat from "./components/Chat/ContainerChat";
 
 export default {
-  components: { LayoutDefault, OnScroll },
+  components: { LayoutDefault, OnScroll, ContainerChat },
 };
 </script>
 
