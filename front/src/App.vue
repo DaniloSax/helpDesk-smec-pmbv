@@ -10,7 +10,7 @@
         
         <OnScroll></OnScroll>
 
-        <ContainerChat />
+        <ChatContainer />
       </v-container>
       <router-view />
     </layout-default>
@@ -20,10 +20,10 @@
 <script>
 import LayoutDefault from "./components/template/LayoutDefault";
 import OnScroll from "./components/OnScroll";
-import ContainerChat from "./components/Chat/ContainerChat";
+import ChatContainer from "./components/Chat/ChatContainer";
 
 export default {
-  components: { LayoutDefault, OnScroll, ContainerChat },
+  components: { LayoutDefault, OnScroll, ChatContainer },
 };
 </script>
 
