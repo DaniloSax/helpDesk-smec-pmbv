@@ -1,10 +1,10 @@
  <template>
   <v-menu
     top
-    right
+    left
     offset-x
-    :close-on-content-click="closeOnContentClick"
-    transition="slide-x-transition"
+    :close-on-content-click="false"
+    transition="scroll-y-reverse-transition"
   >
     <!-- origin="center center"
     transition="scale-transition" -->
@@ -52,7 +52,6 @@ export default {
         },
       },
       include: ["recent", "people", "activity"],
-      closeOnContentClick: false,
     };
   },
   methods: {

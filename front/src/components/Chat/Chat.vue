@@ -1,36 +1,39 @@
  <template>
   <!-- <v-sheet color="white" elevation="1" height="100%" width="100%"> -->
-  <div>
+  <v-card>
     <v-row class="blue-grey lighten-5">
+      <!-- <v-col cols="4"> -->
+      <!-- </v-col> -->
       <!-- users -->
-      <!-- <v-col>
-      <v-list>
+      <!-- <v-col cols="4"> -->
+      <!-- <v-list>
         <v-list-item v-for="user in users" :key="user.id" @click="() => {}">{{
           user.name
         }}</v-list-item>
-      </v-list>
-    </v-col> -->
+      </v-list> -->
+      <!-- </v-col> -->
 
+        <ChatSideBar />
       <v-col class="d-flex flex-column justify-end">
         <!-- messages -->
         <v-virtual-scroll
           :items="messages"
-          item-height="110%"
+          item-height="90%"
           height="350"
           max-height="200%"
           :bench="benched"
         >
           <template v-slot:default="{ item }">
-            <!-- <div
+            <div
               :ref="item.id"
               :key="item.id"
               class="d-flex"
               :class="
                 item.participantId === 3 ? 'justify-end' : 'justify-start'
               "
-            > -->
+            >
               <v-alert
-              :key="item.id"
+                :key="item.id"
                 :color="
                   item.participantId === 3
                     ? 'primary white--text'
@@ -45,7 +48,7 @@
               >
                 <!-- content -->
                 <!-- <div class="ml-4"> -->
-                  {{ item.content }}
+                {{ item.content }}
                 <!-- </div> -->
                 <!-- timestamp -->
                 <div class="subtitle-2 font-weight-light text-right">
@@ -55,7 +58,7 @@
                   {{ item.timestamp.hour }}:{{ item.timestamp.minute }}H
                 </div>
               </v-alert>
-            <!-- </div> -->
+            </div>
           </template>
         </v-virtual-scroll>
 
@@ -67,16 +70,18 @@
         <ChatFooter @push-message="send($event)" />
       </v-col>
     </v-row>
-  </div>
+  </v-card>
+
   <!-- </v-sheet> -->
 </template>
  
  <script>
 // import ChatEmojis from "./ChatEmojis";
 import ChatFooter from "./ChatFooter";
+import ChatSideBar from "./ChatSideBar";
 
 export default {
-  components: { ChatFooter },
+  components: { ChatFooter, ChatSideBar },
   data() {
     return {
       benched: 2,
@@ -92,8 +97,7 @@ export default {
       ],
       messages: [
         {
-          content:
-            "minha mensagem sendo enviada",
+          content: "minha mensagem sendo enviada",
           myself: false,
           participantId: 1,
           timestamp: {
@@ -107,8 +111,8 @@ export default {
           },
         },
         {
-          
-          content: "Mensagem 1 sendo carregado na lista de mensagens. testando conteudo longo ... testando mais espaços",
+          content:
+            "Mensagem 1 sendo carregado na lista de mensagens. testando conteudo longo ... testando mais espaços",
           myself: true,
           participantId: 3,
           timestamp: {

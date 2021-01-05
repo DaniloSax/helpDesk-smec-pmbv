@@ -14,13 +14,12 @@
       dense
       rounded
       solo
-      clearable
     >
       <template v-slot:append-outer>
         <v-icon
           medium
           color="primary"
-          @click="send()"
+          @click.prevent="send()"
           @keyup.enter="send()"
           :disabled="!message.content"
         >
