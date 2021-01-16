@@ -1,40 +1,72 @@
  <template>
-  <!-- <v-card class="mx-auto" height="350" width="256"> -->
   <v-navigation-drawer
     class="deep-purple accent-4"
     v-model="drawer"
-    height="350"
+    height="100%"
     permanent
-    expand-on-hover
     left
     dark
   >
     <v-list>
-      <v-list-item v-for="(item, index) in items" :key="index" link>
-        <v-list-item-icon>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-item-icon>
-
+      <v-list-item>
         <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
+          <v-list-item-title>
+            <v-text-field
+              v-model="search"
+              placeholder="Buscar"
+              clearable
+              background-color="blue"
+              autofocus
+              rounded
+            ></v-text-field>
+          </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
 
-    <template v-slot:append>
-      <div class="pa-2">
-        <v-btn block> Logout </v-btn>
-      </div>
-    </template>
+    <v-virtual-scroll
+      :bench="0"
+      :items="items"
+      item-height="40%"
+      height="300"
+      max-height="200%"
+    >
+      <template v-slot:default="{ item }">
+        <v-list>
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </template>
+    </v-virtual-scroll>
   </v-navigation-drawer>
-  <!-- </v-card> -->
 </template>
  
  <script>
 export default {
   data() {
     return {
-      items: [{ icon: "mdi-delete", title: "Joana Mendonça" }],
+      search: "",
+      items: [
+        { icon: "mdi-account", title: "Joana Mendonça" },
+        { icon: "mdi-account", title: "Joana Mendonça" },
+        { icon: "mdi-account", title: "Joana Mendonça" },
+        { icon: "mdi-account", title: "Joana Mendonça" },
+        { icon: "mdi-account", title: "Joana Mendonça" },
+        { icon: "mdi-account", title: "Joana Mendonça" },
+        { icon: "mdi-account", title: "Joana Mendonça" },
+        { icon: "mdi-account", title: "Joana Mendonça" },
+        { icon: "mdi-account", title: "Joana Mendonça" },
+        { icon: "mdi-account", title: "Joana Mendonça" },
+        { icon: "mdi-account", title: "Joana Mendonça" },
+        { icon: "mdi-account", title: "Joana Mendonça" },
+      ],
       drawer: false,
     };
   },

@@ -14,11 +14,11 @@
         large
         fixed
         bottom
-        right
       >
         <v-icon dark> mdi-message-text </v-icon>
       </v-btn>
     </template>
+
     <Chat />
   </v-menu>
 </template>

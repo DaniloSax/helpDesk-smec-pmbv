@@ -3,7 +3,7 @@
     <Head />
     <SidebBar />
     <v-main>
-      <v-container>
+      <v-container class="mb-2">
         <!-- ToastErrorNotify será invocado sempre que um novo call ñ existir quando clicar em notificação -->
         <ToastErrorNotify />
         <slot />

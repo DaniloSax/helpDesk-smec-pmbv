@@ -6,12 +6,10 @@
       </v-container>
     </v-main>
     <layout-default v-else>
-      <v-container grid-list-xs class="d-flex justify-space-around">
-        
+
         <OnScroll></OnScroll>
 
-        <ChatContainer />
-      </v-container>
+        <ChatContainer v-if="$route.name !== 'chat'" />
       <router-view />
     </layout-default>
   </v-app>
@@ -23,7 +21,7 @@ import OnScroll from "./components/OnScroll";
 import ChatContainer from "./components/Chat/ChatContainer";
 
 export default {
-  components: { LayoutDefault, OnScroll, ChatContainer },
+  components: { LayoutDefault, OnScroll, ChatContainer }
 };
 </script>
 

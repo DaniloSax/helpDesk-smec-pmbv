@@ -1,5 +1,5 @@
  <template>
-  <v-footer class="d-flex align-baseline blue-grey lighten-3" height="70%">
+  <div class="d-flex align-baseline blue-grey lighten-3" >
     <ChatEmojis @input-emoji="getEmoji" />
 
     <v-text-field
@@ -9,25 +9,26 @@
       :rules="wordsRules"
       counter="5"
       :counter-value="(v) => v.trim().split(' ').length"
+      @keyup.enter="send()"
       hint="limite de 5 palavras"
       filled
       dense
       rounded
       solo
+      autofocus
     >
       <template v-slot:append-outer>
         <v-icon
           medium
           color="primary"
           @click.prevent="send()"
-          @keyup.enter="send()"
           :disabled="!message.content"
         >
           mdi-send
         </v-icon>
       </template>
     </v-text-field>
-  </v-footer>
+  </div>
 </template>
  
  <script>

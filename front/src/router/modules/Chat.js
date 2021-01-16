@@ -1,8 +1,7 @@
-import Chat from '@/components/Chat/Chat'
+import Chat from '@/views/chat/Chat'
 
 export default [{
-        name: 'chat',
-        path: '/chat',
-        component: Chat,
-    },
-];
+    name: 'chat',
+    path: '/chat',
+    component: Chat,
+}, ];

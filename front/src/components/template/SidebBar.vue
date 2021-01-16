@@ -41,6 +41,21 @@
 
         <router-link
           class="remove-link"
+          to="/chat"
+          v-if="isAdmin || isSolver"
+        >
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-message-text</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>BATE-PAPO</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+
+        <router-link
+          class="remove-link"
           to="/configure"
           v-if="isAdmin || isSolver"
         >

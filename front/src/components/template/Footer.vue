@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="footer-color"  absolute app>
+  <v-footer class="footer-color" height="50%"  absolute app>
     <v-row>
       <v-col class="text-center">
         <span class="white--text"
