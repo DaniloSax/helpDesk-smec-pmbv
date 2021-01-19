@@ -11,6 +11,7 @@ import services from './modules/services'
 import calls from './modules/calls/calls'
 import notifications from './modules/notifications'
 import profile from './modules/profile'
+import messages from './modules/calls/messages'
 
 Vue.use(Vuex)
 
@@ -81,5 +82,6 @@ export default new Vuex.Store({
         calls,
         notifications,
         profile,
+        messages
     }
 })

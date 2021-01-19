@@ -1,7 +1,7 @@
  <template>
   <!-- <v-sheet color="white" elevation="1" height="100%" width="100%"> -->
   <v-card min-height="500" elevation="0" tile>
-    <v-row class="blue-grey lighten-5" >
+    <v-row class="blue-grey lighten-5">
       <div class="mb-2">
         <slot name="sidebar"></slot>
       </div>
@@ -68,6 +68,9 @@ import ChatFooter from "./ChatFooter";
 
 export default {
   components: { ChatFooter },
+  props: {
+    messagesProps: { type: Array, required: false },
+  },
   data() {
     return {
       users: [
