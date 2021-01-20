@@ -12,6 +12,7 @@ class MessageController extends Controller
 
     public function getUsersSolvers()
     {
+        // get usuarios solucionadores
         $solvers_users = User::with([
             'roles' => function ($query) {
                 return $query->where('name', 'solucionador');
@@ -22,17 +23,18 @@ class MessageController extends Controller
                 return $user->roles->count() > 0;
             });
 
-            $users = User::with([
-                'roles' => function ($query) {
+        $users = User::with([
+            'roles' => function ($query) {
                 return $query->where('name', '!=', 'solucionador');
             }
-            ])
+        ])
             ->where('id', '!=', auth()->user()->id)
             ->get()
             ->filter(function ($user) {
                 return $user->roles->count() > 0;
             });
-            
+
+        // preparando array
         $all_users = [];
         foreach ($users as $user) {
             array_push($all_users, $user);

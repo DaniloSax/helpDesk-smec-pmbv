@@ -9,15 +9,6 @@
   >
     <v-list>
       <v-list-item>
-        <!-- <v-text-field
-          v-model="search"
-          placeholder="Buscar"
-          clearable
-          background-color="blue"
-          autofocus
-          rounded
-        ></v-text-field> -->
-
         <v-list-item-content>
           <v-list-item-title>
             <v-text-field
@@ -35,17 +26,21 @@
 
     <v-virtual-scroll
       :bench="0"
-      :items="getChatUsers"
+      :items="users"
       item-height="40%"
       height="300"
-      max-height="200%"
+      max-height="100%"
     >
       <template v-slot:default="{ item }">
         <v-list>
+          <v-divider inset></v-divider>
           <v-list-item link>
-            <v-list-item-icon>
+            <v-list-item-action>
               <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
+            </v-list-item-action>
+            <!-- <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon> -->
 
             <v-list-item-content>
               <v-list-item-title>{{ item.name }}</v-list-item-title>
@@ -70,12 +65,21 @@ export default {
 
   computed: {
     ...mapGetters(["getChatUsers"]),
-    // users(){
-    //   return Array.from(this.getChatUsers)
-    // }
+    users() {
+      if (this.search) {
+        return this.getChatUsers.filter((item) => {
+          return this.search
+            .toLowerCase()
+            .split(" ")
+            .every((v) => item.name.toLowerCase().includes(v));
+        });
+      } else {
+        return this.getChatUsers;
+      }
+    },
   },
 };
 </script>
  
- <style>
+ <style scope>
 </style>

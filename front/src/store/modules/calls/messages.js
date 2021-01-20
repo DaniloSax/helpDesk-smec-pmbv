@@ -42,7 +42,6 @@ export default {
                     }).then(resp => {
                         resolve(resp.data.chatUsers)
                         commit('SET_CHAT_USERS', resp.data.chatUsers)
-                        console.log(resp)
                     })
                     .catch(error => {
                         reject(error)
