@@ -53,6 +53,6 @@ Route::post('/profile', 'Api\ProfileController@storagePhoto')->middleware('auth:
 Route::put('/profile/{id}', 'Api\ProfileController@update')->middleware('auth:api');
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('messages', 'Api\MessageController@getMessages');
-    Route::get('users-solvers', 'Api\MessageController@getUsersSolvers');
+    Route::get('chat-users', 'Api\MessageController@getUsersSolvers');
+    Route::get('chat-messages', 'Api\MessageController@getMessages');
 });

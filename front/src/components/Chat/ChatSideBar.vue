@@ -9,6 +9,15 @@
   >
     <v-list>
       <v-list-item>
+        <!-- <v-text-field
+          v-model="search"
+          placeholder="Buscar"
+          clearable
+          background-color="blue"
+          autofocus
+          rounded
+        ></v-text-field> -->
+
         <v-list-item-content>
           <v-list-item-title>
             <v-text-field
@@ -26,7 +35,7 @@
 
     <v-virtual-scroll
       :bench="0"
-      :items="items"
+      :items="getChatUsers"
       item-height="40%"
       height="300"
       max-height="200%"
@@ -35,11 +44,11 @@
         <v-list>
           <v-list-item link>
             <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-title>{{ item.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -49,26 +58,21 @@
 </template>
  
  <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
       search: "",
-      items: [
-        { icon: "mdi-account", title: "Joana Mendonça" },
-        { icon: "mdi-account", title: "Joana Mendonça" },
-        { icon: "mdi-account", title: "Joana Mendonça" },
-        { icon: "mdi-account", title: "Joana Mendonça" },
-        { icon: "mdi-account", title: "Joana Mendonça" },
-        { icon: "mdi-account", title: "Joana Mendonça" },
-        { icon: "mdi-account", title: "Joana Mendonça" },
-        { icon: "mdi-account", title: "Joana Mendonça" },
-        { icon: "mdi-account", title: "Joana Mendonça" },
-        { icon: "mdi-account", title: "Joana Mendonça" },
-        { icon: "mdi-account", title: "Joana Mendonça" },
-        { icon: "mdi-account", title: "Joana Mendonça" },
-      ],
       drawer: false,
     };
+  },
+
+  computed: {
+    ...mapGetters(["getChatUsers"]),
+    // users(){
+    //   return Array.from(this.getChatUsers)
+    // }
   },
 };
 </script>

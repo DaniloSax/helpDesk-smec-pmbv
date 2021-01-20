@@ -6,6 +6,9 @@
       <template v-slot:sidebar>
         <ChatSideBar />
       </template>
+       <template v-slot:content>
+         <ChatContent/>
+       </template>
     </chat>
   </v-container>
   <!-- </v-card-text>
@@ -14,20 +17,24 @@
  
  <script>
 import Chat from "@/components/Chat/Chat";
-import ChatSideBar from "../../components/Chat/ChatSideBar";
+import ChatSideBar from "@/components/Chat/ChatSideBar";
+import ChatContent from "@/components/Chat/ChatContent";
 
 export default {
   mounted() {
-    const { data } = this.$store.dispatch("loadMesages");
-    this.messages = data;
+    // const { data } = this.$store.dispatch("loadMesages");
+    // this.messages = data;
+    this.$store.dispatch("load_chat_user");
   },
   components: {
     Chat,
     ChatSideBar,
+    ChatContent
   },
   data() {
     return {
       messages: [],
+
     };
   },
 };

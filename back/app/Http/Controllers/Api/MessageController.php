@@ -12,17 +12,51 @@ class MessageController extends Controller
 
     public function getUsersSolvers()
     {
-        $usersSolvers = User::with([
+        $solvers_users = User::with([
             'roles' => function ($query) {
-                return $query->name === 'Solucionador';
+                return $query->where('name', 'solucionador');
             }
-        ]);
-        return response()->json(['usersSolvers' => $usersSolvers]);
+        ])
+            ->get()
+            ->filter(function ($user) {
+                return $user->roles->count() > 0;
+            });
+
+            $users = User::with([
+                'roles' => function ($query) {
+                return $query->where('name', '!=', 'solucionador');
+            }
+            ])
+            ->where('id', '!=', auth()->user()->id)
+            ->get()
+            ->filter(function ($user) {
+                return $user->roles->count() > 0;
+            });
+            
+        $all_users = [];
+        foreach ($users as $user) {
+            array_push($all_users, $user);
+        }
+
+        $auth_is_solver = User::find(auth()->user()->id)->roles->contains('name', 'solucionador');
+        $auth_is_admin = User::find(auth()->user()->id)->roles->contains('name', 'administrador');
+
+        if ($auth_is_solver || $auth_is_admin) {
+            return response()->json(['chatUsers' => $all_users]);
+        } else {
+            return response()->json(['chatUsers' => $solvers_users]);
+        }
     }
 
     public function getMessages()
     {
-        $messages = Message::all();
+        $messages = Message::where([
+            ['from', auth()->user()->id],
+            ['to', auth()->user()->id],
+        ])->orWhere([
+            ['to', auth()->user()->id],
+            ['from', auth()->user()->id],
+        ])->get();
         return response()->json(['messages' => $messages]);
     }
 }

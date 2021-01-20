@@ -41,7 +41,7 @@
 
         <router-link
           class="remove-link"
-          to="/chat"
+         :to="{ name: 'chat' }"
           v-if="isAdmin || isSolver"
         >
           <v-list-item>
