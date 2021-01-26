@@ -1,5 +1,5 @@
  <template>
-  <div class="d-flex align-baseline blue-grey lighten-3" >
+  <div class="d-flex align-baseline blue-grey lighten-3">
     <ChatEmojis @input-emoji="getEmoji" />
 
     <v-text-field
@@ -33,6 +33,7 @@
  
  <script>
 import ChatEmojis from "./ChatEmojis";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -45,29 +46,29 @@ export default {
   },
   components: { ChatEmojis },
 
+  computed: {
+    ...mapGetters(["auth", "getcurrentMessages"]),
+  },
+
   methods: {
     getEmoji(event) {
       this.message.content = this.message.content + event.native;
     },
 
     send() {
+      const to = this.getcurrentMessages.map((msg) => msg.to)[0];
+
       const message = {
-        participantId: 3,
+        call_id: 156,
+        from: this.auth.id,
+        to,
         content: this.message.content,
-        timestamp: {
-          year: 2019,
-          month: 3,
-          day: 5,
-          hour: 20,
-          minute: 10,
-          second: 3,
-          millisecond: 123,
-        },
+        created_at: new Date(),
       };
-      if (this.message.content) {
-        this.$emit("push-message", message);
-        this.message.content = "";
-      }
+
+      this.$store.dispatch("send_new_message", message);
+
+      this.message.content = "";
     },
   },
 };

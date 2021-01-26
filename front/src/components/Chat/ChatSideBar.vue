@@ -34,7 +34,7 @@
       <template v-slot:default="{ item }">
         <v-list>
           <v-divider inset></v-divider>
-          <v-list-item link>
+          <v-list-item link @click="setCurrentMessages(item)">
             <v-list-item-action>
               <v-icon>mdi-account</v-icon>
             </v-list-item-action>
@@ -64,7 +64,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getChatUsers"]),
+    ...mapGetters(["getChatUsers", "getcurrentMessages"]),
     users() {
       if (this.search) {
         return this.getChatUsers.filter((item) => {
@@ -76,6 +76,11 @@ export default {
       } else {
         return this.getChatUsers;
       }
+    },
+  },
+  methods: {
+    setCurrentMessages(user) {
+      this.$store.commit("SET_CURRENT_MESSAGE", user);
     },
   },
 };

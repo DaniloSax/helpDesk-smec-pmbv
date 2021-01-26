@@ -6,10 +6,9 @@
       </v-container>
     </v-main>
     <layout-default v-else>
-
-        <OnScroll></OnScroll>
-
-        <!-- <ChatContainer v-if="$route.name !== 'chat'" /> -->
+      <OnScroll></OnScroll>
+<!-- v-if="$route.name !== 'chat'" -->
+      <ChatContainer  />
       <router-view />
     </layout-default>
   </v-app>
@@ -18,10 +17,14 @@
 <script>
 import LayoutDefault from "./components/template/LayoutDefault";
 import OnScroll from "./components/OnScroll";
-// import ChatContainer from "./components/Chat/ChatContainer";
+import ChatContainer from "./components/Chat/ChatContainer";
 
 export default {
-  components: { LayoutDefault, OnScroll }
+  // mounted() {
+  //   this.$store.dispatch("load_chat_user");
+  //   this.$store.dispatch("loadMessages");
+  // },
+  components: { LayoutDefault, OnScroll, ChatContainer },
 };
 </script>
 

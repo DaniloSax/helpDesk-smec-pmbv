@@ -1,9 +1,12 @@
 import axios from 'axios'
+import localforage from 'localforage'
 
 export default {
     state: {
         messages: [],
-        chatUsers: []
+        chatUsers: [],
+        currentMessages: [],
+        sendMessage: false
     },
     mutations: {
         SET_MESSAGES(state, messages) {
@@ -12,10 +15,31 @@ export default {
 
         SET_CHAT_USERS(state, chatUsers) {
             state.chatUsers = chatUsers
+        },
+
+        SET_CURRENT_MESSAGE(state, user) {
+            localforage.getItem('helpDesk').then(item => {
+                const auth = item.login.auth
+
+                state.currentMessages = state.messages.filter(message => {
+                    const authMessage = message.from === auth.id && message.to === user.id
+                    const userMessage = message.from === user.id && message.to === auth.id
+
+                    return authMessage || userMessage
+                })
+
+            })
+
+        },
+
+        SEND_NEW_MESSAGE(state, message) {
+            state.messages.push(message)
+            state.currentMessages.push(message)
+            state.sendMessage = !state.sendMessage
         }
     },
     actions: {
-        loadMesages({ commit }) {
+        loadMessages({ commit }) {
             return new Promise((resolve, reject) => {
                 axios('chat-messages', {
                         headers: {
@@ -48,10 +72,21 @@ export default {
                         console.log(error)
                     })
             })
+        },
+
+        send_new_message({ commit }, message) {
+            return new Promise(() => {
+                commit('SEND_NEW_MESSAGE', message)
+            })
         }
+
     },
     getters: {
         getMessages: (state) => state.messages,
-        getChatUsers: (state) => state.chatUsers
+        getcurrentMessages: (state) => state.currentMessages.sort((a, b) => {
+            return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+        }),
+        getChatUsers: (state) => state.chatUsers,
+        getSendMessage: (state) => state.sendMessage
     },
 }

@@ -1,141 +1,87 @@
  <template>
-  <v-virtual-scroll
-    :bench="0"
-    :items="messages"
+  <!-- <v-virtual-scroll
+    :bench="2"
+    :items="getcurrentMessages"
     :item-height="$vuetify.breakpoint.mobile ? '100' : '110'"
-    height="400"
+    height="450"
     max-height="200%"
+    tag="div"
+    id="scroll-target"
   >
-    <template v-slot:default="{ item }">
-      <v-alert
-        :color="
-          item.participantId === 3
-            ? 'primary white--text'
-            : 'blue-grey lighten-4'
-        "
-        max-width="100%"
-        :value="true"
-        class="rounded-pill ma-3 text-left"
-        :class="item.participantId === 3 ? 'rounded-br-0' : 'rounded-bl-0'"
-      >
-        <!-- content -->
-        <div class="pa-2">
-          {{ item.content }}
-          <!-- timestamp -->
-          <div class="subtitle-2 font-weight-light text-right">
-            {{ item.timestamp.day }}/{{ item.timestamp.month }}/{{
-              item.timestamp.year
-            }}
-            {{ item.timestamp.hour }}:{{ item.timestamp.minute }}H
+    <template v-slot:default="{ item }"> -->
+  <!-- <v-card >
+    <v-card-text > -->
+  <!-- rounded-pill  -->
+  <!-- :class="item.from === auth.id ? 'rounded-br-0' : 'rounded-bl-0'" -->
+  <div style="max-height: 450px; max-width: 100%;" id="scroll-target" class="overflow-y-auto">
+    <v-row v-for="item in getcurrentMessages" :key="item.id" class="">
+      <v-col>
+        <v-alert
+        dense
+          :color="item.from === auth.id ? 'info' : 'blue-grey lighten-4'"
+          max-width="100%"
+          :value="true"
+          rounded="xl"
+          class="text-left"
+          :class="item.from === auth.id ? 'rounded-br-0' : 'rounded-bl-0'"
+        >
+          <!-- content -->
+          <!-- pa-2 -->
+          <div class="text-justify">
+            {{ item.content }}
+            <!-- timestamp -->
+            <div class="subtitle-2 font-weight-light text-right">
+              {{ formatDate(item.created_at) }}
+            </div>
           </div>
-        </div>
-      </v-alert>
-    </template>
-  </v-virtual-scroll>
+        </v-alert>
+      </v-col>
+    </v-row>
+  </div>
+  <!-- </v-card-text>
+  </v-card> -->
+
+  <!-- </template>
+  </v-virtual-scroll> -->
 </template>
  
  <script>
+import { mapGetters } from "vuex";
+import localforage from "localforage";
+import moment from "moment";
+
 export default {
+  mounted() {
+    localforage.getItem("helpDesk").then((item) => {
+      this.auth = item.login.auth;
+      this.scrollToEnd();
+    });
+  },
   data() {
     return {
-      users: [
-        {
-          name: "Arnaldo",
-          id: 1,
-        },
-        {
-          name: "José",
-          id: 2,
-        },
-      ],
-      messages: [
-        {
-          content: "minha mensagem sendo enviada",
-          myself: false,
-          participantId: 1,
-          timestamp: {
-            year: 2019,
-            month: 3,
-            day: 5,
-            hour: 20,
-            minute: 10,
-            second: 3,
-            millisecond: 123,
-          },
-        },
-        {
-          content:
-            "Mensagem 1 sendo carregado na lista de mensagens. testando conteudo longo ... testando mais espaços",
-          myself: true,
-          participantId: 3,
-          timestamp: {
-            year: 2019,
-            month: 4,
-            day: 5,
-            hour: 19,
-            minute: 10,
-            second: 3,
-            millisecond: 123,
-          },
-        },
-        {
-          content: "outra mensagem",
-          myself: false,
-          participantId: 1,
-          timestamp: {
-            year: 2019,
-            month: 5,
-            day: 5,
-            hour: 10,
-            minute: 10,
-            second: 3,
-            millisecond: 123,
-          },
-        },
-        {
-          content: "outra mensagem",
-          myself: false,
-          participantId: 3,
-          timestamp: {
-            year: 2019,
-            month: 5,
-            day: 5,
-            hour: 10,
-            minute: 10,
-            second: 3,
-            millisecond: 123,
-          },
-        },
-        {
-          content: "outra mensagem",
-          myself: false,
-          participantId: 1,
-          timestamp: {
-            year: 2019,
-            month: 5,
-            day: 5,
-            hour: 10,
-            minute: 10,
-            second: 3,
-            millisecond: 123,
-          },
-        },
-        {
-          content: "outra mensagem",
-          myself: false,
-          participantId: 3,
-          timestamp: {
-            year: 2019,
-            month: 5,
-            day: 5,
-            hour: 10,
-            minute: 10,
-            second: 3,
-            millisecond: 123,
-          },
-        },
-      ],
+      auth: {},
     };
+  },
+  computed: {
+    ...mapGetters(["getcurrentMessages", "getSendMessage"]),
+  },
+
+  watch: {
+    getSendMessage() {
+      this.scrollToEnd();
+    },
+  },
+
+  methods: {
+    formatDate(date) {
+      moment.locale("pt-br");
+      return moment(date).format("L LTS");
+    },
+
+    scrollToEnd() {
+      const doc = document.querySelector("#scroll-target ");
+      doc.scrollTop = doc.scrollHeight;
+    },
   },
 };
 </script>

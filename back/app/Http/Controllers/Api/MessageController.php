@@ -52,13 +52,15 @@ class MessageController extends Controller
 
     public function getMessages()
     {
-        $messages = Message::where([
-            ['from', auth()->user()->id],
-            ['to', auth()->user()->id],
-        ])->orWhere([
-            ['to', auth()->user()->id],
-            ['from', auth()->user()->id],
-        ])->get();
+        // $messages = Message::where([
+        //     ['from', auth()->user()->id],
+        //     ['to', auth()->user()->id],
+        // ])->orWhere([
+        //     ['to', auth()->user()->id],
+        //     ['from', auth()->user()->id],
+        // ])->get();
+
+        $messages = Message::all();
         return response()->json(['messages' => $messages]);
     }
 }
