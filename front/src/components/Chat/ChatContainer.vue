@@ -19,46 +19,44 @@
         <v-icon dark> mdi-message-text </v-icon>
       </v-btn>
     </template>
+    
+    <FormValidChat
+      v-if="currentComponent !== 'Chat'"
+      @valid-chat="currentComponent = $event"
+    />
 
-    <!-- <chat>
-      <template v-slot:content>
-        <v-container grid-list-xs>
-          <ChatContent/> -->
-          <keep-alive>
-            <component v-bind:is="currentComponent"></component>
-          </keep-alive>
-        <!-- </v-container>
-      </template>
-    </chat> -->
+    <v-expand-x-transition>
+      <chat v-show="currentComponent === 'Chat'">
+        <template v-slot:content>
+          <v-container grid-list-xs>
+            <ChatContent />
+          </v-container>
+        </template>
+      </chat>
+    </v-expand-x-transition>
   </v-menu>
 </template>
  
  <script>
 import Chat from "./Chat";
 import ChatContent from "./ChatContent";
-// import FormValidChat from './FormValidChat'
+import FormValidChat from "./FormValidChat";
 import { mapGetters } from "vuex";
 
-const ChatComponent = { 
-  template: Chat,
-  content: ChatContent,
-
-}
-
 export default {
+  mounted() {
+    // console.log(Chat);
+  },
   data() {
     return {
       showMenu: false,
-      currentComponent: ChatComponent,
+      currentComponent: "FormValidChat",
     };
-  },
-  render(h){
-    return h(Chat, ChatContent)
   },
   components: {
     Chat,
     ChatContent,
-    // FormValidChat
+    FormValidChat,
   },
   computed: {
     ...mapGetters(["getcurrentMessages"]),
