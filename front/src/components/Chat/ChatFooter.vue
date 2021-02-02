@@ -1,5 +1,8 @@
  <template>
-  <div class="d-flex align-baseline blue-grey lighten-3">
+  <div
+    class="d-flex align-baseline blue-grey lighten-3 pa-3"
+    style="width: 100%; height: 100%"
+  >
     <ChatEmojis @input-emoji="getEmoji" />
 
     <v-text-field
@@ -47,7 +50,7 @@ export default {
   components: { ChatEmojis },
 
   computed: {
-    ...mapGetters(["auth", "getcurrentMessages"]),
+    ...mapGetters(["auth", "getTo"]),
   },
 
   methods: {
@@ -56,14 +59,10 @@ export default {
     },
 
     send() {
-      const to = this.getcurrentMessages.map((msg) => msg.to)[0];
-
       const message = {
-        call_id: 156,
         from: this.auth.id,
-        to,
+        to: this.getTo,
         content: this.message.content,
-        created_at: new Date(),
       };
 
       this.$store.dispatch("send_new_message", message);

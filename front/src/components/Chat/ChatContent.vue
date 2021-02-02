@@ -1,33 +1,40 @@
  <template>
-  <!-- <v-virtual-scroll
-    :bench="2"
-    :items="getcurrentMessages"
-    :item-height="$vuetify.breakpoint.mobile ? '100' : '110'"
-    height="450"
-    max-height="200%"
-    tag="div"
+  <div
+    :style="`height: ${height}; max-height: ${height}; max-width: 100%`"
     id="scroll-target"
+    class="overflow-y-auto pa-0"
   >
-    <template v-slot:default="{ item }"> -->
-  <!-- <v-card >
-    <v-card-text > -->
-  <!-- rounded-pill  -->
-  <!-- :class="item.from === auth.id ? 'rounded-br-0' : 'rounded-bl-0'" -->
-  <div style="max-height: 450px; max-width: 100%;" id="scroll-target" class="overflow-y-auto">
-    <v-row v-for="item in getcurrentMessages" :key="item.id" class="">
-      <v-col>
+    <img
+      v-if="getcurrentMessages.length == 0"
+      src="../../assets/images/no_data.png"
+      height="98%"
+      width="100%"
+    />
+
+    <v-row
+      v-else
+      v-for="(item, i) in getcurrentMessages"
+      :key="item.id"
+      class="pt-0"
+    >
+      <v-col
+        class="'mr-2 d-flex"
+        :class="[
+          i === 0 ? 'pt-3' : 'pa-0 pl-3 pr-3',
+          item.from === auth.id ? 'justify-end' : 'justify-start',
+        ]"
+      >
         <v-alert
-        dense
+          dense
           :color="item.from === auth.id ? 'info' : 'blue-grey lighten-4'"
-          max-width="100%"
+          max-width="70%"
           :value="true"
           rounded="xl"
-          class="text-left"
-          :class="item.from === auth.id ? 'rounded-br-0' : 'rounded-bl-0'"
+          :class="item.from === auth.id ? 'rounded-br-0' : 'rounded-bl-0 '"
         >
           <!-- content -->
-          <!-- pa-2 -->
           <div class="text-justify">
+            <p>{{ findUser(item.from).name }}:</p>
             {{ item.content }}
             <!-- timestamp -->
             <div class="subtitle-2 font-weight-light text-right">
@@ -38,11 +45,6 @@
       </v-col>
     </v-row>
   </div>
-  <!-- </v-card-text>
-  </v-card> -->
-
-  <!-- </template>
-  </v-virtual-scroll> -->
 </template>
  
  <script>
@@ -51,11 +53,14 @@ import localforage from "localforage";
 import moment from "moment";
 
 export default {
+  props: {
+    height: { type: String, required: false, default: "450px" },
+  },
   mounted() {
     localforage.getItem("helpDesk").then((item) => {
       this.auth = item.login.auth;
-      this.scrollToEnd();
     });
+    this.scrollToEnd();
   },
   data() {
     return {
@@ -81,6 +86,10 @@ export default {
     scrollToEnd() {
       const doc = document.querySelector("#scroll-target ");
       doc.scrollTop = doc.scrollHeight;
+    },
+
+    findUser(id) {
+      return this.$store.getters.users.find((user) => user.id === id);
     },
   },
 };

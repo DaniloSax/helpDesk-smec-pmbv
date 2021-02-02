@@ -102,7 +102,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .remove-link {
   text-decoration: none;
 }

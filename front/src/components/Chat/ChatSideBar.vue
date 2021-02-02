@@ -3,6 +3,7 @@
     class="deep-purple accent-4"
     v-model="drawer"
     height="100%"
+    max-height="100%"
     permanent
     left
     dark
@@ -22,33 +23,29 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+
+      <v-list-item-group
+        v-model="selection"
+        class="overflow-y-auto pa-0"
+        style="height: 350px; max-height: 350px; max-width: 100%"
+      >
+        <v-list-item
+          link
+          @click="setCurrentMessages(item)"
+          v-for="item in users"
+          :key="item.id"
+        >
+          <v-list-item-action>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.name }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
+      <v-divider inset class="mr-2"></v-divider>
     </v-list>
-
-    <v-virtual-scroll
-      :bench="0"
-      :items="users"
-      item-height="40%"
-      height="300"
-      max-height="100%"
-    >
-      <template v-slot:default="{ item }">
-        <v-list>
-          <v-divider inset></v-divider>
-          <v-list-item link @click="setCurrentMessages(item)">
-            <v-list-item-action>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-action>
-            <!-- <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon> -->
-
-            <v-list-item-content>
-              <v-list-item-title>{{ item.name }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </template>
-    </v-virtual-scroll>
   </v-navigation-drawer>
 </template>
  
@@ -60,11 +57,13 @@ export default {
     return {
       search: "",
       drawer: false,
+      activeClass: false,
+      selection: "",
     };
   },
 
   computed: {
-    ...mapGetters(["getChatUsers", "getcurrentMessages"]),
+    ...mapGetters(["auth", "getChatUsers", "getcurrentMessages"]),
     users() {
       if (this.search) {
         return this.getChatUsers.filter((item) => {

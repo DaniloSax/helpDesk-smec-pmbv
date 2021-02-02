@@ -3,7 +3,9 @@
     v-model="showMenu"
     :close-on-content-click="false"
     transition="scroll-y-reverse-transition"
-    max-width="50%"
+    max-width="40%"
+    width="40%"
+    max-height="90%"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn
@@ -19,21 +21,26 @@
         <v-icon dark> mdi-message-text </v-icon>
       </v-btn>
     </template>
-    
-    <FormValidChat
-      v-if="currentComponent !== 'Chat'"
-      @valid-chat="currentComponent = $event"
-    />
 
-    <v-expand-x-transition>
-      <chat v-show="currentComponent === 'Chat'">
-        <template v-slot:content>
-          <v-container grid-list-xs>
-            <ChatContent />
-          </v-container>
-        </template>
-      </chat>
-    </v-expand-x-transition>
+    <slot name="content">
+      <FormValidChat
+        v-if="currentComponent !== 'Chat'"
+        @valid-chat="currentComponent = $event"
+      />
+
+      <v-expand-x-transition>
+        <chat v-show="currentComponent === 'Chat'">
+          <template v-slot:content>
+            <v-container grid-list-xs>
+              <v-btn text icon color="primary" @click="currentComponent = ''">
+                <v-icon medium>mdi-arrow-left</v-icon>
+              </v-btn>
+              <ChatContent height="300px" />
+            </v-container>
+          </template>
+        </chat>
+      </v-expand-x-transition>
+    </slot>
   </v-menu>
 </template>
  
@@ -41,12 +48,12 @@
 import Chat from "./Chat";
 import ChatContent from "./ChatContent";
 import FormValidChat from "./FormValidChat";
+
 import { mapGetters } from "vuex";
+import AcessControllerMixins from "@/mixins/AcessControllerMixins";
 
 export default {
-  mounted() {
-    // console.log(Chat);
-  },
+  mixins: [AcessControllerMixins],
   data() {
     return {
       showMenu: false,

@@ -15,13 +15,13 @@ class Messages extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('call_id');
+            // $table->foreignId('call_id');
             $table->foreignId('from');
             $table->foreignId('to');
             $table->text('content');
             $table->timestamps();
 
-            $table->foreign('call_id')->references('id')->on('calls')->onDelete('CASCADE')->onUpdate('CASCADE');
+            // $table->foreign('call_id')->references('id')->on('calls')->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->foreign('from')->references('id')->on('users')->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->foreign('to')->references('id')->on('users')->onDelete('CASCADE')->onUpdate('CASCADE');
         });
@@ -34,6 +34,6 @@ class Messages extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('messages');
     }
 }

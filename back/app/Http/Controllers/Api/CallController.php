@@ -30,7 +30,7 @@ class CallController extends Controller
             }
         }
 
-        $callsOfUser = $user->calls()->orderBy('id', 'desc')->get();
+        $callsOfUser = $user->calls()->with('users')->orderBy('id', 'desc')->get();
         $callsAll = Call::with('users')->orderBy('id', 'desc')->get();
 
         $rolesOfUser = collect($user->roles)->contains('name', 'administrador') ||  collect($user->roles)->contains('name', 'direcionador');

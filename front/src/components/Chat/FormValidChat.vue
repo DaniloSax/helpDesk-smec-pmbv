@@ -1,5 +1,5 @@
  <template>
-  <v-card max-height="100%" height="100%" min-height="500" dark color="primary" >
+  <v-card max-height="100%" height="100%" min-height="500" dark color="primary">
     <v-container>
       <strong>
         Entre com o número do chamado sobre o qual deseja tratar:
@@ -14,6 +14,7 @@
         type="number"
         v-model.number="numberCall"
         label="Digite o número do Chamado"
+        @keydown.enter="validNumberCall"
       ></v-text-field>
       <v-card-actions class="d-flex justify-end">
         <v-btn
@@ -27,26 +28,79 @@
           OK
         </v-btn>
       </v-card-actions>
+
+      <v-alert
+        v-show="showAlert"
+        v-model="showAlert"
+        type="warning"
+        icon="mdi-alert-circle-outline"
+        :value="true"
+        transition="fade-transition"
+        dismissible
+        dense
+      >
+        O chamado de nº {{ numberCallCopy }} não existe.
+      </v-alert>
     </v-container>
   </v-card>
 </template>
  
  <script>
+// import localforage from "localforage";
+
 export default {
   data() {
     return {
       numberCall: null,
+      numberCallCopy: null,
       loading: false,
+      showAlert: false,
     };
   },
   methods: {
     async validNumberCall() {
       this.loading = true;
-      const calls = await this.$store.dispatch("loadCalls");
-      const call = calls.find( call => call.id === this.numberCall)
-      console.log(call)
-      this.$emit("valid-chat", "");
-      this.loading = false;
+      this.alert = false;
+      try {
+        const calls = await this.$store.dispatch("loadCalls");
+
+        const call = calls.find((call) => call.id === this.numberCall);
+
+        if (call) {
+          this.setCurrentMessages(call);
+        } else {
+          this.showAlert = true;
+          this.numberCallCopy = this.numberCall;
+        }
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async setCurrentMessages(call) {
+      await this.$store.dispatch("loadMessages");
+
+      this.$store.commit(
+        "SET_CURRENT_MESSAGE",
+        this.findUserSolverOfCall(call)
+      );
+      this.$emit("valid-chat", "Chat");
+    },
+
+    findUserSolverOfCall(call) {
+      const roles = call.users.map((user) => {
+        return this.$store.getters.usersById(user.id).roles[0];
+      });
+
+      const user = roles
+        .filter((role) => role.name === "solucionador")
+        .map((role) => {
+          return this.$store.getters.usersById(role.pivot.model_id);
+        });
+
+      console.log("findUserSolverOfCall", user[0]);
+
+      return user[0];
     },
   },
 };

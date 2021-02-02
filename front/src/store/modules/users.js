@@ -7,23 +7,20 @@ export default {
     },
     mutations: {
         setUsers(state, users) {
+            console.log('commit users', users)
             state.users = users
         },
         setRoles(state, roles) {
             state.roles = roles
         },
-        // setErrors(state, errors) {
-        //     state.errors = errors
-        // }
     },
     actions: {
         loadUsers({ commit }) {
             return new Promise((resolve, reject) => {
                 axios.get('/users', { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
                     .then((resp) => {
-                        resolve(resp.data)
                         commit('setUsers', resp.data)
-                        return resp.data
+                        return resolve(resp.data)
                     })
                     .catch((error) => {
                         reject(error)
