@@ -8,7 +8,7 @@
     left
     dark
   >
-    <v-list>
+    <v-list >
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title>
@@ -30,6 +30,7 @@
         style="height: 350px; max-height: 350px; max-width: 100%"
       >
         <v-list-item
+        class="border"
           link
           @click="setCurrentMessages(item)"
           v-for="item in users"
@@ -41,10 +42,12 @@
 
           <v-list-item-content>
             <v-list-item-title>{{ item.name }}</v-list-item-title>
+            <!-- <v-list-item-subtitle class="mt-2">
+              <v-divider ></v-divider>
+            </v-list-item-subtitle> -->
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
-      <v-divider inset class="mr-2"></v-divider>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -86,4 +89,7 @@ export default {
 </script>
  
  <style scope>
+ .border{
+   border-top: 0.7px solid rgba(219, 200, 200, 0.616);
+ }
 </style>

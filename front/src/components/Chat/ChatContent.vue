@@ -60,7 +60,6 @@ export default {
     localforage.getItem("helpDesk").then((item) => {
       this.auth = item.login.auth;
     });
-    this.scrollToEnd();
   },
   data() {
     return {

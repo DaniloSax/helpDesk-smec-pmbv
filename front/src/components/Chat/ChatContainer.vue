@@ -4,7 +4,7 @@
     :close-on-content-click="false"
     transition="scroll-y-reverse-transition"
     max-width="40%"
-    width="40%"
+    width="30%"
     max-height="90%"
   >
     <template v-slot:activator="{ on, attrs }">
