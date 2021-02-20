@@ -21,34 +21,22 @@
 import Chat from "@/components/Chat/Chat";
 import ChatSideBar from "@/components/Chat/ChatSideBar";
 import ChatContent from "@/components/Chat/ChatContent";
-// import FormValidChatAdmin from "./FormValidateChatAdmin";
 
 export default {
   async mounted() {
+    await this.$store.dispatch("loadUsers");
     await this.$store.dispatch("load_chat_user");
     await this.$store.dispatch("loadMessages");
-    this.$store.dispatch("loadUsers");
   },
   components: {
     Chat,
     ChatSideBar,
     ChatContent,
-    // FormValidChatAdmin,
   },
   data() {
     return {
       messages: [],
     };
-  },
-  computed: {
-    // toMessage: {
-    //   get() {
-    //     return this.$store.getters.getToMessage;
-    //   },
-    //   set(value) {
-    //     this.$store.commit("UPDATE_TO_MESSAGE", value);
-    //   },
-    // },
   },
 };
 </script>

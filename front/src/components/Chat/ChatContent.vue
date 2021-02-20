@@ -34,7 +34,7 @@
         >
           <!-- content -->
           <div class="text-justify">
-            <p>{{ findUser(item.from).name }}:</p>
+            <p>{{ searchUser(item.from).name }}:</p>
             {{ item.content }}
             <!-- timestamp -->
             <div class="subtitle-2 font-weight-light text-right">
@@ -87,7 +87,7 @@ export default {
       doc.scrollTop = doc.scrollHeight;
     },
 
-    findUser(id) {
+    searchUser(id) {
       return this.$store.getters.users.find((user) => user.id === id);
     },
   },

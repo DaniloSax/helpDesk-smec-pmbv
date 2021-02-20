@@ -31,6 +31,7 @@
         </v-icon>
       </template>
     </v-text-field>
+    {{ messages }}
   </div>
 </template>
  
@@ -39,11 +40,25 @@ import ChatEmojis from "./ChatEmojis";
 import { mapGetters } from "vuex";
 
 export default {
+  async mounted() {
+    await this.$store.dispatch("getAuth");
+
+    window.Echo.private(`user-chat${8}`).listen(
+      "SendMessage",
+      (resp) => {
+        console.log("resposta do Echo", resp.data.message);
+        // this.messages.push(resp)
+      }
+    );
+
+    // console.log('mensagens do ECHo',this.messages)
+  },
   data() {
     return {
       message: {
         content: "",
       },
+      messages: [],
       wordsRules: [(v) => v.trim().split(" ").length <= 5 || "Max 5 palavras"],
     };
   },

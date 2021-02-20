@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        // 'localhost:8080/*',
+        'api/broadcasting/auth'
     ];
 }

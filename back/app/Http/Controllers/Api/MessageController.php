@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\SendMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 
 class MessageController extends Controller
 {
@@ -18,6 +20,7 @@ class MessageController extends Controller
                 return $query->where('name', 'solucionador');
             }
         ])
+            ->where('id', '!=', auth()->user()->id)
             ->get()
             ->filter(function ($user) {
                 return $user->roles->count() > 0;
@@ -40,11 +43,11 @@ class MessageController extends Controller
         foreach ($users as $user) {
             array_push($all_users, $user);
         }
-        
+
         // preparando array usersSolvers
         $usersSolvers = [];
-        foreach ($users as $user) {
-            array_push($usersSolvers, $solvers_users);
+        foreach ($solvers_users as $user) {
+            array_push($usersSolvers, $user);
         }
 
         $auth_is_solver = User::find(auth()->user()->id)->roles->contains('name', 'solucionador');
@@ -80,9 +83,12 @@ class MessageController extends Controller
 
     public function sendMessage(Request $request)
     {
-        Message::create($request->all());
+        $message = Message::create($request->all());
+
+        Event::dispatch(new SendMessage($message));
+
+        // event(new SendMessage($message));
 
         return response('success', 200);
-
     }
 }
