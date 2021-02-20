@@ -59,4 +59,4 @@ Route::middleware('auth:api')->group(function () {
     Route::post('chat-send-message', 'Api\MessageController@sendMessage');
 });
 
-Broadcast::routes();
+Broadcast::routes(['middleware' => 'auth:api']);

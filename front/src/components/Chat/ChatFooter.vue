@@ -43,11 +43,12 @@ export default {
   async mounted() {
     await this.$store.dispatch("getAuth");
 
-    window.Echo.private(`user-chat${8}`).listen(
+    window.Echo.private(`user-chat${this.auth.id}`).listen(
       "SendMessage",
       (resp) => {
-        console.log("resposta do Echo", resp.data.message);
-        // this.messages.push(resp)
+        console.log("resposta do Echo", resp.message);
+        this.messages.push(resp.message)
+        this.$store.dispatch("send_new_message", resp.message);
       }
     );
 

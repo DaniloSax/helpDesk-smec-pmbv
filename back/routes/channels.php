@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Log;
 |
 */
 
-Broadcast::channel('user-chat{id}', function ($user, $id) {
-    Log::info('chegou no channel');
+Broadcast::Channel('user-chat{id}', function ($user, $id) {
+    // Log::info('chegou no channel');
     // return (int) $user->id === (int) $id;
     return true;
 });
