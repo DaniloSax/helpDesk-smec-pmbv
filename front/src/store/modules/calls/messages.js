@@ -55,45 +55,11 @@ export default {
 
         },
 
-        // SET_CURRENT_MESSAGE_PER_CALL(state, message) {
-
-        //     const messages = state.messages.filter(msg => {
-        //         return msg.call_id === message.call_id
-        //     })
-        //     if (messages.length) {
-        //         state.currentMessages = messages
-        //     } else {
-        //         state.currentMessages = []
-        //         state.currentMessages.push(message)
-        //     }
-        // },
-
-        // SET_CURRENT_MESSAGE_PER_CALL_ADMIN(state, message) {
-
-        //     const messages = state.messages.filter(msg => {
-        //         return msg.call_id === message.call_id
-        //     })
-        //     if (messages.length) {
-        //         state.currentMessages = messages
-        //     } else {
-        //         state.currentMessages = []
-        //     }
-        // },
-
-        // CLEAN_CURRENT_MESSAGE(state) {
-        //     state.currentMessages = []
-        // },
-
-
         SEND_NEW_MESSAGE(state, message) {
             state.messages.push(message)
             state.currentMessages.push(message)
             state.sendMessage = !state.sendMessage
         },
-
-        // UPDATE_TO_MESSAGE(state, payload) {
-        //     state.to = payload
-        // }
 
     },
     actions: {

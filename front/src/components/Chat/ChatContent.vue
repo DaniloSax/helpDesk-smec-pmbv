@@ -13,14 +13,14 @@
 
     <v-row
       v-else
-      v-for="(item, i) in getcurrentMessages"
-      :key="item.id"
+      v-for="(item, index) in getcurrentMessages"
+      :key="index"
       class="pt-0"
     >
       <v-col
         class="'mr-2 d-flex"
         :class="[
-          i === 0 ? 'pt-3' : 'pa-0 pl-3 pr-3',
+          index === 0 ? 'pt-3' : 'pa-0 pl-3 pr-3',
           item.from === auth.id ? 'justify-end' : 'justify-start',
         ]"
       >

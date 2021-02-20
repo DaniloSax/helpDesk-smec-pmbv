@@ -31,7 +31,6 @@
         </v-icon>
       </template>
     </v-text-field>
-    {{ messages }}
   </div>
 </template>
  
@@ -48,7 +47,7 @@ export default {
       (resp) => {
         console.log("resposta do Echo", resp.message);
         this.messages.push(resp.message)
-        this.$store.dispatch("send_new_message", resp.message);
+        this.$store.commit("SEND_NEW_MESSAGE", resp.message);
       }
     );
 
