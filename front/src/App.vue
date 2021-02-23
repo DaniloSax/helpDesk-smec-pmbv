@@ -7,8 +7,7 @@
     </v-main>
     <layout-default v-else>
       <OnScroll></OnScroll>
-<!-- v-if="$route.name !== 'chat'" -->
-      <ChatContainer  />
+      <ChatContainer  v-if="$route.name !== 'chat'"/>
       <router-view />
     </layout-default>
   </v-app>

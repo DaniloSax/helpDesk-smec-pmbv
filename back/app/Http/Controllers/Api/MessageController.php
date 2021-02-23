@@ -66,28 +66,11 @@ class MessageController extends Controller
         return response()->json(['messages' => $messages]);
     }
 
-    // public function getMessagesOfCall($call_id, $userFrom, $userTo)
-    // {
-    //     $messages = Message::where([
-    //         ['call_id', $call_id],
-    //         ['from', $userFrom],
-    //         ['to', $userTo],
-    //     ])->orWhere([
-    //         ['call_id', $call_id],
-    //         ['from', $userTo],
-    //         ['to', $userFrom],
-    //     ])->get();
-
-    //     return response()->json(['currentMessages' => $messages]);
-    // }
-
     public function sendMessage(Request $request)
     {
         $message = Message::create($request->all());
 
         Event::dispatch(new SendMessage($message));
-
-        // event(new SendMessage($message));
 
         return response('success', 200);
     }

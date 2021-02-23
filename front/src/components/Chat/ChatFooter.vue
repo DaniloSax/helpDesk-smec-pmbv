@@ -37,19 +37,22 @@
  <script>
 import ChatEmojis from "./ChatEmojis";
 import { mapGetters } from "vuex";
+import localforage from "localforage";
 
 export default {
   async mounted() {
-    await this.$store.dispatch("getAuth");
-
-    window.Echo.private(`user-chat${this.auth.id}`).listen(
-      "SendMessage",
-      (resp) => {
-        console.log("resposta do Echo", resp.message);
-        this.messages.push(resp.message)
-        this.$store.commit("SEND_NEW_MESSAGE", resp.message);
-      }
-    );
+    // await this.$store.dispatch("getAuth");
+    localforage.getItem("helpDesk").then((item) => {
+      const auth = item.login.auth;
+      window.Echo.private(`user-chat${auth.id}`).listen(
+        "SendMessage",
+        (resp) => {
+          console.log("resposta do Echo", resp.message);
+          this.messages.push(resp.message);
+          this.$store.commit("SEND_NEW_MESSAGE", resp.message);
+        }
+      );
+    });
 
     // console.log('mensagens do ECHo',this.messages)
   },
