@@ -79,9 +79,8 @@ export default {
             this.error = resp.data.message;
           }
         })
-        .catch(() => {
+        .finally(() => {
           this.loading = false;
-          console.log("error");
         });
     },
     clearError() {

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import localforage from 'localforage'
+import Vue from 'vue'
 
 export default {
     state: {
@@ -61,6 +62,19 @@ export default {
             state.sendMessage = !state.sendMessage
         },
 
+        ACTIVE_CIRCLE_NOTIFY(state, from) {
+            const index = state.chatUsers.findIndex(u => u.id === from)
+
+            Vue.set(state.chatUsers[index], 'read', false)
+        },
+
+        DEACTIVATE_CIRCLE_NOTIFY(state, to) {
+            const index = state.chatUsers.findIndex(u => u.id === to)
+            console.log(index)
+
+            Vue.set(state.chatUsers[index], 'read', true)
+        }
+
     },
     actions: {
         loadMessages({ commit }) {
@@ -88,8 +102,8 @@ export default {
                             Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                         }
                     }).then(resp => {
-                        resolve(resp.data.chatUsers)
                         commit('SET_CHAT_USERS', resp.data.chatUsers)
+                        return resolve(resp.data.chatUsers)
                     })
                     .catch(error => {
                         reject(error)

@@ -19,6 +19,7 @@ class Messages extends Migration
             $table->foreignId('from');
             $table->foreignId('to');
             $table->text('content');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
 
             // $table->foreign('call_id')->references('id')->on('calls')->onDelete('CASCADE')->onUpdate('CASCADE');

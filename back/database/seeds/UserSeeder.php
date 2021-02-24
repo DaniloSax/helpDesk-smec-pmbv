@@ -15,8 +15,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // Role::create(['name' => 'administrador', 'guard_name' => 'api']);
-
         // user ADMINISTRADOR
         User::create([
             'name' => 'Danilo Veloso',
@@ -29,17 +27,5 @@ class UserSeeder extends Seeder
             factory(Profile::class, 1)->create(['user_id' => $user->id]);
             $user->assignRole('administrador');
         });
-
-        // user DIRECIONADOR
-        // User::create([
-        //     'name' => 'Solucionador',
-        //     'email' => 'solucionador@gmail.com',
-        //     'email_verified_at' => now(),
-        //     'password' =>  bcrypt('danilo123'), 
-        //     'remember_token' => Str::random(10),
-        // ])->each( function ($user){
-        //     factory(Profile::class, 1)->create(['user_id' => $user->id]);
-        //     $user->assignRole('solucionador');
-        // });
     }
 }

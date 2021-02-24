@@ -18,7 +18,6 @@
       dense
       rounded
       solo
-      autofocus
     >
       <template v-slot:append-outer>
         <v-icon
@@ -41,27 +40,25 @@ import localforage from "localforage";
 
 export default {
   async mounted() {
-    // await this.$store.dispatch("getAuth");
     localforage.getItem("helpDesk").then((item) => {
       const auth = item.login.auth;
       window.Echo.private(`user-chat${auth.id}`).listen(
         "SendMessage",
         (resp) => {
-          console.log("resposta do Echo", resp.message);
-          this.messages.push(resp.message);
+          // console.log("resposta do Echo", resp.message.from);
+          
           this.$store.commit("SEND_NEW_MESSAGE", resp.message);
+          this.$store.commit("ACTIVE_CIRCLE_NOTIFY", resp.message.from);
         }
       );
     });
-
-    // console.log('mensagens do ECHo',this.messages)
   },
   data() {
     return {
       message: {
         content: "",
       },
-      messages: [],
+      // messages: [],
       wordsRules: [(v) => v.trim().split(" ").length <= 5 || "Max 5 palavras"],
     };
   },
