@@ -2,10 +2,10 @@ module.exports = {
     "transpileDependencies": [
         "vuetify"
     ],
+
     devServer: {
         host: 'localhost'
     },
-
 
     publicPath: '/',
 
@@ -23,5 +23,17 @@ module.exports = {
         //     swSrc: 'dev/sw.js',
         //     // ...other Workbox options...
         // }
-    }
+    },
+
+    pluginOptions: {
+      quasar: {
+        importStrategy: 'kebab',
+        rtlSupport: true
+      }
+    },
+
+    transpileDependencies: [
+      'vuetify',
+      'quasar'
+    ]
 }
