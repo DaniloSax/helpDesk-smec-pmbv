@@ -61,6 +61,10 @@ export default {
       this.auth = item.login.auth;
     });
   },
+  updated() {
+    this.scrollToEnd();
+  },
+
   data() {
     return {
       auth: {},
@@ -70,11 +74,11 @@ export default {
     ...mapGetters(["getcurrentMessages", "getSendMessage"]),
   },
 
-  watch: {
-    getSendMessage() {
-      this.scrollToEnd();
-    },
-  },
+  // watch: {
+  //   getSendMessage() {
+  //     this.scrollToEnd();
+  //   },
+  // },
 
   methods: {
     formatDate(date) {
@@ -83,8 +87,10 @@ export default {
     },
 
     scrollToEnd() {
-      const doc = document.querySelector("#scroll-target ");
-      doc.scrollTop = doc.scrollHeight;
+      // const doc = document.querySelector("#scroll-target ");
+      // doc.scrollTop = doc.scrollHeight;
+      // $el => elemento raiz deste component
+      this.$el.scrollTop = this.$el.lastElementChild.offsetTop;
     },
 
     searchUser(id) {
