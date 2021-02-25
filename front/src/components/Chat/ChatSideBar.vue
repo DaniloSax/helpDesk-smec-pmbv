@@ -1,59 +1,67 @@
  <template>
-  <v-navigation-drawer
-    class="deep-purple accent-4"
-    v-model="drawer"
-    height="100%"
-    max-height="100%"
-    permanent
-    left
-    dark
-  >
-    <v-list>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>
-            <v-text-field
-              v-model="search"
-              placeholder="Buscar"
-              clearable
-              background-color="blue"
-              rounded
-            ></v-text-field>
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-list-item-group
-        v-model="selection"
-        class="overflow-y-auto pa-0"
-        style="height: 350px; max-height: 350px; max-width: 100%"
-      >
-        <v-list-item
-          class="border"
-          link
-          v-for="item in users"
-          :key="item.id"
-          @click="setCurrentMessages(item)"
-        >
-          <v-list-item-action>
-            <v-icon>mdi-account</v-icon>
-          </v-list-item-action>
-
+  <div>
+    <div :class="isDeskTop ? 'deep-purple accent-4 white--text' : ''">
+      <v-app-bar-nav-icon
+        @click.stop="drawer = !drawer"
+        :class="isDeskTop ? 'white--text' : ''"
+      ></v-app-bar-nav-icon>
+    </div>
+    <v-navigation-drawer
+      class="deep-purple accent-4"
+      v-model="drawer"
+      height="100%"
+      max-height="100%"
+      :permanent="isDeskTop"
+      left
+      dark
+    >
+      <v-list>
+        <v-list-item>
           <v-list-item-content>
-            <v-list-item-title>{{ item.name }}</v-list-item-title>
+            <v-list-item-title>
+              <v-text-field
+                v-model="search"
+                placeholder="Buscar"
+                clearable
+                background-color="blue"
+                rounded
+              ></v-text-field>
+            </v-list-item-title>
           </v-list-item-content>
-          <v-list-item-action>
-            <span
-              class="rounded-circle blue elevation-1"
-              style="height: 15px; width: 15px"
-              v-show="item.read === false"
-            ></span>
-            <!-- {{ item }} -->
-          </v-list-item-action>
         </v-list-item>
-      </v-list-item-group>
-    </v-list>
-  </v-navigation-drawer>
+
+        <v-list-item-group
+          v-model="selection"
+          class="overflow-y-auto pa-0"
+          style="height: 350px; max-height: 350px; max-width: 100%"
+        >
+          <v-list-item
+            class="border"
+            link
+            v-for="item in users"
+            :key="item.id"
+            @click="setCurrentMessages(item)"
+          >
+            <v-list-item-action>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-action>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.name }}</v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-action>
+              <span
+                class="rounded-circle blue elevation-1"
+                style="height: 15px; width: 15px"
+                v-show="item.read === false"
+              ></span>
+              <!-- {{ item }} -->
+            </v-list-item-action>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+  </div>
 </template>
  
  <script>
@@ -69,10 +77,10 @@ export default {
     };
   },
 
-  watch:{
-    'item.read_at'(value){
-      console.log('watch', value)
-    }
+  watch: {
+    "item.read_at"(value) {
+      console.log("watch", value);
+    },
   },
 
   computed: {
@@ -93,6 +101,13 @@ export default {
       } else {
         return this.getChatUsers;
       }
+    },
+
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown;
+    },
+    isDeskTop() {
+      return this.$vuetify.breakpoint.mdAndUp;
     },
   },
   methods: {

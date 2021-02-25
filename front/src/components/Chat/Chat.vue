@@ -1,8 +1,8 @@
  <template>
   <v-card min-height="450px" elevation="0" tile >
     <v-card-text>
-      <v-row class="blue-grey lighten-5">
-        <div class="mb-2">
+      <v-row >
+        <div class="">
           <slot name="sidebar"></slot>
         </div>
         <v-col class="d-flex flex-column justify-end" id="message-container">
