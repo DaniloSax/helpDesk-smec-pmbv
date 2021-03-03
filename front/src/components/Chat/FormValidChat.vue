@@ -88,7 +88,6 @@ export default {
     },
 
     findUserSolverOfCall(call) {
-      console.log(call);
       const user = call.users.map((user) => {
         return this.$store.getters.usersById(user.id);
       });
@@ -99,7 +98,7 @@ export default {
       //     return this.$store.getters.usersById(role.pivot.model_id);
       //   });
 
-      console.log("findUserSolverOfCall", user[0]);
+      // console.log("findUserSolverOfCall", user[0]);
 
       return user[0];
     },

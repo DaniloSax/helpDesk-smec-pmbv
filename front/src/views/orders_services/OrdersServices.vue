@@ -50,7 +50,7 @@ export default {
   created() {
     this.$store.dispatch("loadCalls").then(() => {
       this.$store.dispatch("allNotifications");
-      this.$store.dispatch("loadUsers");
+      // this.$store.dispatch("loadUsers");
       this.loading = false;
       this.concatItems();
     });

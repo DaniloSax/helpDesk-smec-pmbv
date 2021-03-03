@@ -10,7 +10,6 @@ import './registerServiceWorker'
 import './plugins/axios'
 import './plugins/echo'
 
-
 Vue.config.productionTip = false
 
 new Vue({
