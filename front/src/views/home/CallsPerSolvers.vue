@@ -76,7 +76,6 @@ export default {
     );
     this.calls = calls.data;
     this.concatItems();
-    console.log("novo call", this.calls);
   },
   props: ["solver"],
   mixins: [GlobalMixins, AcessControllerMixins],

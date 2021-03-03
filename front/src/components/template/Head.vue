@@ -145,13 +145,14 @@ export default {
     localforage.getItem("helpDesk").then((item) => {
       this.auth = item.login.auth;
       // this.photo = item.login.auth.profile.photo;
-      this.$store.dispatch("allNotifications");
+
       this.downloadPhotoFirebase(this.auth)
-        .then((url) => {
+        .then(async (url) => {
+          await this.$store.dispatch("allNotifications");
           return (this.photo = url);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
           return (this.photo = require("@/assets/images/profile.png"));
         });
     });

@@ -30,10 +30,9 @@ export default {
             return new Promise((resolve, reject) => {
                 return axios.get('/home/admin/status-calls', { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
                     .then(response => {
-                        console.log('return response of dispatch', response.data)
+
                         commit('setDatasStatusCalls', response.data)
-                        resolve(response.data)
-                        return response.data
+                        return resolve(response.data)
                     })
                     .catch(error => {
                         return reject(error)
@@ -45,7 +44,6 @@ export default {
             return new Promise((resolve, reject) => {
                 return axios.get('/home/admin/status-calls-solvers', { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
                     .then(response => {
-                        console.log('return response of dispatch', response.data)
 
                         commit('setcallPerUserSolver', response.data)
 

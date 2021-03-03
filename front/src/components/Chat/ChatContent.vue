@@ -1,21 +1,19 @@
  <template>
   <div
-    :style="`height: ${height}; max-height: ${height}; max-width: 100%`"
+    :style="`height: ${height}; max-height: ${height}; `"
     id="scroll-target"
     class="overflow-y-auto pa-0"
   >
     <img
       v-if="getcurrentMessages.length == 0"
       src="../../assets/images/no_data.png"
-      height="98%"
+      height="100%"
       width="100%"
     />
 
     <v-row
-      v-else
       v-for="(item, index) in getcurrentMessages"
       :key="index"
-      class="pt-0"
     >
       <v-col
         class="'mr-2 d-flex"
@@ -27,9 +25,10 @@
         <v-alert
           dense
           :color="item.from === auth.id ? 'info' : 'blue-grey lighten-4'"
-          max-width="70%"
+          min-width="50%"
           :value="true"
           rounded="xl"
+          class="ml-2 mr-2"
           :class="item.from === auth.id ? 'rounded-br-0' : 'rounded-bl-0 '"
         >
           <!-- content -->
@@ -74,12 +73,6 @@ export default {
     ...mapGetters(["getcurrentMessages", "getSendMessage"]),
   },
 
-  // watch: {
-  //   getSendMessage() {
-  //     this.scrollToEnd();
-  //   },
-  // },
-
   methods: {
     formatDate(date) {
       moment.locale("pt-br");
@@ -87,9 +80,6 @@ export default {
     },
 
     scrollToEnd() {
-      // const doc = document.querySelector("#scroll-target ");
-      // doc.scrollTop = doc.scrollHeight;
-      // $el => elemento raiz deste component
       this.$el.scrollTop = this.$el.lastElementChild.offsetTop;
     },
 

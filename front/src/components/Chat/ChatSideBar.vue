@@ -1,17 +1,12 @@
  <template>
   <div>
-    <div :class="isDeskTop ? 'deep-purple accent-4 white--text' : ''">
-      <v-app-bar-nav-icon
-        @click.stop="drawer = !drawer"
-        :class="isDeskTop ? 'white--text' : ''"
-      ></v-app-bar-nav-icon>
-    </div>
     <v-navigation-drawer
       class="deep-purple accent-4"
       v-model="drawer"
+      absolute
+      temporary
       height="100%"
       max-height="100%"
-      :permanent="isDeskTop"
       left
       dark
     >
@@ -29,11 +24,11 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+          <!-- style="height: 350px; max-height: 350px; max-width: 100%" -->
 
         <v-list-item-group
           v-model="selection"
           class="overflow-y-auto pa-0"
-          style="height: 350px; max-height: 350px; max-width: 100%"
         >
           <v-list-item
             class="border"
@@ -71,16 +66,9 @@ export default {
   data() {
     return {
       search: "",
-      drawer: false,
       activeClass: false,
       selection: "",
     };
-  },
-
-  watch: {
-    "item.read_at"(value) {
-      console.log("watch", value);
-    },
   },
 
   computed: {
@@ -108,6 +96,16 @@ export default {
     },
     isDeskTop() {
       return this.$vuetify.breakpoint.mdAndUp;
+    },
+
+    drawer: {
+      get() {
+        return this.$store.getters.getDrawer;
+      },
+
+      set(value) {
+        this.$store.commit("UPDATE_DRAWER", value);
+      },
     },
   },
   methods: {

@@ -90,8 +90,8 @@ import { mapGetters } from "vuex";
 export default {
   async created() {
     this.loaded = true;
-    this.$store.dispatch("loadUsers");
-    this.$store.dispatch("loadAllResponses");
+    // this.$store.dispatch("loadUsers");
+    // this.$store.dispatch("loadAllResponses");
     this.calls = await this.$store.dispatch("loadCalls");
     await this.$store.dispatch("statusAllCalls").then((statusAllCalls) => {
       this.$store.dispatch("callPerUserSolver").then(() => {

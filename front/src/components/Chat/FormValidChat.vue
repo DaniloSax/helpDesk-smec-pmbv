@@ -88,15 +88,16 @@ export default {
     },
 
     findUserSolverOfCall(call) {
-      const roles = call.users.map((user) => {
-        return this.$store.getters.usersById(user.id).roles[0];
+      console.log(call);
+      const user = call.users.map((user) => {
+        return this.$store.getters.usersById(user.id);
       });
 
-      const user = roles
-        .filter((role) => role.name === "solucionador")
-        .map((role) => {
-          return this.$store.getters.usersById(role.pivot.model_id);
-        });
+      // const user = roles
+      //   .filter((role) => role.name === "solucionador")
+      //   .map((role) => {
+      //     return this.$store.getters.usersById(role.pivot.model_id);
+      //   });
 
       console.log("findUserSolverOfCall", user[0]);
 

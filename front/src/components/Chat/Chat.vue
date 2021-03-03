@@ -1,30 +1,28 @@
  <template>
-  <v-card min-height="450px" elevation="0" tile >
-    <v-card-text>
-      <v-row >
-        <div class="">
-          <slot name="sidebar"></slot>
-        </div>
-        <v-col class="d-flex flex-column justify-end" id="message-container">
-          <!-- messages -->
-          <v-responsive>
-            <slot name="content"></slot>
-          </v-responsive>
+  <v-card min-height="450px" elevation="2">
+   
 
-          <!-- send -->
-        </v-col>
-      </v-row>
-    </v-card-text>
-    <!-- <v-row class="blue-grey lighten-3 card-actions"> -->
-    <v-card-actions class="pa-0">
-      <!-- <v-col> -->
-        <ChatFooter />
+    <!-- <v-card-text class="pa-1"> -->
+        <slot name="top-bar"></slot>
+        <slot name="sidebar"></slot>
+    <v-row>
+      <!-- <v-col sm="6" md="3" class="mr-md-0 pr-md-0"> -->
       <!-- </v-col> -->
-    </v-card-actions>
-    <!-- </v-row> -->
-  </v-card>
 
-  <!-- </v-sheet> -->
+      <!-- <v-col sm="10" md="9" class="ml-md-0 pl-md-0"> -->
+        <!-- messages -->
+        <v-col>
+          <slot name="content"></slot>
+        </v-col>
+          
+        <!-- send -->
+      <!-- </v-col> -->
+    </v-row>
+    <!-- </v-card-text> -->
+    <v-card-actions class="pa-0">
+      <ChatFooter />
+    </v-card-actions>
+  </v-card>
 </template>
  
  <script>
@@ -35,14 +33,10 @@ export default {
   methods: {
     send(event) {
       this.messages.push(event);
-      this.scrollToEnd();
     },
-    scrollToEnd() {
-      const element = document.getElementById("message-container");
-      element.scrollTop = element.scrollHeight;
-      // this.$vuetify.goTo(element);
-    },
+   
   },
+ 
 };
 </script>
  

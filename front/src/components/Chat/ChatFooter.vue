@@ -46,7 +46,7 @@ export default {
       window.Echo.private(`user-chat${auth.id}`).listen(
         "SendMessage",
         (resp) => {
-          // console.log("resposta do Echo", resp.message.from);
+          console.log("resposta do Echo", resp.message.from);
 
           this.$store.commit("SEND_NEW_MESSAGE", resp.message);
           this.$store.commit("ACTIVE_CIRCLE_NOTIFY", resp.message.from);

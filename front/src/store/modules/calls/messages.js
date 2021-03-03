@@ -8,7 +8,8 @@ export default {
         messages: [],
         to: '',
         currentMessages: [],
-        sendMessage: false
+        sendMessage: false,
+        drawer: false
     },
     mutations: {
         SET_MESSAGES(state, messages) {
@@ -56,6 +57,10 @@ export default {
 
         },
 
+        CLEAN_CURRENT_MESSAGE(state) {
+            state.currentMessages = []
+        },
+
         SEND_NEW_MESSAGE(state, message) {
             state.messages.push(message)
             state.currentMessages.push(message)
@@ -73,6 +78,10 @@ export default {
             console.log(index)
 
             Vue.set(state.chatUsers[index], 'read', true)
+        },
+
+        UPDATE_DRAWER(state, drawer) {
+            state.drawer = drawer
         }
 
     },
@@ -131,8 +140,13 @@ export default {
         getcurrentMessages: (state) => state.currentMessages.sort((a, b) => {
             return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
         }),
+
         getChatUsers: (state) => state.chatUsers,
+
         getSendMessage: (state) => state.sendMessage,
-        getTo: (state) => state.to
+
+        getTo: (state) => state.to,
+
+        getDrawer: (state) => state.drawer
     },
 }
