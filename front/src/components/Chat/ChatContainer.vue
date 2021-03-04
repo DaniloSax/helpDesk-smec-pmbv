@@ -18,7 +18,7 @@
         fixed
         bottom
       >
-        <v-icon dark> mdi-message-text </v-icon>
+        <v-icon dark> mdi-chat </v-icon>
       </v-btn>
     </template>
 

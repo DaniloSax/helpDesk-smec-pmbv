@@ -1,6 +1,6 @@
  <template>
   <span>
-    <v-btn large color="success" @click="dialog = true" :loading=" loading">
+    <v-btn large color="success" @click="dialog = true" :loading="loading">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
 
@@ -13,7 +13,15 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text color="red" @click="dialog = false">SAIR</v-btn>
-          <v-btn text color="success" @click="dialog = false; storeService()">SALVAR</v-btn>
+          <v-btn
+            text
+            color="success"
+            @click="
+              dialog = false;
+              storeService();
+            "
+            >SALVAR</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -56,20 +64,19 @@ export default {
       this.loading = true;
       this.setLoading(true);
 
-      await this.$store
-        .dispatch("storeService", this.service)
-        .then(() => {
-          this.$store.dispatch("loadServices").then(() => {
-            this.loading = false;
-            this.setLoading(false);
-            return this.$emit("msgSuccess", true);
-          });
-        })
-        .catch((error) => {
-          this.setLoading(false);
+      await this.$store.dispatch("storeService", this.service);
+      // .then(() => {
+      //   this.$store.dispatch("loadServices").then(() => {
           this.loading = false;
-          return this.$emit("msgError", error.data);
-        });
+          this.setLoading(false);
+      //     return this.$emit("msgSuccess", true);
+      //   });
+      // })
+      // .catch((error) => {
+      //   this.setLoading(false);
+      //   this.loading = false;
+      //   return this.$emit("msgError", error.data);
+      // });
     },
   },
 };

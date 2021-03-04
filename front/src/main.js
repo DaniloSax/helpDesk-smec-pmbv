@@ -10,6 +10,19 @@ import './registerServiceWorker'
 import './plugins/axios'
 import './plugins/echo'
 
+import Toast from "vue-toastification";
+// Import the CSS or use your own!
+import "vue-toastification/dist/index.css";
+
+const options = {
+    transition: "Vue-Toastification__bounce",
+    maxToasts: 25,
+    newestOnTop: false
+};
+
+
+Vue.use(Toast, options);
+
 Vue.config.productionTip = false
 
 new Vue({

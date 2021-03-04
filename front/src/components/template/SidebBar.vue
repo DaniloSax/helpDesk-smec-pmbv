@@ -46,7 +46,7 @@
         >
           <v-list-item>
             <v-list-item-icon>
-              <v-icon>mdi-message-text</v-icon>
+              <v-icon>mdi-chat</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>BATE-PAPO</v-list-item-title>

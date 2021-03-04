@@ -37,20 +37,20 @@ export default {
         // storeService({ commit }, payload) {
         //     commit('storeService', payload)
         // },
-        storeService({ commit }, service) {
-            return new Promise((resolve, reject) => {
+        storeService(service) {
+            return new Promise(() => {
                 axios.post(`services`, service, {
                         headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
                     })
-                    .then((resp) => {
-                        resolve(resp.data)
-                        commit('storeService', service)
+                    .then(() => {
+                        // console.log('acertou no dispatch', resp)
+                        // commit('storeService', service)
 
-                        return console.log(resp.data)
+                        // return resolve(resp.data)
                     })
                     .catch((error) => {
-                        reject(error.response)
-                        return console.log(error.response.data)
+                        console.log('errou no dispatch', error)
+                            // return reject(error.response)
                     })
             })
         },

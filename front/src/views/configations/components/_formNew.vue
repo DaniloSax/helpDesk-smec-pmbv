@@ -3,7 +3,12 @@
     <v-row>
       <v-col cols="6">
         <ValidationProvider>
-          <v-text-field label="Nome" v-model="service.name" @input="$emit('service', service)"></v-text-field>
+          <v-text-field
+            label="Nome"
+            v-model="service.name"
+            @input="$emit('service', service)"
+            clearable
+          ></v-text-field>
         </ValidationProvider>
       </v-col>
       <v-col cols="6">
@@ -13,6 +18,7 @@
             textarea
             v-model="service.description"
             @input="$emit('service', service)"
+            clearable
           ></v-text-field>
         </ValidationProvider>
       </v-col>
@@ -25,6 +31,7 @@
             label="Destino"
             v-model="service.destiny"
             @input="$emit('service', service)"
+            clearable
           ></v-text-field>
         </ValidationProvider>
       </v-col>
@@ -36,12 +43,16 @@
             label="Sigla"
             clearable
           ></v-autocomplete>
-          <!-- <v-select :items="initials" v-model="service.initials" label="Sigla" ></v-select> -->
         </ValidationProvider>
       </v-col>
       <v-col cols="3">
         <ValidationProvider>
-          <v-select :items="prioritys" v-model="service.priority" label="Prioridades"></v-select>
+          <v-select
+            :items="prioritys"
+            v-model="service.priority"
+            label="Prioridades"
+            clearable
+          ></v-select>
         </ValidationProvider>
       </v-col>
     </v-row>
@@ -54,6 +65,7 @@
             label="Prazo em dias"
             v-model="service.term"
             @input="$emit('service', service)"
+            clearable
           ></v-text-field>
         </ValidationProvider>
       </v-col>
@@ -67,7 +79,8 @@ export default {
   data() {
     return {
       service: {
-        destiny: 'Ponto Eletrônico'
+        destiny: "Ponto Eletrônico",
+        initials: "SMAG",
       },
       initials: [
         "SEMUC",

@@ -18,8 +18,6 @@
       </template>
 
       <template v-slot:card-body>
-        <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />
-        <AlertMsg v-if="msg.errors || msg.success" :msg="msg" />
 
         <form-edit
           :id="id"
@@ -35,10 +33,9 @@
  <script>
 import CardDefault from "@/components/Card";
 import FormEdit from "./components/forms/FormEdit";
-import AlertMsg from "../../components/AlertMsg";
-import ToastMsg from "../../components/ToastMsg";
 
 import GlobalMixin from "../../mixins/globalMixins";
+import ToastMixin from '../../mixins/Toast'
 
 export default {
   props: ["id"],
@@ -50,10 +47,8 @@ export default {
   components: {
     FormEdit,
     CardDefault,
-    AlertMsg,
-    ToastMsg,
   },
-  mixins: [GlobalMixin],
+  mixins: [GlobalMixin, ToastMixin],
   computed: {
     user() {
       return this.$store.getters.usersById(this.id);
@@ -67,14 +62,13 @@ export default {
         .then(() => {
           this.loading = false;
           this.getMsgSuccess(true);
+         this.toastSuccess('Usuário atualizado com sucesso!')
 
           this.$store.dispatch("getAuth");
         })
         .catch((error) => {
           this.loading = false;
-          this.getMsgError(error);
-          // this.toastActiveError = !this.toastActiveError;
-          console.log(error);
+           this.toastSuccess('Ocorreu um erro ' + error)
         });
     },
 
