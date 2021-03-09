@@ -17,6 +17,7 @@
                   <v-text-field
                     label="Nome"
                     v-model="service.name"
+                    clearable
                   ></v-text-field>
                 </ValidationProvider>
               </v-col>
@@ -26,6 +27,7 @@
                     label="Descrição"
                     textarea
                     v-model="service.description"
+                    clearable
                   ></v-text-field>
                 </ValidationProvider>
               </v-col>
@@ -37,6 +39,7 @@
                   <v-text-field
                     label="Destino"
                     v-model="service.destiny"
+                    clearable
                   ></v-text-field>
                 </ValidationProvider>
               </v-col>
@@ -48,11 +51,6 @@
                     label="Sigla"
                     clearable
                   ></v-autocomplete>
-                  <!-- <v-select
-                    :items="initials"
-                    v-model="service.initials"
-                    label="Sigla"
-                  ></v-select> -->
                 </ValidationProvider>
               </v-col>
               <v-col cols="3">
@@ -61,6 +59,7 @@
                     :items="prioritys"
                     v-model="service.priority"
                     label="Prioridades"
+                    clearable
                   ></v-select>
                 </ValidationProvider>
               </v-col>
@@ -73,6 +72,7 @@
                     type="number"
                     label="Prazo em dias"
                     v-model="service.term"
+                    clearable
                   ></v-text-field>
                 </ValidationProvider>
               </v-col>
@@ -141,24 +141,22 @@ export default {
       const auth = this.$store.getters.auth;
       this.service.user_id = auth.id;
     },
-    updateService() {
+    async updateService() {
       this.loading = true;
       this.setLoading(true);
       this.ajustData();
-      this.$store
-        .dispatch("updateService", this.service)
-        .then(() => {
-          return this.$store.dispatch("loadServices").then(() => {
-            this.loading = false;
-            this.setLoading(false);
-            return this.$emit("msgSuccess", true);
-          });
-        })
-        .catch((error) => {
-          this.loading = false;
-          this.setLoading(false);
-          return this.$emit("msgError", error.data);
-        });
+
+      try {
+        await this.$store.dispatch("updateService", this.service);
+        await this.$store.dispatch("loadServices");
+        this.$toast.success("Serviço atualizado com sucesso!");
+      } catch (error) {
+        this.$toast.error("O servidor detectou algum erro...");
+        this.$emit("msgError", error.response.data.errors);
+      } finally {
+        this.loading = false;
+        this.setLoading(false);
+      }
     },
   },
 };

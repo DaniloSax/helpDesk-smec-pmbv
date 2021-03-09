@@ -30,22 +30,12 @@ export default {
             return color;
         },
 
-        getMsgError(event) {
+        getMsgError(errors) {
             this.msg.type = "error";
             this.msg.toast = true;
             this.msg.color = "error";
-            this.msg.errors = event.errors;
+            this.msg.errors = errors;
             this.msg.message = "Dados inválidos";
-        },
-        getMsgSuccess(event) {
-            if (event) {
-                this.msg.type = "success";
-                this.msg.toast = true;
-                this.msg.color = "success";
-                this.msg.errors = null;
-                this.msg.success = true;
-                this.msg.message = "Transação efetuada com sucesso!";
-            }
         },
         clearMsg(event) {
             if (event) {

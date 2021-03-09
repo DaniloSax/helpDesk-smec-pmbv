@@ -10,7 +10,6 @@
       <dialog-add
         @storeService="loading = $event"
         @msgError="getMsgError($event)"
-        @msgSuccess="getMsgSuccess($event)"
       />
     </template>
     <template v-slot:card-header-list-fieldSearch>
@@ -19,8 +18,8 @@
 
     <template v-slot:card-body>
       <!-- msgs aqui! -->
-      <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />
-      <AlertMsg v-if="msg.errors || msg.success" :msg="msg" />
+      <!-- <ToastMsg @closeToast="clearMsg($event)" :msg="msg" /> -->
+      <AlertMsg v-show="msg.errors" :msg="msg" />
       <!-- --------------- -->
 
       <v-pagination class="mb-3" v-model="pagination.page" :length="numberOfPages" circle></v-pagination>
@@ -52,12 +51,10 @@
           <dialog-edit
             :service="item"
             @msgError="getMsgError($event)"
-            @msgSuccess="getMsgSuccess($event)"
           />
           <dialog-delete
             :service_id="item.id"
             @msgError="getMsgError($event)"
-            @msgSuccess="getMsgSuccess($event)"
           />
         </template>
       </v-data-table>
@@ -72,7 +69,7 @@ import DialogDelete from "./components/DialogDelete";
 import DialogEdit from "./components/DialogEdit";
 import CardDefault from "@/components/Card";
 import AlertMsg from "../../components/AlertMsg";
-import ToastMsg from "../../components/ToastMsg";
+// import ToastMsg from "../../components/ToastMsg";
 
 import globalMixins from "@/mixins/globalMixins";
 
@@ -86,7 +83,7 @@ export default {
     DialogEdit,
     CardDefault,
     AlertMsg,
-    ToastMsg,
+    // ToastMsg,
   },
   data() {
     return {

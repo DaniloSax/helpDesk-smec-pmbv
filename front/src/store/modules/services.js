@@ -19,7 +19,6 @@ export default {
         updateService(state, service) {
             const i = state.services.findIndex(item => item.id === service.id)
             state.services[i] = service
-            console.log(state.services[i])
         },
     },
     actions: {
@@ -29,8 +28,7 @@ export default {
                     resolve(resp.data)
                     return commit('setServices', resp.data)
                 }).catch(error => {
-                    reject(error)
-                    return console.log(error.response.data)
+                    return reject(error)
                 })
             })
         },
@@ -56,14 +54,12 @@ export default {
                         headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
                     })
                     .then((resp) => {
-                        resolve(resp.data)
                         commit('updateService', service)
+                        return resolve(resp)
 
-                        return console.log(resp.data)
                     })
                     .catch((error) => {
-                        reject(error.response)
-                        return console.log(error.response.data)
+                        return reject(error)
                     })
             })
         },
@@ -74,12 +70,10 @@ export default {
                     })
                     .then((resp) => {
                         commit('deleteService', service_id)
-                        console.log(resp.data)
-                        resolve(resp.data)
+                        return resolve(resp)
                     })
                     .catch((error) => {
-                        console.log(error.response.data)
-                        reject(error)
+                        return reject(error)
                     })
             });
         },

@@ -29,9 +29,10 @@
 </template>
  
  <script>
-import { mapMutations } from "vuex";
 import FormNewService from "./_formNew";
+
 import localForage from "localforage";
+import { mapMutations } from "vuex";
 
 export default {
   created() {
@@ -53,7 +54,6 @@ export default {
     };
   },
   components: { FormNewService },
-  // computed: mapState(["loading"]),
   methods: {
     ...mapMutations(["setLoading"]),
     getServiceOfForm(event) {
@@ -66,11 +66,10 @@ export default {
 
       try {
         await this.$store.dispatch("storeService", this.service);
+        this.$toast.success("Serviço criado com sucesso!")
       } catch (error) {
-        console.log(error);
-        this.$toast.error("My toast content", {
-          timeout: 5000,
-        });
+        this.$toast.error("O servidor detectou algum erro...");
+        this.$emit('msgError', error.response.data.errors)
       } finally {
         this.loading = false;
         this.setLoading(false);
