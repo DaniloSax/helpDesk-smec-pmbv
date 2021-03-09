@@ -34,23 +34,19 @@ export default {
                 })
             })
         },
-        // storeService({ commit }, payload) {
-        //     commit('storeService', payload)
-        // },
-        storeService(service) {
-            return new Promise(() => {
-                axios.post(`services`, service, {
+
+        storeService({ commit }, service) {
+            return new Promise((resolve, reject) => {
+                return axios.post('services', service, {
                         headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
                     })
-                    .then(() => {
-                        // console.log('acertou no dispatch', resp)
-                        // commit('storeService', service)
+                    .then((resp) => {
+                        commit('storeService', service)
 
-                        // return resolve(resp.data)
+                        return resolve(resp.data)
                     })
                     .catch((error) => {
-                        console.log('errou no dispatch', error)
-                            // return reject(error.response)
+                        return reject(error)
                     })
             })
         },

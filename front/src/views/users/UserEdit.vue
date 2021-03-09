@@ -68,7 +68,8 @@ export default {
         })
         .catch((error) => {
           this.loading = false;
-           this.toastSuccess('Ocorreu um erro ' + error)
+          console.log(error)
+           this.toastError('Ocorreu um erro ' + error.errors)
         });
     },
 

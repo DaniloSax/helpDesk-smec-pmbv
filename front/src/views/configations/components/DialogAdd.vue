@@ -64,19 +64,17 @@ export default {
       this.loading = true;
       this.setLoading(true);
 
-      await this.$store.dispatch("storeService", this.service);
-      // .then(() => {
-      //   this.$store.dispatch("loadServices").then(() => {
-          this.loading = false;
-          this.setLoading(false);
-      //     return this.$emit("msgSuccess", true);
-      //   });
-      // })
-      // .catch((error) => {
-      //   this.setLoading(false);
-      //   this.loading = false;
-      //   return this.$emit("msgError", error.data);
-      // });
+      try {
+        await this.$store.dispatch("storeService", this.service);
+      } catch (error) {
+        console.log(error);
+        this.$toast.error("My toast content", {
+          timeout: 5000,
+        });
+      } finally {
+        this.loading = false;
+        this.setLoading(false);
+      }
     },
   },
 };
