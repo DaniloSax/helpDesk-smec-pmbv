@@ -89,9 +89,6 @@ import AlertMsg from "@/components/AlertMsg";
 import GlobalMixin from "@/mixins/globalMixins";
 
 export default {
- async created() {
-   await this.$store.dispatch("loadUsers");
-  },
   components: {
     DialogDelete,
     CardDefault,
