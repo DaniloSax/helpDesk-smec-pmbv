@@ -22,8 +22,7 @@
 
     <template v-slot:card-body>
      
-      <AlertMsg v-if="msg.errors || msg.success" :msg="msg" />
-      <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />
+     <AlertMsg v-show="msg.errors" :msg="msg" />
 
       <!-- <v-pagination :length="numberOfPages" v-model="pagination.page " circle></v-pagination> -->
 
@@ -42,7 +41,7 @@
           pageText: `${pagination.page} de ${numberOfPages}`,
         }"
       >
-        <template v-slot:item.roles="{ item }">
+        <template v-slot:[`item.roles`]="{ item }">
           <span v-for="role in item.roles" :key="role.id" class="mx-1">
             <v-chip
               :color="colorRoles(role.name)"
@@ -53,7 +52,7 @@
           </span>
         </template>
 
-        <template v-slot:item.profile="{ item }">
+        <template v-slot:[`item.profile`]="{ item }">
           <v-switch
             v-if="isSolver(item.id)"
             v-model="item.profile.driver"
@@ -66,7 +65,7 @@
           <span v-else>----</span>
         </template>
 
-        <template v-slot:item.actions="{ item }">
+        <template v-slot:[`item.actions`]="{ item }">
           <v-btn icon color="primary" :to="`/users/${item.id}/edit`">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
@@ -75,7 +74,6 @@
             :user_id="item.id"
             @ladingTable="loading = $event"
             @msgError="getMsgError($event)"
-            @msgSuccess="getMsgSuccess($event)"
           ></dialog-delete>
         </template>
       </v-data-table>
@@ -86,20 +84,18 @@
 <script>
 import CardDefault from "@/components/Card";
 import DialogDelete from "./components/dialogs/DialogDeleteUser";
-import AlertMsg from "../../components/AlertMsg";
-import ToastMsg from "../../components/ToastMsg";
+import AlertMsg from "@/components/AlertMsg";
 
-import GlobalMixin from "../../mixins/globalMixins";
+import GlobalMixin from "@/mixins/globalMixins";
 
 export default {
-  created() {
-    this.$store.dispatch("loadUsers");
+ async created() {
+   await this.$store.dispatch("loadUsers");
   },
   components: {
     DialogDelete,
     CardDefault,
-    AlertMsg,
-    ToastMsg,
+    AlertMsg
   },
   mixins: [GlobalMixin],
   data() {
@@ -170,15 +166,14 @@ export default {
       } else return false;
     },
 
-    changeDriver(user_id, driver) {
+    async changeDriver(user_id, driver) {
       const user = {
         id: user_id,
         driver,
       };
 
-      this.$store.dispatch("updateUserDriver", user);
+      await this.$store.dispatch("updateUserDriver", user);
     },
-
   },
 };
 </script>

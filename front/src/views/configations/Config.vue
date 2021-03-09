@@ -39,7 +39,7 @@
         pageText: `${pagination.page} de ${numberOfPages}`,
       }"
       >
-        <template v-slot:item.priority="{ item }">
+        <template v-slot:[`item.priority`]="{ item }">
           <v-chip
             :color="colorPriority(item.priority)"
             dark
@@ -47,7 +47,7 @@
           >{{ item.priority }}</v-chip>
         </template>
 
-        <template v-slot:item.actions="{ item }">
+        <template v-slot:[`item.actions`]="{ item }">
           <dialog-edit
             :service="item"
             @msgError="getMsgError($event)"

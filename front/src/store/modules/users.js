@@ -65,10 +65,10 @@ export default {
                     .then((resp) => {
                         dispatch('loadUsers')
                         commit('notCommit')
-                        resolve(resp.data)
+                        return resolve(resp)
                     })
                     .catch((error) => {
-                        return reject(error.response.data)
+                        return reject(error)
                     })
             })
         },
@@ -97,14 +97,12 @@ export default {
                         headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
                     })
                     .then((resp) => {
-                        console.log(resp.data)
                         dispatch('loadUsers')
                         commit('notCommit')
-                        return resolve(resp.data)
+                        return resolve(resp)
                     })
                     .catch((error) => {
-                        console.log(error.response)
-                        return reject(error.response.data)
+                        return reject(error)
                     })
             })
         },
