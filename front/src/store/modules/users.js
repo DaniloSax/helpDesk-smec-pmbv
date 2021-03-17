@@ -7,7 +7,6 @@ export default {
     },
     mutations: {
         setUsers(state, users) {
-            console.log('commit users', users)
             state.users = users
         },
         setRoles(state, roles) {
