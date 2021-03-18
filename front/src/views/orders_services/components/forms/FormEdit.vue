@@ -1,23 +1,19 @@
 <template>
   <v-form>
     <v-row>
-      <v-col cols="3">
-        <v-text-field
-          name="name"
-          label="Criado por:"
-          :value="
+      <v-col>
+        <v-alert type="primary" :value="true" border="left">
+          Criado por 
+          {{
             created_by
               ? `${created_by.name} - ${formatDate(callLocal.created_at)}`
-              : 'teste'
-          "
-          readonly
-          filled
-          shaped
-        ></v-text-field>
+              : ""
+          }}
+        </v-alert>
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="2">
+      <!-- <v-col class="col-md-2">
         <validation-provider rules v-slot="{ errors }">
           <v-autocomplete
             :items="services"
@@ -30,9 +26,9 @@
             clearable
           ></v-autocomplete>
         </validation-provider>
-      </v-col>
+      </v-col> -->
 
-      <v-col cols="4">
+      <v-col sm="6" md="4" lg="4">
         <validation-provider rules="required" v-slot="{ errors }">
           <v-text-field
             label="Nome"
@@ -43,7 +39,8 @@
           />
         </validation-provider>
       </v-col>
-      <v-col :cols="disabled ? 3 : 2">
+
+      <v-col sm="6" md="4" lg="4">
         <validation-provider rules="required" v-slot="{ errors, valid }">
           <v-select
             :items="prioritys"
@@ -56,7 +53,8 @@
           ></v-select>
         </validation-provider>
       </v-col>
-      <v-col :cols="disabled ? 3 : 2">
+
+      <v-col sm="6" md="4" lg="2">
         <!-- LEMBRETE -> can: admin|solucionador|direcionador -->
         <validation-provider rules="required" v-slot="{ errors }">
           <v-select
@@ -71,7 +69,8 @@
           ></v-select>
         </validation-provider>
       </v-col>
-      <v-col cols="2">
+
+      <v-col sm="6" md="4" lg="2">
         <validation-provider rules v-slot="{ errors }">
           <v-autocomplete
             :items="solvers"
@@ -79,7 +78,7 @@
             @input="updateSolver(solver)"
             item-text="name"
             item-value="id"
-            label="Solucionador"
+            label="Técnico"
             :readonly="!isAdmin"
             :disabled="callLocal.statu === 'concluído'"
             :loading="loading || loadingSolver"
@@ -88,22 +87,23 @@
           ></v-autocomplete>
         </validation-provider>
       </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="4">
+      <!-- </v-row> -->
+
+      <!-- <v-row> -->
+      <v-col sm="6" md="4" lg="4">
         <validation-provider rules="required" v-slot="{ errors, valid }">
           <v-text-field
             label="Origem"
             :value="created_by.profile.school"
             :error-messages="errors[0]"
             :success="valid"
-            disabled
+            readonly
             @input="$emit('call', callLocal)"
           />
         </validation-provider>
       </v-col>
 
-      <v-col cols="3">
+      <v-col sm="6" md="4" lg="4">
         <validation-provider rules="required" v-slot="{ errors, valid }">
           <v-text-field
             label="Destino"
@@ -115,7 +115,7 @@
           />
         </validation-provider>
       </v-col>
-      <v-col cols="3">
+      <v-col sm="6" md="6" lg="2">
         <validation-provider rules="required" v-slot="{ errors }">
           <v-select
             :items="initials"
@@ -128,7 +128,7 @@
           ></v-select>
         </validation-provider>
       </v-col>
-      <v-col cols="2">
+      <v-col sm="6" md="6" lg="2">
         <validation-provider
           name="assunto"
           rules="required"
@@ -146,23 +146,28 @@
         </validation-provider>
       </v-col>
     </v-row>
-    <validation-provider
-      name="descricao"
-      rules="required"
-      v-slot="{ errors, valid }"
-    >
-      <v-textarea
-        clearable
-        auto-grow
-        outlined
-        label="Descrição"
-        :disabled="callLocal.statu === 'concluído'"
-        v-model="callLocal.description"
-        :error-messages="errors[0]"
-        :success="valid"
-        @input="$emit('call', callLocal)"
-      />
-    </validation-provider>
+
+    <v-row>
+      <v-col>
+        <validation-provider
+          name="descricao"
+          rules="required"
+          v-slot="{ errors, valid }"
+        >
+          <v-textarea
+            clearable
+            auto-grow
+            outlined
+            label="Descrição"
+            :disabled="callLocal.statu === 'concluído'"
+            v-model="callLocal.description"
+            :error-messages="errors[0]"
+            :success="valid"
+            @input="$emit('call', callLocal)"
+          />
+        </validation-provider>
+      </v-col>
+    </v-row>
   </v-form>
 </template>
 
@@ -178,12 +183,12 @@ export default {
       this.isConclued = true;
       console.log(this.isConclued);
     }
-    localforage.getItem("helpDesk").then((value) => {
+    localforage.getItem("helpDesk").then(value => {
       this.callLocal = this.call;
       this.$store.dispatch("loadUsers").then(() => {
         this.$store.dispatch("loadServices");
         this.loadingSolver = true;
-        this.$store.dispatch("loadSolver", this.call.id).then((item) => {
+        this.$store.dispatch("loadSolver", this.call.id).then(item => {
           this.solver = item;
           this.loadingSolver = false;
           return (this.auth = value.login.auth);
@@ -200,7 +205,7 @@ export default {
         "andamento",
         "atrasado",
         "cancelado",
-        "paralisado",
+        "paralisado"
       ],
       prioritys: ["Urgente", "Alta", "Média", "Baixa"],
       initials: ["SMEC", "SMAG", "SMO"],
@@ -211,7 +216,7 @@ export default {
       solver: null,
       loading: false,
       loadingSolver: false,
-      isConclued: false,
+      isConclued: false
     };
   },
   mixins: [AccessControllerMixins],
@@ -221,14 +226,14 @@ export default {
       return this.$store.getters.usersById(this.auth.id);
     },
     service() {
-      return this.services.find((sv) => sv.id == this.service_id) || "";
+      return this.services.find(sv => sv.id == this.service_id) || "";
     },
     solvers() {
-      const solvers = this.$store.getters.users.filter((user) => {
-        const roleSolvers = user.roles.filter((role) => {
+      const solvers = this.$store.getters.users.filter(user => {
+        const roleSolvers = user.roles.filter(role => {
           return role.name == "solucionador";
         });
-        const user_id = roleSolvers.map((solver) => {
+        const user_id = roleSolvers.map(solver => {
           return solver.pivot.model_id;
         });
 
@@ -239,12 +244,12 @@ export default {
     },
     created_by() {
       return this.$store.getters.usersById(this.call.created_by);
-    },
+    }
   },
   watch: {
     service() {
       this.callLocal = this.service;
-    },
+    }
   },
   methods: {
     dispatchSolver(solver) {
@@ -260,7 +265,7 @@ export default {
     updateSolver(user_id) {
       const solver = {
         user_id,
-        call_id: this.call.id,
+        call_id: this.call.id
       };
 
       if (!solver.user_id) {
@@ -278,10 +283,9 @@ export default {
     formatDate(value) {
       moment.locale("pt-br");
       return moment(value).format("dddd L");
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

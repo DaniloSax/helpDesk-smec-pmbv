@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+// colocar o carregamento de imagens em stat
+
 export default {
 
     actions: {

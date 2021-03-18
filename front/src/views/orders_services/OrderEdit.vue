@@ -1,4 +1,4 @@
- <template>
+<template>
   <div>
     <card-default color="primary">
       <template v-slot:card-icon>
@@ -36,7 +36,7 @@
         </template>
 
         <template v-else>
-          <ToastMsg @closeToast="clearMsg($event)" :msg="msg" />
+          <AlertMsg v-show="msg.errors" :msg="msg" />
 
           <form-edit
             @call="getInputs($event)"
@@ -96,23 +96,23 @@
     </card-default>
   </div>
 </template>
- 
- <script>
+
+<script>
 import CardDefault from "@/components/Card";
 import FormEdit from "./components/forms/FormEdit";
 import imageUpload from "./components/ImagesUploads";
 import InputDinamic from "./components/InputDinamic";
 import ExpansionResponses from "./components/expansion/ExpansionResponses";
 import DialogDeleteCard from "./components/dialogs/DialogDeleteCard";
+import AlertMsg from "@/components/AlertMsg";
 
 import GlobalMixins from "@/mixins/globalMixins";
-import ToastMsg from "../../components/ToastMsg";
 
 export default {
   created() {
     this.$store.dispatch("loadCalls").then(() => {
-      this.$store.dispatch("loadImagesCall", this.id).then((items) => {
-        this.$store.dispatch("loadResponses", this.id).then((responses) => {
+      this.$store.dispatch("loadImagesCall", this.id).then(items => {
+        this.$store.dispatch("loadResponses", this.id).then(responses => {
           this.responses = responses ? responses : "";
           this.images = items != "" ? items : null;
           this.newCall = this.call;
@@ -122,16 +122,16 @@ export default {
   },
   props: {
     id: { type: [Number, String], required: true },
-    solver: { type: Object, required: false },
+    solver: { type: Object, required: false }
   },
   data() {
     return {
       newCall: null,
       images: [],
-      // baseURL: "http://localhost:8000/storage/",
-      baseURL: "http://131.255.233.6:8008/storage/",
+      baseURL: "http://localhost:8000/storage/",
+      // baseURL: "http://131.255.233.6:8008/storage/",
       responses: null,
-      loading: false,
+      loading: false
     };
   },
   mixins: [GlobalMixins],
@@ -142,7 +142,7 @@ export default {
     InputDinamic,
     ExpansionResponses,
     DialogDeleteCard,
-    ToastMsg,
+    AlertMsg
   },
   watch: {
     "call.id"(lastQuestion, newQuestion) {
@@ -151,7 +151,7 @@ export default {
         this.newCall = this.call;
         this.$router.go();
       }
-    },
+    }
   },
   computed: {
     call() {
@@ -159,26 +159,23 @@ export default {
     },
     services() {
       return this.$store.getters.services;
-    },
+    }
   },
   methods: {
     getInputs(event) {
       this.newCall = event;
     },
-    updateCall() {
-      console.log("update call");
+    async updateCall() {
       this.loading = true;
-      this.$store
-        .dispatch("updateCall", this.newCall)
-        .then(() => {
-          this.getMsgSuccess(true);
-          return (this.loading = false);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.getMsgError(error);
-          return (this.loading = false);
-        });
+      try {
+        await this.$store.dispatch("updateCall", this.newCall);
+        this.$toast.success("Chamado atualizado com sucesso!");
+      } catch (error) {
+        this.$toast.error("O servidor detectou algum erro...");
+        this.getMsgError(error);
+      } finally {
+        this.loading = false;
+      }
     },
     deleteCall() {
       this.$store
@@ -186,22 +183,19 @@ export default {
         .then(() => {
           return this.$router.replace("/calls");
         })
-        .catch((error) => {
-          if (error.status == "423") {
-            this.getMsgError(error);
-          }
+        .catch(errors => {
+          this.getMsgError(errors);
         });
     },
 
     backRouter() {
       this.$router.push({
         name: "callsSolver",
-        params: { id: this.solver.id, solver: this.solver },
+        params: { id: this.solver.id, solver: this.solver }
       });
-    },
-  },
+    }
+  }
 };
 </script>
- 
- <style>
-</style>
+
+<style></style>

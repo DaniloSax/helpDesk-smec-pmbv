@@ -26,7 +26,7 @@
 
           <v-divider></v-divider>
 
-          <v-stepper-step :complete="step > 2" step="2">Anxeos</v-stepper-step>
+          <v-stepper-step :complete="step > 2" step="2">Anexos</v-stepper-step>
         </v-stepper-header>
 
         <v-stepper-items>

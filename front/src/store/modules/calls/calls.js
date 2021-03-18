@@ -82,8 +82,8 @@ export default {
                         return resolve(resp.data)
                     })
                     .catch((error) => {
-                        reject(error.response)
-                        return console.log(error.response.data)
+                        // console.log(`error`, error.response.data.errors)
+                        return reject(error.response.data.errors)
                     })
             })
         },

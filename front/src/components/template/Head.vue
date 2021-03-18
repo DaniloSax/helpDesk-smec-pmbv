@@ -148,8 +148,7 @@ export default {
 
       this.downloadPhotoFirebase(this.auth)
         .then(async (url) => {
-          await this.$store.dispatch("allNotifications");
-          await this.$store.dispatch("loadUsers");
+         
           return (this.photo = url);
         })
         .catch((error) => {
