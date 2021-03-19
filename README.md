@@ -10,11 +10,16 @@ Este HelpDesk é focado em administrar serviços de manutenção de ponto eletr�
 
 ### Abrindo um chamado:
 
-[![N|Solid](./front/src/assets/images/component_chat.png)]
+![N|Solid](./front/src/assets/images/component_chat.png)
 
 ### Chat versão alfa:
 
+#### Chat exclusivo para usuários adminitradores
+
 ![N|Solid](./front/src/assets/images/page_chat.png)
+
+#### Chat para todos
+
 ![N|Solid](./front/src/assets/images/component_chat.png)
 
 
