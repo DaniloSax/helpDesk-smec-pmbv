@@ -10,11 +10,11 @@ Este HelpDesk é focado em administrar serviços de manutenção de ponto eletr�
 
 Abrindo um novo Chamado: 
 
-[![N|Solid](./front/src/assets/gifs/criar_servico.gif)]
+[![N|Solid](./front/src/assets/images/component_chat.png)]
 
-Chat versão alfa (ainda em implementação).
+Chat versão alfa (ainda em implementação):
 
-[![Watch the video](./front/src/assets/gifs/chat_helpdesk v1.mp4)]
+[![N|Solid](./front/src/assets/images/page_chat.png)]
 
 
 ## Techs
