@@ -1,7 +1,7 @@
 # HelpDesk Ponto Eletrônico
 ## _Desenvolvido Com Laravel API + VueJS no front_
 
-[![N|Solid](./front/public/img/icons/android-chrome-192x192.png)]
+[![N|Solid](./front/public/img/icons/android-chrome-192x192.png))](http://131.255.233.6:8000/login)
 
 ## Visão Geral
 Este HelpDesk é focado em administrar serviços de manutenção de ponto eletrônico de toda uma rede municipal com mais de 11k usuários. Desenvolvido com laravel no back e vue no front, é uma aplicação SPA que atualmente está hospedada em um servidor local que permite acessos via extranet.
