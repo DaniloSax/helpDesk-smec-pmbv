@@ -1,14 +1,14 @@
 # HelpDesk Ponto Eletrônico
 ## _Desenvolvido Com Laravel API + VueJS no front_
 
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
+[![N|Solid](public\img\icons\android-chrome-512x512.png)
 
 ## Visão Geral
 Este HelpDesk é focado em administrar serviços de manutenção de ponto eletrônico de toda uma rede municipal com mais de 11k usuários. Desenvolvido com laravel no back e vue no front, é uma aplicação SPA que atualmente está hospedada em um servidor local que permite acessos via extranet.
 
 ## Techs
 
-HelpDesk utiliza uma série de projetos de código aberto para funcionar corretamente:
+HelpDesk utiliza uma série de projetos de código aberto para melhor funcionamento:
 
 - [Vuejs] - v2.x e todo seu ecosistema (vue-router, vuex,.. ) + libs externas
 - [Laravel] - v7.x usando seus recursos de API como Passport (Oauth2) + libs externas
@@ -19,7 +19,7 @@ HelpDesk utiliza uma série de projetos de código aberto para funcionar correta
 - [moment] - lib para manipulação de dados do tipo data
 - [firebase] - utilizado para gerenciamento da imagem de perfil
 
-E, claro, o próprio HelpDesk é um código aberto com um repositório público
+E claro, o próprio HelpDesk é um código aberto com um repositório público
 no GitHub.
 
 ## Instalação
