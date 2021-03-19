@@ -14,7 +14,8 @@ Abrindo um novo Chamado:
 
 Chat versão alfa (ainda em implementação):
 
-[![N|Solid](./front/src/assets/images/page_chat.png)]
+![N|Solid](./front/src/assets/images/page_chat.png)
+![N|Solid](./front/src/assets/images/component_chat_chat.png)
 
 
 ## Techs
