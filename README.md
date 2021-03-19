@@ -28,12 +28,12 @@ Este HelpDesk é focado em administrar serviços de manutenção de ponto eletr�
 HelpDesk é desenvolvido em duas estruturas distintas (front e back), abaixo estão alguams das bibliotecas utilizadas que auxiliaram no desenvolvimento:
 
 - [Vuejs](https://vuejs.org/) - v2.x e todo seu ecosistema (vue-router, vuex,.. ) + libs externas
-- [Laravel] (https://laravel.com/docs/7.x) - v7.x usando seus recursos de API como Passport (Oauth2) + libs externas
-- [Laravel-websockets] (https://beyondco.de/docs/laravel-websockets/getting-started/introduction) - lib que gerencia o pusher.
-- [laravel-echo] (https://github.com/laravel/echo) - real-time cliente
-- [vuetify] (https://vuetifyjs.com/en/) - framework css
-- [moment] (https://momentjs.com/) - lib para manipulação de dados do tipo data
-- [firebase] (https://firebase.google.com/?gclid=Cj0KCQjwl9GCBhDvARIsAFunhskKHbvsUU9nfW8BaIscCWD0eikzWRXvfmLpke_Bd8HB3OnhkShwSYYaAgRzEALw_wcB&gclsrc=aw.ds) - utilizado para gerenciamento da imagem de perfil
+- [Laravel](https://laravel.com/docs/7.x) - v7.x usando seus recursos de API como Passport (Oauth2) + libs externas
+- [Laravel-websockets](https://beyondco.de/docs/laravel-websockets/getting-started/introduction) - lib que gerencia o pusher.
+- [laravel-echo](https://github.com/laravel/echo) - real-time cliente
+- [vuetify](https://vuetifyjs.com/en/) - framework css
+- [moment](https://momentjs.com/) - lib para manipulação de dados do tipo data
+- [firebase](https://firebase.google.com/?gclid=Cj0KCQjwl9GCBhDvARIsAFunhskKHbvsUU9nfW8BaIscCWD0eikzWRXvfmLpke_Bd8HB3OnhkShwSYYaAgRzEALw_wcB&gclsrc=aw.ds) - utilizado para gerenciamento da imagem de perfil
 
 E claro, o próprio HelpDesk é um código aberto com um repositório público
 no GitHub.
