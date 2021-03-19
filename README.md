@@ -14,8 +14,8 @@ Este HelpDesk é focado em administrar serviços de manutenção de ponto eletr�
 
 ### Chat versão alfa:
 
-[![N|Solid](./front/src/assets/images/page_chat.png)]
-[![N|Solid](./front/src/assets/images/component_chat.png)]
+![N|Solid](./front/src/assets/images/page_chat.png)
+![N|Solid](./front/src/assets/images/component_chat.png)
 
 
 ## Techs
