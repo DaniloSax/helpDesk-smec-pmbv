@@ -8,14 +8,14 @@ Este HelpDesk é focado em administrar serviços de manutenção de ponto eletr�
 
 ## Demonstração
 
-Abrindo um novo Chamado: 
+### Abrindo um chamado:
 
 [![N|Solid](./front/src/assets/images/component_chat.png)]
 
-Chat versão alfa (ainda em implementação):
+### Chat versão alfa:
 
-![N|Solid](./front/src/assets/images/page_chat.png)
-![N|Solid](./front/src/assets/images/component_chat_chat.png)
+[![N|Solid](./front/src/assets/images/page_chat.png)]
+[![N|Solid](./front/src/assets/images/component_chat.png)]
 
 
 ## Techs
