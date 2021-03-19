@@ -62,8 +62,7 @@ php artisan websockets:serve
 
 Atualmente estou trabalhando em algumas atualizações, nesta, pretendo implantar docker para melhor manutenção e deploy.
 
-### Autor
---
+## Autor
 
 <a href="https://github.com/DaniloSax.png">
  <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/50502834?v=4" width="100px;" alt=""/>
