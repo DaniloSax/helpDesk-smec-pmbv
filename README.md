@@ -14,7 +14,7 @@ Abrindo um novo Chamado:
 
 Chat versão alfa (ainda em implementação).
 
-[![N|Solid](./front/src/assets/gifs/chat_helpdesk v1.mp4)]
+[![Watch the video](./front/src/assets/gifs/chat_helpdesk v1.mp4)]
 
 
 ## Techs
