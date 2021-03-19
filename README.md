@@ -4,7 +4,7 @@
 [![N|Solid](./front/public/img/icons/android-chrome-192x192.png)](http://131.255.233.6:8000/login)
 
 ## Visão Geral
-Este HelpDesk é focado em administrar serviços de manutenção de ponto eletrônico de toda uma rede municipal com mais de 11k usuários. Desenvolvido com laravel no back e vue no front, é uma aplicação SPA que atualmente está hospedada em um servidor local que permite acessos via extranet.
+Este HelpDesk é focado em administrar serviços de manutenção de ponto eletrônico de toda uma rede municipal com mais de 11k usuários. Desenvolvido com laravel no back e vue no front, é uma aplicação SPA que atualmente está hospedada em um servidor local e permite acessos via extranet.
 
 ## Demonstração
 
@@ -25,16 +25,15 @@ Este HelpDesk é focado em administrar serviços de manutenção de ponto eletr�
 
 ## Techs
 
-HelpDesk é desenvolvido em duas estruturas distantas (front e back), abaixo estão alguams das bibliotecas utilizadas que auxiliaram no desenvolvimento:
+HelpDesk é desenvolvido em duas estruturas distintas (front e back), abaixo estão alguams das bibliotecas utilizadas que auxiliaram no desenvolvimento:
 
-- [Vuejs] - v2.x e todo seu ecosistema (vue-router, vuex,.. ) + libs externas
-- [Laravel] - v7.x usando seus recursos de API como Passport (Oauth2) + libs externas
-- [pusher-php-server] - lib para comunicação em real-time
-- [Laravel-websockets] - lib que gerencia o pusher.
-- [laravel-echo] - real-time cliente
-- [vuetify] - framework css
-- [moment] - lib para manipulação de dados do tipo data
-- [firebase] - utilizado para gerenciamento da imagem de perfil
+- [Vuejs](https://vuejs.org/) - v2.x e todo seu ecosistema (vue-router, vuex,.. ) + libs externas
+- [Laravel] (https://laravel.com/docs/7.x) - v7.x usando seus recursos de API como Passport (Oauth2) + libs externas
+- [Laravel-websockets] (https://beyondco.de/docs/laravel-websockets/getting-started/introduction) - lib que gerencia o pusher.
+- [laravel-echo] (https://github.com/laravel/echo) - real-time cliente
+- [vuetify] (https://vuetifyjs.com/en/) - framework css
+- [moment] (https://momentjs.com/) - lib para manipulação de dados do tipo data
+- [firebase] (https://firebase.google.com/?gclid=Cj0KCQjwl9GCBhDvARIsAFunhskKHbvsUU9nfW8BaIscCWD0eikzWRXvfmLpke_Bd8HB3OnhkShwSYYaAgRzEALw_wcB&gclsrc=aw.ds) - utilizado para gerenciamento da imagem de perfil
 
 E claro, o próprio HelpDesk é um código aberto com um repositório público
 no GitHub.
@@ -62,6 +61,21 @@ php artisan websockets:serve
 ## Docker
 
 Atualmente estou trabalhando em algumas atualizações, nesta, pretendo implantar docker para melhor manutenção e deploy.
+
+### Autor
+---
+
+<a href="https://github.com/DaniloSax.png">
+ <img style="border-radius: 50%;" src="https://avatars3.githubusercontent.com/u/380327?s=460&u=61b426b901b8fe02e12019b1fdb67bf0072d4f00&v=4" width="100px;" alt=""/>
+ <br />
+ <sub><b>Danilo Veloso</b></sub></a> <a href="https://github.com/DaniloSax" title="Rocketseat">🚀</a>
+
+
+Feito com ❤️ por Danilo Veloso 👋🏽 Entre em contato!
+
+[![Linkedin Badge](https://img.shields.io/badge/-Danilo-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/tgmarinho/)](https://www.linkedin.com/in/danilo-veloso/) 
+[![Gmail Badge](https://img.shields.io/badge/-danilovsdanilo@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:danilovsdanilo@gmail.com)](mailto:danilovsdanilo@gmail.com)
+
 
 ## License
 
