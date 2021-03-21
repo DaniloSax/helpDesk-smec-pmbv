@@ -3,7 +3,7 @@ import axios from 'axios'
 export default {
 
     mutations: {
-        updateSolverOfCall(state, data) {
+        updateSolverOfCall (state, data) {
             const i = state.calls.findIndex(item => item.id === data.call_id)
             delete state.calls[i].user
             state.calls[i] = data.user
@@ -13,23 +13,21 @@ export default {
     },
 
     actions: {
-        loadSolver({ commit }, call_id) {
+        loadSolver ({ commit }, call_id) {
             console.log('dispatch loadSolver')
             return new Promise((resolve, reject) => {
                 axios.get(`call-solver/${call_id}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
                 }).then((resp) => {
                     commit('notCommit')
-                    console.log(resp.data)
                     return resolve(resp.data)
                 }).catch(error => {
-                    console.log(error.response.data)
                     return reject(error)
                 })
             })
         },
 
-        storeResponse({ commit }, response) {
+        storeResponse ({ commit }, response) {
             const config = {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -51,7 +49,7 @@ export default {
             })
         },
 
-        updateSolverCall({ commit }, solver) {
+        updateSolverCall ({ commit }, solver) {
             console.log('dispatch updateSolverCall')
             new Promise((resolve, reject) => {
                 axios.put(`call-solver/${solver.call_id}`, solver, {
@@ -62,10 +60,9 @@ export default {
                     // let user = getters.usersById(solver.user_id);
 
                     commit('notCommit')
-                    console.log(resp.data)
+                    return resolve(resp.data)
                 }).catch(error => {
-                    reject(error)
-                    console.log(error.response.data)
+                    return reject(error)
                 })
             })
         },

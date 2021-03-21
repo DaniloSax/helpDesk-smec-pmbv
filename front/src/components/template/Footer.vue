@@ -18,6 +18,7 @@ export default {
   async mounted() {
     await this.$store.dispatch("allNotifications");
     await this.$store.dispatch("loadUsers");
+    await this.$store.dispatch("loadCalls");
 
     localforage.getItem("helpDesk").then(item => {
       const auth = item.login.auth;

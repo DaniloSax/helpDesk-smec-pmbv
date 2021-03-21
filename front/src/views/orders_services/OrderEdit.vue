@@ -36,11 +36,10 @@
         </template>
 
         <template v-else>
-          <AlertMsg v-show="msg.errors" :msg="msg" />
-
           <form-edit
             @call="getInputs($event)"
             :call="call"
+            :solver="solver_data"
             :services="services"
           />
 
@@ -104,21 +103,25 @@ import imageUpload from "./components/ImagesUploads";
 import InputDinamic from "./components/InputDinamic";
 import ExpansionResponses from "./components/expansion/ExpansionResponses";
 import DialogDeleteCard from "./components/dialogs/DialogDeleteCard";
-import AlertMsg from "@/components/AlertMsg";
 
 import GlobalMixins from "@/mixins/globalMixins";
 
 export default {
-  created() {
-    this.$store.dispatch("loadCalls").then(() => {
-      this.$store.dispatch("loadImagesCall", this.id).then(items => {
-        this.$store.dispatch("loadResponses", this.id).then(responses => {
-          this.responses = responses ? responses : "";
-          this.images = items != "" ? items : null;
-          this.newCall = this.call;
-        });
-      });
-    });
+  async mounted() {
+    const images = await this.$store.dispatch("loadImagesCall", this.id);
+    const responses = await this.$store.dispatch("loadResponses", this.id);
+    const solver = await this.$store.dispatch("loadSolver", this.id);
+
+    this.solver_data = solver;
+    this.images = images || [];
+    this.responses = responses || "";
+
+    if (!this.call) {
+      await this.$store.dispatch("loadCalls", this.id);
+      this.newCall = this.call;
+    } else {
+      this.newCall = this.call;
+    }
   },
   props: {
     id: { type: [Number, String], required: true },
@@ -127,6 +130,7 @@ export default {
   data() {
     return {
       newCall: null,
+      solver_data: {},
       images: [],
       baseURL: "http://localhost:8000/storage/",
       // baseURL: "http://131.255.233.6:8008/storage/",
@@ -141,18 +145,17 @@ export default {
     imageUpload,
     InputDinamic,
     ExpansionResponses,
-    DialogDeleteCard,
-    AlertMsg
+    DialogDeleteCard
   },
-  watch: {
-    "call.id"(lastQuestion, newQuestion) {
-      // add newCall and refresh page for reload datas
-      if (newQuestion.id !== lastQuestion) {
-        this.newCall = this.call;
-        this.$router.go();
-      }
-    }
-  },
+  // watch: {
+  //   "call.id"(lastQuestion, newQuestion) {
+  //     // add newCall and refresh page for reload datas
+  //     if (newQuestion.id !== lastQuestion) {
+  //       this.newCall = this.call;
+  //       this.$router.go();
+  //     }
+  //   }
+  // },
   computed: {
     call() {
       return this.$store.getters.callsById(this.id);

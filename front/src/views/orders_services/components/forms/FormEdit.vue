@@ -2,32 +2,19 @@
   <v-form>
     <v-row>
       <v-col>
-        <v-alert type="primary" :value="true" border="left">
-          Criado por 
-          {{
-            created_by
-              ? `${created_by.name} - ${formatDate(callLocal.created_at)}`
-              : ""
-          }}
+        <v-alert color="info" :value="true" border="left">
+          <span class="white--text">
+            Criado por
+            {{
+              created_by
+                ? `${created_by.name} - ${formatDate(callLocal.created_at)}`
+                : ""
+            }}
+          </span>
         </v-alert>
       </v-col>
     </v-row>
     <v-row>
-      <!-- <v-col class="col-md-2">
-        <validation-provider rules v-slot="{ errors }">
-          <v-autocomplete
-            :items="services"
-            :disabled="!isAdmin || callLocal.statu === 'concluído'"
-            item-text="name"
-            item-value="id"
-            v-model="service_id"
-            label="Escolha o Serviço"
-            :error-messages="errors"
-            clearable
-          ></v-autocomplete>
-        </validation-provider>
-      </v-col> -->
-
       <v-col sm="6" md="4" lg="4">
         <validation-provider rules="required" v-slot="{ errors }">
           <v-text-field
@@ -74,8 +61,8 @@
         <validation-provider rules v-slot="{ errors }">
           <v-autocomplete
             :items="solvers"
-            v-model="solver"
-            @input="updateSolver(solver)"
+            v-model="solverLocal"
+            @input="updateSolver(solverLocal)"
             item-text="name"
             item-value="id"
             label="Técnico"
@@ -181,22 +168,19 @@ export default {
   created() {
     if (this.call.statu === "concluído") {
       this.isConclued = true;
-      console.log(this.isConclued);
     }
     localforage.getItem("helpDesk").then(value => {
       this.callLocal = this.call;
-      this.$store.dispatch("loadUsers").then(() => {
-        this.$store.dispatch("loadServices");
-        this.loadingSolver = true;
-        this.$store.dispatch("loadSolver", this.call.id).then(item => {
-          this.solver = item;
-          this.loadingSolver = false;
-          return (this.auth = value.login.auth);
-        });
-      });
+      this.solverLocal = this.solver;
+
+      this.$store.dispatch("loadServices");
+      this.loadingSolver = true;
+
+      this.loadingSolver = false;
+      return (this.auth = value.login.auth);
     });
   },
-  props: ["call", "services"],
+  props: ["call", "services", "solver"],
   data() {
     return {
       status: [
@@ -211,9 +195,9 @@ export default {
       initials: ["SMEC", "SMAG", "SMO"],
       service_id: "",
       callLocal: {},
+      solverLocal: {},
       auth: {},
       disabled: false,
-      solver: null,
       loading: false,
       loadingSolver: false,
       isConclued: false
