@@ -18,7 +18,7 @@
 
       <v-card-text v-else>
         <v-row
-          class="d-flex align-center"
+          class="d-flex align-center py-4"
           :class="$vuetify.breakpoint.mobile ? 'flex-column' : ''"
         >
           <v-col :cols="$vuetify.breakpoint.mobile ? '' : 8">

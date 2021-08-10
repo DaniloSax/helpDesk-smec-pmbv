@@ -18,6 +18,7 @@ export default {
             return new Promise((resolve, reject) => {
                 axios.get('/users', { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
                     .then((resp) => {
+                        console.log('load users', resp.data)
                         commit('setUsers', resp.data)
                         return resolve(resp.data)
                     })

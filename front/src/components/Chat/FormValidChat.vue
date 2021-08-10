@@ -92,6 +92,8 @@ export default {
         return this.$store.getters.usersById(user.id);
       });
 
+      console.log(user)
+
       // const user = roles
       //   .filter((role) => role.name === "solucionador")
       //   .map((role) => {

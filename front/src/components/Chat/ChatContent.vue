@@ -11,10 +11,7 @@
       width="100%"
     />
 
-    <v-row
-      v-for="(item, index) in getcurrentMessages"
-      :key="index"
-    >
+    <v-row v-for="(item, index) in getcurrentMessages" :key="index">
       <v-col
         class="'mr-2 d-flex"
         :class="[
@@ -29,7 +26,10 @@
           :value="true"
           rounded="xl"
           class="ml-2 mr-2"
-          :class="item.from === auth.id ? 'rounded-br-0' : 'rounded-bl-0 '"
+          :class="[
+          item.from === auth.id ? 'rounded-br-0' : 'rounded-bl-0 ',
+          index === 0 ? 'mt-2' : ''
+          ]"
         >
           <!-- content -->
           <div class="text-justify">
@@ -84,7 +84,8 @@ export default {
     },
 
     searchUser(id) {
-      return this.$store.getters.users.find((user) => user.id === id);
+      const user = this.$store.getters.users.find((user) => user.id === id);
+      return user;
     },
   },
 };

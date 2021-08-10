@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Call;
+use App\Models\Message;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -62,5 +63,10 @@ class User extends Authenticatable
     public function responses()
     {
          return $this->belongsToMany(Response::class, 'users_calls', 'response_id');
+    }
+
+    public function messages ()
+    {
+        return $this->hasMany(Message::class, 'from');
     }
 }

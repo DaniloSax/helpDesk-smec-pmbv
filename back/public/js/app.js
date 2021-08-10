@@ -49886,8 +49886,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Projetos Dev\ordensServicos\back\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Projetos Dev\ordensServicos\back\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/danilo/Documentos/Projetos/helpDesk-smec-pmbv/back/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/danilo/Documentos/Projetos/helpDesk-smec-pmbv/back/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

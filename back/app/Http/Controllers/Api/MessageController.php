@@ -18,25 +18,22 @@ class MessageController extends Controller
         $solvers_users = User::with([
             'roles' => function ($query) {
                 return $query->where('name', 'solucionador');
-            }
+            }, 'messages'
         ])
             ->where('id', '!=', auth()->user()->id)
             ->get()
-            ->filter(function ($user) {
-                return $user->roles->count() > 0;
-            });
+            ->filter(fn ($user) => $user->roles->isNotEmpty());
 
         // get usuarios all
         $users = User::with([
+            'messages',
             'roles' => function ($query) {
                 return $query->where('name', '!=', 'solucionador');
             }
         ])
             ->where('id', '!=', auth()->user()->id)
             ->get()
-            ->filter(function ($user) {
-                return $user->roles->count() > 0;
-            });
+            ->filter(fn ($user) => $user->roles->isNotEmpty());
 
         // preparando array all_users
         $all_users = [];

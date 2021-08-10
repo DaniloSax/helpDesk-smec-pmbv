@@ -36,24 +36,24 @@
  <script>
 import ChatEmojis from "./ChatEmojis";
 import { mapGetters } from "vuex";
-// import localforage from "localforage";
+import localforage from "localforage";
 
 export default {
-  // async mounted() {
-  //   localforage.getItem("helpDesk").then((item) => {
-  //     const auth = item.login.auth;
+  async mounted() {
+    localforage.getItem("helpDesk").then((item) => {
+      const auth = item.login.auth;
 
-  //     window.Echo.private(`user-chat${auth.id}`).listen(
-  //       "SendMessage",
-  //       (resp) => {
-  //         console.log("resposta do Echo", resp.message.from);
+      window.Echo.channel(`user-chat${auth.id}`).listen(
+        "SendMessage",
+        (resp) => {
+          // console.log("resposta do Echo", resp.message.from);
 
-  //         this.$store.commit("SEND_NEW_MESSAGE", resp.message);
-  //         this.$store.commit("ACTIVE_CIRCLE_NOTIFY", resp.message.from);
-  //       }
-  //     );
-  //   });
-  // },
+          this.$store.commit("SEND_NEW_MESSAGE", resp.message);
+          this.$store.commit("ACTIVE_CIRCLE_NOTIFY", resp.message.from);
+        }
+      );
+    });
+  },
   data() {
     return {
       message: {
@@ -80,6 +80,8 @@ export default {
         to: this.getTo,
         content: this.message.content,
       };
+
+      console.log('enviando mensagem', message)
 
       this.$store.dispatch("send_new_message", message);
 

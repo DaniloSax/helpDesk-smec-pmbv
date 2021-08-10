@@ -26,11 +26,11 @@ class SendMessage implements ShouldBroadcast
      */
     public function __construct(Message $message)
     {
-        Log::info('chegou no event');
+        // Log::info('chegou no event');
         $this->to = $message->to;
         $this->message = $message;
     }
-    
+
     /**
      * Get the channels the event should broadcast on.
      *
@@ -38,14 +38,14 @@ class SendMessage implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        Log::info('acionando o channel dentro do event');
-        return new PrivateChannel('user-chat' . $this->to);
+        // Log::info('acionando o channel dentro do event '. $this->to);
+        return new Channel('user-chat' . $this->to);
     }
-    
+
     public function broadcastWith()
     {
-        
-        Log::info('enviando dados dentro do event');
+
+        // Log::info('enviando dados dentro do event '. $this->message);
         return [
             'message' => $this->message
         ];

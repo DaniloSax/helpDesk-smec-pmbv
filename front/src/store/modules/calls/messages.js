@@ -2,6 +2,7 @@ import axios from 'axios'
 import localforage from 'localforage'
 import Vue from 'vue'
 
+
 export default {
     state: {
         chatUsers: [],
@@ -54,7 +55,6 @@ export default {
                     }
                 }
             })
-
         },
 
         CLEAN_CURRENT_MESSAGE(state) {
@@ -63,6 +63,10 @@ export default {
 
         SEND_NEW_MESSAGE(state, message) {
             state.messages.push(message)
+            console.log('mutation send message', message)
+
+
+            console.log('state users', state.chatUsers)
             state.currentMessages.push(message)
             state.sendMessage = !state.sendMessage
         },
@@ -89,14 +93,14 @@ export default {
         loadMessages({ commit }) {
             return new Promise((resolve, reject) => {
                 axios('chat-messages', {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                        }
-                    }).then(resp => {
-                        resolve(resp.data.messages)
-                        commit('SET_MESSAGES', resp.data.messages)
-                        console.log(resp)
-                    })
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                    }
+                }).then(resp => {
+                    resolve(resp.data.messages)
+                    commit('SET_MESSAGES', resp.data.messages)
+                    console.log(resp)
+                })
                     .catch(error => {
                         reject(error)
                         console.log(error)
@@ -107,13 +111,14 @@ export default {
         load_chat_user({ commit }) {
             return new Promise((resolve, reject) => {
                 axios('chat-users', {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                        }
-                    }).then(resp => {
-                        commit('SET_CHAT_USERS', resp.data.chatUsers)
-                        return resolve(resp.data.chatUsers)
-                    })
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                    }
+                }).then(resp => {
+                    console.log(resp.data.chatUsers)
+                    commit('SET_CHAT_USERS', resp.data.chatUsers)
+                    return resolve(resp.data.chatUsers)
+                })
                     .catch(error => {
                         reject(error)
                         console.log(error)
